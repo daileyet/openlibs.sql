@@ -1,52 +1,51 @@
 package openthinks.libs.sql;
 
+public class MessageE extends openthinks.libs.sql.entity.Entity {
 
-public class MessageE extends openthinks.libs.sql.entity.Entity{
-
-	private String messageId;
-	private String locale;
-	private String content;
+	private String message_id;
+	private String message_locale;
+	private String message_content;
 
 	/* (non-Javadoc)
 	 * @see i18n.IMessage#getContent()
 	 */
 	public String getContent() {
-		return content;
+		return message_content;
 	}
 
 	/* (non-Javadoc)
 	 * @see i18n.IMessage#getLocale()
 	 */
 	public String getLocale() {
-		return locale;
+		return message_locale;
 	}
 
 	/**
 	 * @return the messageId
 	 */
 	public String getMessageId() {
-		return messageId;
+		return message_id;
 	}
 
 	/**
 	 * @param messageId the messageId to set
 	 */
 	public void setMessageId(String messageId) {
-		this.messageId = messageId;
+		this.message_id = messageId;
 	}
 
 	/**
 	 * @param locale the locale to set
 	 */
 	public void setLocale(String locale) {
-		this.locale = locale;
+		this.message_locale = locale;
 	}
 
 	/**
 	 * @param content the content to set
 	 */
 	public void setContent(String content) {
-		this.content = content;
+		this.message_content = content;
 	}
 
 	/* (non-Javadoc)
@@ -54,6 +53,6 @@ public class MessageE extends openthinks.libs.sql.entity.Entity{
 	 */
 	@Override
 	public String toString() {
-		return "MessageE [messageId=" + messageId + ", locale=" + locale + ", content=" + content + "]";
+		return "MessageE [messageId=" + message_id + ", locale=" + message_locale + ", content=" + message_content + "]";
 	}
 }

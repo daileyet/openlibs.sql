@@ -38,7 +38,7 @@ import org.junit.Test;
  */
 public class LoadTest {
 
-//	@Test
+	//	@Test
 	public void testListEntity() {
 		Session session = SessionFactory.getSession();
 		List<MessageE> list = session.list(MessageE.class, "SELECT * FROM message");
@@ -49,7 +49,7 @@ public class LoadTest {
 
 	}
 
-//	@Test
+	//	@Test
 	public void testJPAList() {
 		Session session = SessionFactory.getSession();
 		List<Message> list = session.list(Message.class, "SELECT * FROM message");
@@ -59,7 +59,7 @@ public class LoadTest {
 		session.close();
 	}
 
-//	@Test
+	//	@Test
 	public void testListByClass() {
 		Session session = SessionFactory.getSession();
 		List<Message> list = session.list(Message.class);
@@ -76,6 +76,5 @@ public class LoadTest {
 		System.out.println(message);
 		session.close();
 	}
-	
-	
+
 }

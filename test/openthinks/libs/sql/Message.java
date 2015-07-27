@@ -13,11 +13,11 @@ public class Message {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "messageid_column")
+	@Column(name = "message_id")
 	private String messageId;
-	@Column(name = "locale_column")
+	@Column(name = "message_locale")
 	private String locale;
-	@Column(name = "content_column")
+	@Column(name = "message_content")
 	private String content;
 
 	/*
@@ -76,7 +76,6 @@ public class Message {
 	 */
 	@Override
 	public String toString() {
-		return "Message [messageId=" + messageId + ", locale=" + locale
-				+ ", content=" + content + "]";
+		return "Message [messageId=" + messageId + ", locale=" + locale + ", content=" + content + "]";
 	}
 }
