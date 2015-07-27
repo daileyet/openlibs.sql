@@ -16,7 +16,10 @@ import openthinks.libs.utilities.Converter;
 
 /**
  * 对应数据库表的实体类
- * 
+ * The simple entity which reference the table in database;<BR>
+ * required:<BR>
+ * 	<li>the attribute(property) name in this entity need same as the column name in database table
+ * 	<li>the first attribute in this entity map to the primary key column in database table
  * @author dmj
  */
 public abstract class Entity extends AbstractRow {
@@ -41,13 +44,11 @@ public abstract class Entity extends AbstractRow {
 				propertyNames = new String[fields.length];
 				for (int i = 0; i < propertyNames.length; i++) {
 					propertyNames[i] = fields[i].getName();
-					ColumnAttribute columnAttribute = new ColumnAttribute(
-							propertyNames[i], propertyNames[i]);
+					ColumnAttribute columnAttribute = new ColumnAttribute(propertyNames[i], propertyNames[i]);
 					if (i == 0) {
 						columnAttribute.setIdType(IDType.MANUAL);
 						Class<?> type = fields[i].getType();
-						if (type == int.class || type == long.class
-								|| type == Integer.class || type == Long.class) {
+						if (type == int.class || type == long.class || type == Integer.class || type == Long.class) {
 							columnAttribute.setIdType(IDType.AUTO);
 						}
 					}
@@ -62,13 +63,10 @@ public abstract class Entity extends AbstractRow {
 		return columnAttributeMapping.toArray();
 	}
 
-	protected PropertyDescriptor getPropertyDescriptor(String propertyName)
-			throws IntrospectionException {
-		PropertyDescriptor propertyDescriptor = propertyDescMap
-				.get(propertyName);
+	protected PropertyDescriptor getPropertyDescriptor(String propertyName) throws IntrospectionException {
+		PropertyDescriptor propertyDescriptor = propertyDescMap.get(propertyName);
 		if (propertyDescriptor == null) {
-			propertyDescriptor = new PropertyDescriptor(propertyName,
-					getClass());
+			propertyDescriptor = new PropertyDescriptor(propertyName, getClass());
 			propertyDescMap.put(propertyName, propertyDescriptor);
 		}
 		return propertyDescriptor;
@@ -93,14 +91,13 @@ public abstract class Entity extends AbstractRow {
 		} catch (Exception e) {
 			isThrow = true;
 		}
-		if (isThrow) {
+		if (isThrow) {//get field value directly by access the filed
 			try {
 				Field filed = this.getClass().getDeclaredField(propertyName);
 				filed.setAccessible(true);
 				ret = filed.get(this);
 			} catch (Exception e) {
-				throw new EntityReflectException(propertyName + "属性",
-						e.getCause());
+				throw new EntityReflectException(propertyName + "属性", e.getCause());
 			}
 		}
 		return ret;
@@ -123,8 +120,7 @@ public abstract class Entity extends AbstractRow {
 			Method method = propertyDescriptor.getWriteMethod();
 			Class<?>[] parameterTypes = method.getParameterTypes();
 			if (parameterTypes != null && parameterTypes.length == 1) {
-				method.invoke(this,
-						Converter.source(e).convertToSingle(parameterTypes[0]));
+				method.invoke(this, Converter.source(e).convertToSingle(parameterTypes[0]));
 			} else {
 				method.invoke(this, e);
 			}
@@ -134,15 +130,13 @@ public abstract class Entity extends AbstractRow {
 			// + "方法", ex.getCause());
 			isThrow = true;
 		}
-		if (isThrow) {
+		if (isThrow) {//set field value directly by access the filed
 			try {
 				Field filed = getClass().getDeclaredField(propertyName);
 				filed.setAccessible(true);
-				filed.set(this,
-						Converter.source(e).convertToSingle(filed.getType()));
+				filed.set(this, Converter.source(e).convertToSingle(filed.getType()));
 			} catch (Exception ex) {
-				throw new EntityReflectException(propertyName + "属性",
-						ex.getCause());
+				throw new EntityReflectException(propertyName + "属性", ex.getCause());
 			}
 		}
 	}

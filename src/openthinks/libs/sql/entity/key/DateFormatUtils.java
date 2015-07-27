@@ -6,6 +6,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Date formatter helper.
+ * @author dailey
+ *
+ */
 public class DateFormatUtils {
 
 	static final Map<String, DateFormat> formatMap = new HashMap<String, DateFormat>();

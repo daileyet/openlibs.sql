@@ -87,6 +87,11 @@ public class Condition {
 		order = new HashMap<String, String>();
 	}
 
+	/**
+	 * auto build the front query sql by the given parameter {@link Class}
+	 * This parameter {@link Class} must be {@link Entity} or its sub class, or the class which include the annotation of JPA
+	 * @param queryObject Class<?>
+	 */
 	public Condition(Class<?> queryObject) {
 		String persistName = ReflectEngine.getEntityTable(queryObject);
 		Checker.require(persistName).notNull();
@@ -97,7 +102,7 @@ public class Condition {
 	 * 增加查询条件
 	 * 
 	 * @param type
-	 *            :int 查询条件类型
+	 *            :Integer 查询条件类型
 	 * @param key
 	 *            :String 查询条件字段
 	 * @param value
@@ -172,8 +177,7 @@ public class Condition {
 	 * @return
 	 */
 	public boolean empty(final int type) {
-		return getCondition(type) == null ? false : getCondition(type)
-				.isEmpty();
+		return getCondition(type) == null ? false : getCondition(type).isEmpty();
 	}
 
 	/**
@@ -195,8 +199,7 @@ public class Condition {
 	 * @return String :带完整的查询条件的查询改删SQL语句
 	 */
 	public static String getFullSql(Condition condition) {
-		return condition == null ? null : getFullSql(condition.getSqlPart(),
-				condition);
+		return condition == null ? null : getFullSql(condition.getSqlPart(), condition);
 	}
 
 	// TODO re-write

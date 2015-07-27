@@ -33,16 +33,15 @@ import openthinks.libs.sql.entity.Entity;
 
 import org.apache.log4j.Logger;
 
+/**
+ * The simple {@link IReflectHandler} implementation for {@link Entity}
+ * @author dailey
+ *
+ */
 public class EntityReflectHandler extends JPAReflectHandler implements IReflectHandler {
 
 	Logger logger = Logger.getLogger(getClass());
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see sql.lang.reflect.IReflectHandler#handField(java.lang.Object,
-	 * java.lang.String, java.lang.Object)
-	 */
 	@Override
 	public <T> boolean handColumnField(T entity, String columnName, Object columnValue) {
 		// TODO Checker.require(entity).isExtendsFrom(Entity.class);
@@ -71,11 +70,6 @@ public class EntityReflectHandler extends JPAReflectHandler implements IReflectH
 		return tableName;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see sql.entity.jpa.JPAReflectHandler#getEntityIDName(java.lang.Class)
-	 */
 	@Override
 	public <T> String getEntityIDName(Class<T> entityClazz) {
 		String idName = super.getEntityIDName(entityClazz);

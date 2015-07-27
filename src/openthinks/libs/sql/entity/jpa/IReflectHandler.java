@@ -28,40 +28,47 @@ package openthinks.libs.sql.entity.jpa;
 import openthinks.libs.sql.dhibernate.support.ColumnAttributeMapping;
 
 /**
+ * The interface to handle different entity object
  * @author dailey
  *
  */
 public interface IReflectHandler {
-	
+
 	/**
 	 * parse entity class to {@link ColumnAttributeMapping}
 	 * @param entityClass Class<T><BR>
 	 * 		1. JPA annotation<BR>
 	 * 		2. Subclass of {@link Entity}
-	 * @return
+	 * @return {@link ColumnAttributeMapping}
 	 */
-	public <T>  ColumnAttributeMapping parseEntityClass(Class<T> entityClass);
+	public <T> ColumnAttributeMapping parseEntityClass(Class<T> entityClass);
 
 	/**
 	 * set column value to corresponding entity object
 	 * @param entity entity instance
+	 * 		1. JPA annotation<BR>
+	 * 		2. Subclass of {@link Entity}
 	 * @param columnName 	column name in database table
 	 * @param columnValue	column name value in database table row
-	 * @return boolean
+	 * @return boolean handle success or not
 	 */
 	public <T> boolean handColumnField(T entity, String columnName, Object columnValue);
 
 	/**
 	 * get entity corresponding table name
 	 * @param entityClazz Class<T>
-	 * @return String
+	 * 		1. JPA annotation<BR>
+	 * 		2. Subclass of {@link Entity}
+	 * @return String table name
 	 */
 	public <T> String getEntityTableName(Class<T> entityClazz);
 
 	/**
 	 * get entity corresponding table primary key
 	 * @param entityClazz Class<T>
-	 * @return String
+	 * 		1. JPA annotation<BR>
+	 * 		2. Subclass of {@link Entity}
+	 * @return String primary key name
 	 */
 	public <T> String getEntityIDName(Class<T> entityClazz);
 

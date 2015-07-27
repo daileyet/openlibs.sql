@@ -25,7 +25,11 @@
  */
 package openthinks.libs.sql.dhibernate.support;
 
-
+/**
+ * The information which holds the attribute name and column name in entity and table
+ * @author dailey
+ *
+ */
 public class ColumnAttribute {
 	private String columnName;
 	private String attributeName;
@@ -105,10 +109,8 @@ public class ColumnAttribute {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((attributeName == null) ? 0 : attributeName.hashCode());
-		result = prime * result
-				+ ((columnName == null) ? 0 : columnName.hashCode());
+		result = prime * result + ((attributeName == null) ? 0 : attributeName.hashCode());
+		result = prime * result + ((columnName == null) ? 0 : columnName.hashCode());
 		return result;
 	}
 

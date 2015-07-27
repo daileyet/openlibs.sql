@@ -15,7 +15,7 @@ import org.apache.log4j.Logger;
  */
 public abstract class IdGenerator {
 
-	private final static Logger logger = Logger.getLogger(IdGenerator.class.getName());
+	private final static Logger logger = Logger.getLogger(IdGenerator.class);
 	static Map<Class<?>, IdGenerator> generatorMap = new ConcurrentHashMap<Class<?>, IdGenerator>();
 	static {
 		generatorMap.put(Object.class, new DefaultIdGenerator());
@@ -28,8 +28,7 @@ public abstract class IdGenerator {
 	public static IdGenerator getGenerator(Class<?> type) {
 		IdGenerator generator = generatorMap.get(type);
 		if (generator == null) {
-			logger.log(Level.WARN, "Can not find this type:" + type
-					+ " IdGenerator, use default IdGenerator");
+			logger.log(Level.WARN, "Can not find this type:" + type + " IdGenerator, use default IdGenerator");
 			generator = generatorMap.get(Object.class);
 		}
 		return generator;

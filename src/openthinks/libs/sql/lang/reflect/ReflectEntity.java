@@ -22,6 +22,11 @@ public class ReflectEntity {
 				propertyName.substring(1);
 	}
 
+	/**
+	 * get property name from the given parameter {@link Method}
+	 * @param method {@link Method}
+	 * @return property name String
+	 */
 	public static String getPropertyName(Method method) {
 		String methodName = method.getName();
 		String propertyName = "";

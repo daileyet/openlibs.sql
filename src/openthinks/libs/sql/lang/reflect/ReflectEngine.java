@@ -41,6 +41,7 @@ import openthinks.libs.sql.entity.jpa.IReflectHandler;
 import openthinks.libs.sql.entity.jpa.JPAReflectHandler;
 
 /**
+ * The engine of reflect entity, its property, mapped table and sql template
  * @author dailey
  * 
  */
@@ -52,19 +53,31 @@ public abstract class ReflectEngine {
 		register(Object.class, new JPAReflectHandler());
 	}
 
+	/**
+	 * register new {@link IReflectHandler} to bind given parameter entityClass
+	 * @param entityClass Class<?>
+	 * @param hander IReflectHandler
+	 */
 	public static void register(Class<?> entityClass, IReflectHandler hander) {
 		map.put(entityClass, hander);
 	}
 
-	public static <T> boolean propertyReflect(T entity, String columnName,
-			Object columnValue) {
+	/**
+	 * set column value to corresponding entity object
+	 * @param entity entity instance
+	 * 		1. JPA annotation<BR>
+	 * 		2. Subclass of {@link Entity}
+	 * @param columnName 	column name in database table
+	 * @param columnValue	column name value in database table row
+	 * @return boolean handle success or not
+	 */
+	public static <T> boolean propertyReflect(T entity, String columnName, Object columnValue) {
 		boolean isSuccess = false;
 		for (Entry<Class<?>, IReflectHandler> entry : map.entrySet()) {
 			Class<?> clzz = entry.getKey();
 			if (clzz.isInstance(entity)) {
 				try {
-					isSuccess = entry.getValue().handColumnField(entity,
-							columnName, columnValue);
+					isSuccess = entry.getValue().handColumnField(entity, columnName, columnValue);
 				} catch (Exception e) {
 					continue;
 				}
@@ -75,14 +88,20 @@ public abstract class ReflectEngine {
 		return isSuccess;
 	}
 
+	/**
+	 * get entity corresponding table name
+	 * @param entityClazz Class<T>
+	 * 		1. JPA annotation<BR>
+	 * 		2. Subclass of {@link Entity}
+	 * @return String table name
+	 */
 	public static <T> String getEntityTable(Class<T> entityClazz) {
 		String tableName = null;
 		for (Entry<Class<?>, IReflectHandler> entry : map.entrySet()) {
 			Class<?> clzz = entry.getKey();
 			if (clzz.isAssignableFrom(entityClazz)) {
 				try {
-					tableName = entry.getValue()
-							.getEntityTableName(entityClazz);
+					tableName = entry.getValue().getEntityTableName(entityClazz);
 				} catch (Exception e) {
 					continue;
 				}
@@ -93,6 +112,13 @@ public abstract class ReflectEngine {
 		return tableName;
 	}
 
+	/**
+	 * get entity corresponding table primary key
+	 * @param entityClazz Class<T>
+	 * 		1. JPA annotation<BR>
+	 * 		2. Subclass of {@link Entity}
+	 * @return String primary key name
+	 */
 	public static <T> String getEntityID(Class<T> entityClazz) {
 		String idName = null;
 		for (Entry<Class<?>, IReflectHandler> entry : map.entrySet()) {
@@ -110,14 +136,19 @@ public abstract class ReflectEngine {
 		return idName;
 	}
 
-	public static <T> ColumnAttributeMapping parseEntityClass(
-			Class<T> entityClass) {
+	/**
+	 * parse entity class to {@link ColumnAttributeMapping}
+	 * @param entityClass Class<T><BR>
+	 * 		1. JPA annotation<BR>
+	 * 		2. Subclass of {@link Entity}
+	 * @return {@link ColumnAttributeMapping}
+	 */
+	public static <T> ColumnAttributeMapping parseEntityClass(Class<T> entityClass) {
 		ColumnAttributeMapping columnAttributeMapping = null;
 		for (Entry<Class<?>, IReflectHandler> entry : map.entrySet()) {
 			Class<?> clzz = entry.getKey();
 			if (clzz.isAssignableFrom(entityClass)) {
-				columnAttributeMapping = entry.getValue().parseEntityClass(
-						entityClass);
+				columnAttributeMapping = entry.getValue().parseEntityClass(entityClass);
 			}
 		}
 		return columnAttributeMapping;
@@ -126,7 +157,7 @@ public abstract class ReflectEngine {
 	/**
 	 * create template for standard sql by entity class<BR>
 	 * 1. JPA annotation on param entityClass<BR>
-	 * 2. param entityClass is subclass from {@link Entity}
+	 * 2. subclass from {@link Entity}
 	 * 
 	 * @param entityClass
 	 *            Class<T>
@@ -139,8 +170,8 @@ public abstract class ReflectEngine {
 		return template;
 	}
 
-	public static <T> FilterTemplate createSQLTemplate(Class<T> entityClass,
-			QueryFilter filter) {
+	//TODO
+	public static <T> FilterTemplate createSQLTemplate(Class<T> entityClass, QueryFilter filter) {
 		FilterTemplate template = null;
 		ColumnAttributeMapping columnAttributeMapping = parseEntityClass(entityClass);
 		template = new FilterSQLTemplate(columnAttributeMapping, entityClass);

@@ -26,9 +26,10 @@
 package openthinks.libs.sql.dhibernate.support;
 
 /**
+ * The primary key type for database table
  * @author dailey
  *
  */
 public enum IDType {
-	AUTO,MANUAL
+	AUTO, MANUAL
 }

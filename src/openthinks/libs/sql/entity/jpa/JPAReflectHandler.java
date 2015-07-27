@@ -44,7 +44,7 @@ import openthinks.libs.sql.lang.reflect.ReflectEntity;
 import openthinks.libs.utilities.Converter;
 
 /**
- * Simple implement for JPA Annotation
+ * The simple {@link IReflectHandler} implementation for JPA Annotation
  * 
  * @author dailey
  * 
@@ -52,12 +52,11 @@ import openthinks.libs.utilities.Converter;
 public class JPAReflectHandler implements IReflectHandler {
 
 	/**
-	 * column name		
-	 * 1. from the name of annotation {@link javax.persistence.Column}
-	 * 2. if the name of annotation {@link javax.persistence.Column} is empty, use the attribute name
-	 * attribute name	
-	 * 
-	 * @see openthinks.libs.sql.entity.jpa.IReflectHandler#parseEntityClass(java.lang.Class)
+	 * The strategy of get column name
+	 * <ol>		
+	 * <li>from the name of annotation {@link javax.persistence.Column}
+	 * <li>if the name of annotation {@link javax.persistence.Column} is empty, use the attribute name
+	 * </ol>
 	 */
 	@Override
 	public <T> ColumnAttributeMapping parseEntityClass(Class<T> entityClass) {
@@ -74,8 +73,7 @@ public class JPAReflectHandler implements IReflectHandler {
 			if ("".equals(_cloumnName)) {
 				_cloumnName = field.getName();
 			}
-			ColumnAttribute columnAttribute = new ColumnAttribute(_cloumnName,
-					attributeName);
+			ColumnAttribute columnAttribute = new ColumnAttribute(_cloumnName, attributeName);
 			handIfisKeyColumn(field, columnAttribute);
 			columnAttributeMapping.map(columnAttribute);
 		}
@@ -92,8 +90,7 @@ public class JPAReflectHandler implements IReflectHandler {
 			if ("".equals(_cloumnName)) {
 				_cloumnName = propertyName;
 			}
-			ColumnAttribute columnAttribute = new ColumnAttribute(_cloumnName,
-					propertyName);
+			ColumnAttribute columnAttribute = new ColumnAttribute(_cloumnName, propertyName);
 			handIfisKeyColumn(method, columnAttribute);
 			columnAttributeMapping.map(columnAttribute);
 		}
@@ -101,13 +98,11 @@ public class JPAReflectHandler implements IReflectHandler {
 		return columnAttributeMapping;
 	}
 
-	private void handIfisKeyColumn(AccessibleObject field,
-			ColumnAttribute columnAttribute) {
+	private void handIfisKeyColumn(AccessibleObject field, ColumnAttribute columnAttribute) {
 		Id id = field.getAnnotation(Id.class);
 		if (id != null) {
 			columnAttribute.setIdType(IDType.MANUAL);
-			GeneratedValue generatedValue = field
-					.getAnnotation(GeneratedValue.class);
+			GeneratedValue generatedValue = field.getAnnotation(GeneratedValue.class);
 			if (generatedValue != null) {
 				if (GenerationType.AUTO == generatedValue.strategy()) {
 					columnAttribute.setIdType(IDType.AUTO);
@@ -116,21 +111,12 @@ public class JPAReflectHandler implements IReflectHandler {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see sql.lang.reflect.IReflectHandler#handField(java.lang.Object,
-	 * java.lang.String, java.lang.Object)
-	 */
 	@Override
-	public <T> boolean handColumnField(T entity, String columnName,
-			Object columnValue) {
+	public <T> boolean handColumnField(T entity, String columnName, Object columnValue) {
 		if (isMarkEntity(entity.getClass()) == false)
 			return false;
-		ColumnAttributeMapping columnAttributeMapping = parseEntityClass(entity
-				.getClass());
-		String attributeName = columnAttributeMapping.findByColumn(columnName)
-				.getAttributeName();
+		ColumnAttributeMapping columnAttributeMapping = parseEntityClass(entity.getClass());
+		String attributeName = columnAttributeMapping.findByColumn(columnName).getAttributeName();
 		if (attributeName == null)
 			return false;
 		boolean isSuccess = trySetByField(entity, attributeName, columnValue);
@@ -149,11 +135,9 @@ public class JPAReflectHandler implements IReflectHandler {
 		return true;
 	}
 
-	private <T> boolean trySetByMethod(T entity, String attributeName,
-			Object columnValue) {
+	private <T> boolean trySetByMethod(T entity, String attributeName, Object columnValue) {
 		try {
-			PropertyDescriptor propertyDescriptor = new PropertyDescriptor(
-					attributeName, entity.getClass());
+			PropertyDescriptor propertyDescriptor = new PropertyDescriptor(attributeName, entity.getClass());
 			propertyDescriptor.getWriteMethod().invoke(entity, columnValue);
 			return true;
 		} catch (Exception e) {
@@ -163,8 +147,7 @@ public class JPAReflectHandler implements IReflectHandler {
 	}
 
 	@SuppressWarnings("unchecked")
-	private <T> boolean trySetByField(T entity, String attributeName,
-			Object value) {
+	private <T> boolean trySetByField(T entity, String attributeName, Object value) {
 		Class<T> clzz = (Class<T>) entity.getClass();
 		try {
 			Field field = clzz.getDeclaredField(attributeName);
@@ -173,10 +156,7 @@ public class JPAReflectHandler implements IReflectHandler {
 				if (value == null || field.getType() == value.getClass())
 					field.set(entity, value);
 				else {// if field type is not accepted by value type
-					field.set(
-							entity,
-							Converter.source(value).convertToSingle(
-									field.getType()));
+					field.set(entity, Converter.source(value).convertToSingle(field.getType()));
 				}
 				return true;
 			}
@@ -187,10 +167,12 @@ public class JPAReflectHandler implements IReflectHandler {
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see sql.entity.jpa.IReflectHandler#getEntityTableName(java.lang.Object)
+	/**
+	 * The strategy of get table name
+	 * <ol>		
+	 * <li>from the name of annotation {@link javax.persistence.Table}
+	 * <li>if the name of annotation {@link javax.persistence.Table} is empty, use the entity class name
+	 * </ol>
 	 */
 	@Override
 	public <T> String getEntityTableName(Class<T> entityClazz) {
