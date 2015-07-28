@@ -17,7 +17,7 @@
  * under the License. 
  * 
  * @Title: QueryFilter.java 
- * @Package sql.dhibernate.support 
+ * @Package openthinks.libs.sql.dhibernate.support.query
  * @Description: TODO
  * @author minjdai 
  * @date 2013-11-25
@@ -26,6 +26,7 @@
 package openthinks.libs.sql.dhibernate.support.query;
 
 import openthinks.libs.sql.dhibernate.support.query.impl.AbstractQueryFilter;
+import openthinks.libs.sql.dhibernate.support.query.impl.AndFilterConnect;
 
 /**
  * @author minjdai
@@ -34,8 +35,8 @@ import openthinks.libs.sql.dhibernate.support.query.impl.AbstractQueryFilter;
 public interface QueryFilter {
 
 	/**
-	 * use (@link AndFilterConnect} as default {@link QueryFilterConnect}
-	 * between current instance and appended instance when appended instance is
+	 * use {@link AndFilterConnect} as default {@link QueryFilterConnect}
+	 * between current instance and the appended instance when appended instance is
 	 * not {@link QueryFilterConnect} type
 	 * 
 	 * @param filter
@@ -44,7 +45,11 @@ public interface QueryFilter {
 	 */
 	public <T extends QueryFilter> T append(QueryFilter filter);
 
-	public abstract boolean hasNext();
+	/**
+	 * judge has next {@link QueryFilter}
+	 * @return boolean
+	 */
+	public boolean hasNext();
 
 	/**
 	 * get appended QueryFilter, could be type {@link QueryFilterConnect} or
@@ -52,6 +57,6 @@ public interface QueryFilter {
 	 * 
 	 * @return QueryFilter
 	 */
-	public abstract QueryFilter next();
+	public QueryFilter next();
 
 }

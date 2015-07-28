@@ -17,7 +17,7 @@
  * under the License. 
  * 
  * @Title: StandardSQLTemplate.java 
- * @Package sql.dhibernate.support 
+ * @Package openthinks.libs.sql.dhibernate.support
  * @Description: TODO
  * @author dailey 
  * @date 2012-11-8
@@ -29,6 +29,7 @@ import static openthinks.libs.sql.dhibernate.support.SQLDialectUtils.wrapColumnN
 import static openthinks.libs.sql.dhibernate.support.SQLDialectUtils.wrapColumnValue;
 
 import java.beans.PropertyDescriptor;
+import java.lang.reflect.Field;
 
 import openthinks.libs.sql.entity.key.IdGenerator;
 import openthinks.libs.sql.lang.reflect.ReflectEngine;
@@ -46,41 +47,24 @@ public class StandardSQLTemplate implements Template {
 	protected final Class<?> entityType;
 
 	/**
-	 * @param columnAttributeMapping
+	 * @param columnAttributeMapping {@link ColumnAttributeMapping}
+	 * @param entityType Class<?> entity class
 	 */
-	public StandardSQLTemplate(
-			final ColumnAttributeMapping columnAttributeMapping,
-			final Class<?> entityType) {
+	public StandardSQLTemplate(final ColumnAttributeMapping columnAttributeMapping, final Class<?> entityType) {
 		this.mapping = columnAttributeMapping;
 		this.entityType = entityType;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * sql.dhibernate.support.Template#setType(sql.dhibernate.support.SQLType)
-	 */
 	@Override
 	public void setType(SQLType type) {
 		this.type = type;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see sql.dhibernate.support.Template#setData(java.lang.Object)
-	 */
 	@Override
 	public <T> void setData(T entityData) {
 		this.data = entityData;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see sql.dhibernate.support.Template#generateSQL()
-	 */
 	@Override
 	public String generateSQL() {
 		Checker.require(entityType).notNull();
@@ -103,25 +87,26 @@ public class StandardSQLTemplate implements Template {
 	}
 
 	/**
-	 * @param entityTableName
-	 * @param idName_
-	 * @return
+	 * generate delete action SQL
+	 * @param entityTableName String table name
+	 * @param idName_	String primary key name
+	 * @return the delete action SQL
 	 */
 	private String getDelete(String entityTableName, String idName_) {
 		StringBuffer sb = new StringBuffer();
 		sb.append("DELETE FROM " + entityTableName);
 		ColumnAttribute attribute = mapping.findByColumn(idName_);
 		Checker.require(attribute).notNull();
-		sb.append(" WHERE "
-				+ wrapColumnName(attribute.getColumnName())
-				+ "="
+		sb.append(" WHERE " + wrapColumnName(attribute.getColumnName()) + "="
 				+ wrapColumnValue(getPropertyValue(attribute.getAttributeName())));
 		return sb.toString();
 	}
 
 	/**
-	 * @param entityTableName
-	 * @return
+	 * generate update action SQL
+	 * @param entityTableName String table name
+	 * @param idName	String primary key name
+	 * @return the update action SQL
 	 */
 	private String getUpdate(String entityTableName, String idName) {
 		StringBuffer sb = new StringBuffer();
@@ -131,22 +116,21 @@ public class StandardSQLTemplate implements Template {
 			if (ca.getIdType() == null) {
 				sb.append(wrapColumnName(ca.getColumnName()));
 				sb.append("=");
-				sb.append(wrapColumnValue(getPropertyValue(ca
-						.getAttributeName())));
+				sb.append(wrapColumnValue(getPropertyValue(ca.getAttributeName())));
 				sb.append(",");
 			}
 		}
 		sb = sb.delete(sb.length() - 1, sb.length());
 		ColumnAttribute attribute = mapping.findByColumn(idName);
 		Checker.require(attribute).notNull();
-		sb.append(" WHERE " + idName + "='"
-				+ getPropertyValue(attribute.getAttributeName()) + "'");
+		sb.append(" WHERE " + idName + "='" + getPropertyValue(attribute.getAttributeName()) + "'");
 		return sb.toString();
 	}
 
 	/**
-	 * @param entityTableName
-	 * @return
+	 * generate insert action SQL
+	 * @param entityTableName String table name
+	 * @return the insert action SQL
 	 */
 	private String getInsert(String entityTableName) {
 		StringBuffer sb = new StringBuffer();
@@ -164,19 +148,17 @@ public class StandardSQLTemplate implements Template {
 
 		sb.append(" VALUES(");
 		for (ColumnAttribute ca : mapping) {
-			if (ca.getIdType() == IDType.AUTO)// pass when the column is primary key and its generator strategy
+			if (ca.getIdType() == IDType.AUTO)// pass when the column is primary key and its generator strategy is auto
 				continue;
 			Object columnValue = null;
 			//get column/attribute value from entity data
 			columnValue = getPropertyValue(ca.getAttributeName());
 			// set id column when id type is IDType.MANUAL and current value is empty or not setting.
-			if (ca.getIdType() == IDType.MANUAL && columnValue ==null ) {
-				columnValue = IdGenerator.getGenerator(this.entityType)
-						.generator();
+			if (ca.getIdType() == IDType.MANUAL && columnValue == null) {
+				columnValue = IdGenerator.getGenerator(this.entityType).generator();
 				// set entity id
-				ReflectEngine.propertyReflect(data, ca.getColumnName(),
-						columnValue);
-			} 
+				ReflectEngine.propertyReflect(data, ca.getColumnName(), columnValue);
+			}
 			sb.append(wrapColumnValue(columnValue));
 			sb.append(",");
 
@@ -187,8 +169,9 @@ public class StandardSQLTemplate implements Template {
 	}
 
 	/**
-	 * @param entityTableName
-	 * @return
+	 * generate select/query table SQL
+	 * @param entityTableName String table name
+	 * @return the query SQL
 	 */
 	private String getSelect(String entityTableName) {
 		StringBuffer sb = new StringBuffer();
@@ -196,15 +179,30 @@ public class StandardSQLTemplate implements Template {
 		return sb.toString();
 	}
 
+	/**
+	 * get the property value for the given property name
+	 * @param propertyName String property name
+	 * @return Object property value
+	 */
 	protected Object getPropertyValue(String propertyName) {
-		try {
-			PropertyDescriptor propertyDescriptor = new PropertyDescriptor(
-					propertyName, data.getClass());
+		Object value = null;
+		try {//first try get value by its getter method
+			PropertyDescriptor propertyDescriptor = new PropertyDescriptor(propertyName, data.getClass());
 			return propertyDescriptor.getReadMethod().invoke(data);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			value = null;
 		}
+		if (value == null) {//secondly try get value by its field directly
+			try {
+				Field field = entityType.getDeclaredField(propertyName);
+				field.setAccessible(true);
+				value = field.get(data);
+			} catch (Exception e) {
+				e.printStackTrace();
+				value = null;
+			}
+		}
+		return value;
 	}
-
 }

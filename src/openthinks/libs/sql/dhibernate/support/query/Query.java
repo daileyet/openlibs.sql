@@ -17,7 +17,7 @@
  * under the License. 
  * 
  * @Title: Query.java 
- * @Package sql.dhibernate.support 
+ * @Package openthinks.libs.sql.dhibernate.support.query 
  * @Description: TODO
  * @author minjdai 
  * @date 2013-11-25
@@ -28,15 +28,30 @@ package openthinks.libs.sql.dhibernate.support.query;
 import java.util.List;
 
 /**
+ * <B>SELECT</B> SQL statement builder and executor interface
  * @author minjdai
- * 
+ * @param T the entity class
  */
 public interface Query<T> {
 
+	/**
+	 * set query entity class
+	 * @param clz Class<T> entity class
+	 * @return Query<T>
+	 */
 	public Query<T> queryObject(Class<T> clz);
 
+	/**
+	 * append the filter on this entity class
+	 * @param filter {@link QueryFilter}
+	 * @return Query<T>
+	 */
 	public Query<T> addFilter(QueryFilter... filter);
 
+	/**
+	 * generate the query SQL and executed;fetch the result as entity List
+	 * @return
+	 */
 	public List<T> execute();
 
 }

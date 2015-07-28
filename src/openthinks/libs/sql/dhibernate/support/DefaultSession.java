@@ -21,22 +21,11 @@ class DefaultSession extends AbstractSession {
 		baseDao.setConfigurator(configurator);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see sql.dhibernate.support.AbstractSession#getBaseDao()
-	 */
 	@Override
 	public BaseDao getBaseDao() {
 		return baseDao;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * sql.dhibernate.support.AbstractSession#setAutoClose(java.lang.Boolean)
-	 */
 	@Override
 	protected void setAutoClose(Boolean autoClose) {
 		super.setAutoClose(autoClose);

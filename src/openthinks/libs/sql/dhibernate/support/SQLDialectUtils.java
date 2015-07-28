@@ -17,7 +17,7 @@
  * under the License. 
  * 
  * @Title: SQLDialectUtils.java 
- * @Package sql.dhibernate.support 
+ * @Package openthinks.libs.sql.dhibernate.support 
  * @Description: TODO
  * @author minjdai 
  * @date 2013-12-2
@@ -29,10 +29,15 @@ import openthinks.libs.sql.lang.Configurator;
 import openthinks.libs.sql.lang.ConfiguratorFactory;
 
 /**
+ * The helper for SQL dialect
  * @author minjdai
- * 
  */
 public final class SQLDialectUtils {
+	/**
+	 * wrap database column name with different database dialect 
+	 * @param columnName String column name in table
+	 * @return String
+	 */
 	public static String wrapColumnName(String columnName) {
 		String retVal = columnName;
 		Configurator configurator = ConfiguratorFactory.getDefaultInstance();
@@ -52,6 +57,11 @@ public final class SQLDialectUtils {
 		return retVal;
 	}
 
+	/**
+	 * wrap database column value with different database dialect 
+	 * @param value Object
+	 * @return String
+	 */
 	public static String wrapColumnValue(Object value) {
 		String retVale = null;
 		if (value != null) {

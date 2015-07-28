@@ -17,7 +17,7 @@
  * under the License. 
  * 
  * @Title: AbstractSession.java 
- * @Package sql.dhibernate.support 
+ * @Package openthinks.libs.sql.dhibernate.support 
  * @Description: TODO
  * @author minjdai 
  * @date 2013-12-2
@@ -75,12 +75,13 @@ public abstract class AbstractSession implements Session {
 	}
 
 	/**
-	 * @return
+	 * provider the {@link BaseDao}
+	 * @return BaseDao
 	 */
 	public abstract BaseDao getBaseDao();
 
 	/**
-	 * @return the autoClose
+	 * @return Boolean if is autoClose
 	 */
 	@Override
 	public Boolean isAutoClose() {
@@ -94,8 +95,7 @@ public abstract class AbstractSession implements Session {
 		Checker.require(persistName).notNull();
 		String persistIdName = ReflectEngine.getEntityID(clz);
 		Checker.require(persistIdName).notNull();
-		String sql = "SELECT * FROM " + persistName + " WHERE " + persistIdName
-				+ " = ?";
+		String sql = "SELECT * FROM " + persistName + " WHERE " + persistIdName + " = ?";
 		return get(clz, sql, new String[] { id.toString() });
 	}
 
@@ -165,8 +165,7 @@ public abstract class AbstractSession implements Session {
 						try {
 							String columnName = rsmd.getColumnName(i);
 							Object columnValue = rs.getObject(columnName);
-							ReflectEngine.propertyReflect(entity, columnName,
-									columnValue);
+							ReflectEngine.propertyReflect(entity, columnName, columnValue);
 						} catch (Exception e) {
 							getBaseDao().getLogger().warn(e.getMessage());
 							continue;
@@ -200,8 +199,7 @@ public abstract class AbstractSession implements Session {
 						try {
 							String columnName = rsmd.getColumnName(i);
 							Object columnValue = rs.getObject(columnName);
-							ReflectEngine.propertyReflect(entity, columnName,
-									columnValue);
+							ReflectEngine.propertyReflect(entity, columnName, columnValue);
 							// entity.set(columnName, columnValue);
 						} catch (Exception e) {
 							getBaseDao().getLogger().warn(e.getMessage());
@@ -229,15 +227,13 @@ public abstract class AbstractSession implements Session {
 	 */
 	@Override
 	public <T> T get(Class<T> clz, Condition condition) {
-		return condition == null ? null : get(clz,
-				Condition.getFullSql(condition));
+		return condition == null ? null : get(clz, Condition.getFullSql(condition));
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public <T extends Entity> T get(Entity entity, Condition condition) {
-		return (T) (condition == null ? null : get(entity,
-				Condition.getFullSql(condition)));
+		return (T) (condition == null ? null : get(entity, Condition.getFullSql(condition)));
 	}
 
 	/**

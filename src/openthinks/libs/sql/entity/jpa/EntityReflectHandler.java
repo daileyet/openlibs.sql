@@ -17,7 +17,7 @@
  * under the License. 
  * 
  * @Title: EntityReflectHandler.java 
- * @Package sql.entity.jpa 
+ * @Package openthinks.libs.sql.entity.jpa 
  * @Description: TODO
  * @author dailey 
  * @date 2012-11-6
@@ -49,9 +49,9 @@ public class EntityReflectHandler extends JPAReflectHandler implements IReflectH
 		if (isSuccess) {
 			return true;
 		}
-		if (entity instanceof openthinks.libs.sql.entity.Entity) {
+		if (entity instanceof Entity) {
 			try {
-				((openthinks.libs.sql.entity.Entity) entity).set(columnName, columnValue);
+				((Entity) entity).set(columnName, columnValue);
 				isSuccess = true;
 			} catch (Exception e) {
 				isSuccess = false;
@@ -60,9 +60,11 @@ public class EntityReflectHandler extends JPAReflectHandler implements IReflectH
 		return isSuccess;
 	}
 
+	/**
+	 * get the table name from the entity class name
+	 */
 	@Override
 	public <T> String getEntityTableName(Class<T> entityClazz) {
-
 		String tableName = super.getEntityTableName(entityClazz);
 		if (tableName == null) {
 			tableName = entityClazz.getSimpleName();
@@ -70,6 +72,9 @@ public class EntityReflectHandler extends JPAReflectHandler implements IReflectH
 		return tableName;
 	}
 
+	/**
+	 * get the first field as primary id in entity class
+	 */
 	@Override
 	public <T> String getEntityIDName(Class<T> entityClazz) {
 		String idName = super.getEntityIDName(entityClazz);
@@ -82,11 +87,6 @@ public class EntityReflectHandler extends JPAReflectHandler implements IReflectH
 		return idName;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see sql.entity.jpa.JPAReflectHandler#parseEntityClass(java.lang.Class)
-	 */
 	@Override
 	public <T> ColumnAttributeMapping parseEntityClass(Class<T> entityClass) {
 		ColumnAttributeMapping columnAttributeMapping = super.parseEntityClass(entityClass);
@@ -103,9 +103,7 @@ public class EntityReflectHandler extends JPAReflectHandler implements IReflectH
 				logger.error(e);
 			}
 		}
-
 		return columnAttributeMapping;
-
 	}
 
 }

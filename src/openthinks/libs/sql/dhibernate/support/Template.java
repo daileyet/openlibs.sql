@@ -17,7 +17,7 @@
  * under the License. 
  * 
  * @Title: Template.java 
- * @Package sql.dhibernate.support 
+ * @Package openthinks.libs.sql.dhibernate.support
  * @Description: TODO
  * @author dailey 
  * @date 2012-11-8
@@ -35,7 +35,7 @@ public interface Template {
 
 	/**
 	 * set the template's type<BR>
-	 * 1. {@link SQLType.SAVE} : insert/update sql<BR>
+	 * 1. {@link SQLType.SAVE,SQLType.INSERT,SQLType.DELETE} : insert/update/delete sql<BR>
 	 * 2. {@link SQLType.QUERY}: select sql
 	 * @param type SQLType
 	 */

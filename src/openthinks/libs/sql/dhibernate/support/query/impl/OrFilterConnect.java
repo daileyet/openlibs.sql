@@ -17,7 +17,7 @@
  * under the License. 
  * 
  * @Title: OrFilterConnect.java 
- * @Package sql.dhibernate.support.query.impl 
+ * @Package openthinks.libs.sql.dhibernate.support.query.impl
  * @Description: TODO
  * @author minjdai 
  * @date 2013-12-4
@@ -26,16 +26,12 @@
 package openthinks.libs.sql.dhibernate.support.query.impl;
 
 /**
+ * Or filter connect as <B>OR</B> in SQL statement
  * @author minjdai
  * 
  */
 public class OrFilterConnect extends AbstractQueryFilterConnect {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
 		return " OR ";

@@ -17,7 +17,7 @@
  * under the License. 
  * 
  * @Title: SQLType.java 
- * @Package sql.dhibernate.support 
+ * @Package openthinks.libs.sql.dhibernate.support 
  * @Description: TODO
  * @author dailey 
  * @date 2012-11-8
@@ -26,8 +26,8 @@
 package openthinks.libs.sql.dhibernate.support;
 
 /**
+ * generate SQL type
  * @author dailey
- * 
  */
 public enum SQLType {
 	INSERT, UPDATE, QUERY, DELETE

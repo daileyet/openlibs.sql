@@ -17,7 +17,7 @@
  * under the License. 
  * 
  * @Title: ContainerFilter.java 
- * @Package sql.dhibernate.support.query.impl 
+ * @Package openthinks.libs.sql.dhibernate.support.query.impl
  * @Description: TODO
  * @author minjdai 
  * @date 2013-12-3
@@ -26,24 +26,40 @@
 package openthinks.libs.sql.dhibernate.support.query.impl;
 
 /**
+ * Like query filter as <b>like</b> in SQL statement
  * @author minjdai
  * 
  */
 public class ContainerFilter extends AbstractQueryFilter<ContainerFilter> {
 	private Object dynamicValue;
 
+	/**
+	 * represent the statement : like '%<i>parameter</i>%'
+	 * @param value Object
+	 * @return ContainerFilter
+	 */
 	public ContainerFilter include(Object value) {
 		this.dynamicValue = "%" + value + "%";
 		return this;
 	}
 
+	/**
+	 * represent the statement : like '<i>parameter</i>%'
+	 * @param value Object
+	 * @return ContainerFilter
+	 */
 	public ContainerFilter startWith(Object value) {
-		this.dynamicValue = "%" + value;
+		this.dynamicValue = value + "%";
 		return this;
 	}
 
+	/**
+	 * represent the statement : like '%<i>parameter</i>'
+	 * @param value Object
+	 * @return ContainerFilter
+	 */
 	public ContainerFilter endWith(Object value) {
-		this.dynamicValue = value + "%";
+		this.dynamicValue = "%" + value;
 		return this;
 	}
 
@@ -54,11 +70,6 @@ public class ContainerFilter extends AbstractQueryFilter<ContainerFilter> {
 		return this.dynamicValue;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see sql.dhibernate.support.query.impl.Relativization#toSQL()
-	 */
 	@Override
 	public StringBuffer toSQL() {
 		StringBuffer buffer = super.getSQLPart();
@@ -66,11 +77,6 @@ public class ContainerFilter extends AbstractQueryFilter<ContainerFilter> {
 		return buffer;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see sql.dhibernate.support.query.impl.Relativization#parameters()
-	 */
 	@Override
 	public Object[] parameters() {
 		return new Object[] { getValue() };

@@ -17,7 +17,7 @@
  * under the License. 
  * 
  * @Title: FilterSQLTemplate.java 
- * @Package sql.dhibernate.support 
+ * @Package openthinks.libs.sql.dhibernate.support.query.impl
  * @Description: TODO
  * @author minjdai 
  * @date 2013-12-2
@@ -42,15 +42,14 @@ import openthinks.libs.sql.dhibernate.support.query.Relativization;
 import openthinks.libs.sql.exception.IllegalQueryFilterException;
 
 /**
+ * The implementation of {@link FilterTemplate} by standard SQL
  * @author minjdai
  * 
  */
-public class FilterSQLTemplate extends StandardSQLTemplate implements
-		FilterTemplate {
+public class FilterSQLTemplate extends StandardSQLTemplate implements FilterTemplate {
 	private QueryFilter queryFilter;
 
-	public FilterSQLTemplate(ColumnAttributeMapping columnAttributeMapping,
-			Class<?> entityType) {
+	public FilterSQLTemplate(ColumnAttributeMapping columnAttributeMapping, Class<?> entityType) {
 		super(columnAttributeMapping, entityType);
 		setType(SQLType.QUERY);
 	}
@@ -61,9 +60,8 @@ public class FilterSQLTemplate extends StandardSQLTemplate implements
 		if (first == null)
 			return next;
 
-		if (first instanceof QueryFilterGroup) {
-			final List<QueryFilter> filters = ((QueryFilterGroup) first)
-					.getQueryFilters();
+		if (first instanceof QueryFilterGroup) {//process group
+			final List<QueryFilter> filters = ((QueryFilterGroup) first).getQueryFilters();
 			LinkedList<QueryFilter> filtersTemp = new LinkedList<QueryFilter>();
 			for (Iterator<QueryFilter> it = filters.iterator(); it.hasNext();) {
 				QueryFilter e = it.next();
@@ -80,24 +78,20 @@ public class FilterSQLTemplate extends StandardSQLTemplate implements
 
 		while (first.hasNext()) {
 			next = first.next();
-			if (first instanceof QueryFilterConnect
-					&& next instanceof QueryFilterConnect)
+			if (first instanceof QueryFilterConnect && next instanceof QueryFilterConnect)
 				throw new IllegalQueryFilterException();
 
 			// add QueryFilterConnect between AbstractQueryFilters
-			if (!(first instanceof QueryFilterConnect)
-					&& !(next instanceof QueryFilterConnect)) {
+			if (!(first instanceof QueryFilterConnect) && !(next instanceof QueryFilterConnect)) {
 				QueryFilter qf = QueryFilterConnects.and().append(next);
 				((AbstractQueryFilter<QueryFilter>) first).appenedFilter = qf;
 			}
 			first = next;
 
 			if (first instanceof QueryFilterGroup) {
-				final List<QueryFilter> filters = ((QueryFilterGroup) first)
-						.getQueryFilters();
+				final List<QueryFilter> filters = ((QueryFilterGroup) first).getQueryFilters();
 				LinkedList<QueryFilter> filtersTemp = new LinkedList<QueryFilter>();
-				for (Iterator<QueryFilter> it = filters.iterator(); it
-						.hasNext();) {
+				for (Iterator<QueryFilter> it = filters.iterator(); it.hasNext();) {
 					QueryFilter e = it.next();
 					getProcessNext(e);
 					filtersTemp.add(e);
@@ -114,11 +108,6 @@ public class FilterSQLTemplate extends StandardSQLTemplate implements
 		return next;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see sql.dhibernate.support.Template#generateSQL()
-	 */
 	@Override
 	public String generateSQL() {
 		if (this.queryFilter == null) {
@@ -155,8 +144,7 @@ public class FilterSQLTemplate extends StandardSQLTemplate implements
 			if (first instanceof Relativization) {
 				Relativization relativization = (Relativization) first;
 				buffer.append(relativization.toSQL());
-				List<Object> objectList = Arrays.asList(relativization
-						.parameters());
+				List<Object> objectList = Arrays.asList(relativization.parameters());
 				parametersCollections.addAll(objectList);
 			}
 			if (!first.hasNext()) {
@@ -169,23 +157,11 @@ public class FilterSQLTemplate extends StandardSQLTemplate implements
 
 	private final Collection<Object> parametersCollections = new ArrayList<Object>();
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * sql.dhibernate.support.FilterTemplate#setFilter(sql.dhibernate.support
-	 * .query.QueryFilter)
-	 */
 	@Override
 	public void setFilter(QueryFilter filter) {
 		this.queryFilter = filter;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see sql.dhibernate.support.FilterTemplate#getParameters()
-	 */
 	@Override
 	public Object[] getParameters() {
 		return parametersCollections.toArray(new Object[0]);

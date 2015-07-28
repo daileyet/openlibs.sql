@@ -27,22 +27,22 @@ package openthinks.libs.sql.dhibernate.support.test;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import openthinks.libs.sql.dao.BaseDao;
 import openthinks.libs.sql.dao.impl.BaseDaoImpl;
 import openthinks.libs.sql.dhibernate.support.AbstractSession;
+import openthinks.libs.sql.lang.Configurator;
+import openthinks.libs.sql.lang.ConfiguratorFactory;
 
 /**
+ * Used for test
  * @author minjdai
  * 
  */
 public class TestSession extends AbstractSession {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see sql.dhibernate.support.AbstractSession#getBaseDao()
-	 */
 	@Override
 	public BaseDao getBaseDao() {
 
@@ -54,12 +54,20 @@ public class TestSession extends AbstractSession {
 			}
 
 			@Override
-			public Connection getConn() throws ClassNotFoundException,
-					SQLException {
+			public Connection getConn() throws ClassNotFoundException, SQLException {
 				return null;
+			}
+
+			@Override
+			public <T> List<T> list(Class<T> clz, String sql, String[] params) {
+				return new ArrayList<T>();
+			}
+
+			@Override
+			public Configurator getConfigurator() {
+				return ConfiguratorFactory.getDefaultInstance();
 			}
 
 		};
 	}
-
 }

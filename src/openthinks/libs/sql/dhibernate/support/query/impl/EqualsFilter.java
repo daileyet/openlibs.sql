@@ -17,7 +17,7 @@
  * under the License. 
  * 
  * @Title: EqualsFilter.java 
- * @Package sql.dhibernate.support.query.impl 
+ * @Package openthinks.libs.sql.dhibernate.support.query.impl
  * @Description: TODO
  * @author minjdai 
  * @date 2013-11-25
@@ -26,19 +26,17 @@
 package openthinks.libs.sql.dhibernate.support.query.impl;
 
 /**
+ * Equal query filter as <B>=</B> in SQL statement
  * @author minjdai
  * 
  */
 public class EqualsFilter extends AbstractQueryFilter<EqualsFilter> {
 	private Object eqValue;
 
-	/**
-	 * 
-	 */
 	public EqualsFilter() {
 	}
 
-	public AbstractQueryFilter<EqualsFilter> eq(Object value) {
+	public EqualsFilter eq(Object value) {
 		this.eqValue = value;
 		return this;
 	}
@@ -51,11 +49,6 @@ public class EqualsFilter extends AbstractQueryFilter<EqualsFilter> {
 		return eqValue;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see sql.dhibernate.support.query.impl.AbstractQueryFilter#toSQL()
-	 */
 	@Override
 	public StringBuffer toSQL() {
 		StringBuffer buffer = super.getSQLPart();
@@ -67,11 +60,6 @@ public class EqualsFilter extends AbstractQueryFilter<EqualsFilter> {
 		return buffer;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see sql.dhibernate.support.query.impl.Relativization#parameters()
-	 */
 	@Override
 	public Object[] parameters() {
 		if (getEqValue() != null) {

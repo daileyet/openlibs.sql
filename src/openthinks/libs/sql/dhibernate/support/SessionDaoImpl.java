@@ -63,17 +63,13 @@ class SessionDaoImpl extends BaseDaoImpl {
 		this.connection = connection;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see sql.dao.impl.BaseDaoImpl#closeConnection(java.sql.Connection)
-	 */
 	@Override
 	public void closeConnection(Connection conn) {
 		if (isAutoClose())
 			super.closeConnection(conn);
 		if (isUsePool()) {
 			// this.connection = null;
+			//TODO put back it to pool
 		}
 
 	}

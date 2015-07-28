@@ -17,7 +17,7 @@
  * under the License. 
  * 
  * @Title: AbstractQueryFilter.java 
- * @Package sql.dhibernate.support.query.impl 
+ * @Package openthinks.libs.sql.dhibernate.support.query.impl
  * @Description: TODO
  * @author minjdai 
  * @date 2013-11-25
@@ -33,11 +33,11 @@ import openthinks.libs.sql.lang.reflect.ReflectEngine;
 import openthinks.libs.utilities.Checker;
 
 /**
+ * the abstract implementation for {@link QueryFilter}
  * @author minjdai
  * 
  */
-public abstract class AbstractQueryFilter<E extends QueryFilter> implements
-		QueryFilter, Relativization {
+public abstract class AbstractQueryFilter<E extends QueryFilter> implements QueryFilter, Relativization {
 
 	private Class<?> filterClass;
 	private String filterName;
@@ -50,12 +50,6 @@ public abstract class AbstractQueryFilter<E extends QueryFilter> implements
 		return this.filterClass;
 	}
 
-	/*
-	 * 
-	 * @see
-	 * sql.dhibernate.support.query.QueryFilter#append(sql.dhibernate.support
-	 * .query.QueryFilter)
-	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public <T extends QueryFilter> T append(QueryFilter filter) {
@@ -69,12 +63,18 @@ public abstract class AbstractQueryFilter<E extends QueryFilter> implements
 	}
 
 	/**
+	 * get the filter name, it represent the attribute name in entity class
 	 * @return the filterName
 	 */
 	protected String getFilterName() {
 		return filterName;
 	}
 
+	/**
+	 * set the filter name, it represent the attribute name in entity class
+	 * @param attributeName String
+	 * @return E QueryFilter
+	 */
 	@SuppressWarnings("unchecked")
 	public E filter(String attributeName) {
 		this.filterName = attributeName;
@@ -94,27 +94,28 @@ public abstract class AbstractQueryFilter<E extends QueryFilter> implements
 		return next() == null ? false : true;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * sql.dhibernate.support.query.QueryFilter#filterClass(java.lang.Class)
+	/**
+	 * set entity class
+	 * @param clz Class<?>
+	 * @return QueryFilter
 	 */
 	QueryFilter filterClass(Class<?> clz) {
 		this.filterClass = clz;
 		return this;
 	}
 
+	/**
+	 * generate the SQL include filter name 
+	 * @return StringBuffer
+	 */
 	protected StringBuffer getSQLPart() {
 		String filterName = getFilterName();
 		Class<?> filterClass = getFilterClass();
 		Checker.require(filterName).notNull();
 		Checker.require(filterClass).notNull();
-		ColumnAttribute columnAttribute = ReflectEngine.parseEntityClass(
-				filterClass).findByAttribute(filterName);
+		ColumnAttribute columnAttribute = ReflectEngine.parseEntityClass(filterClass).findByAttribute(filterName);
 		StringBuffer buffer = new StringBuffer();
-		String wrappedColumnName = SQLDialectUtils
-				.wrapColumnName(columnAttribute.getColumnName());
+		String wrappedColumnName = SQLDialectUtils.wrapColumnName(columnAttribute.getColumnName());
 		buffer.append(wrappedColumnName);
 		return buffer;
 	}

@@ -17,7 +17,7 @@
  * under the License. 
  * 
  * @Title: QueryFilterConnect.java 
- * @Package sql.dhibernate.support.query 
+ * @Package openthinks.libs.sql.dhibernate.support.query 
  * @Description: TODO
  * @author minjdai 
  * @date 2013-12-2

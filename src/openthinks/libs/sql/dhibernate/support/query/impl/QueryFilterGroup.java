@@ -17,7 +17,7 @@
  * under the License. 
  * 
  * @Title: QueryFilterGroup.java 
- * @Package sql.dhibernate.support.query.impl 
+ * @Package openthinks.libs.sql.dhibernate.support.query.impl
  * @Description: TODO
  * @author minjdai 
  * @date 2013-11-25
@@ -33,7 +33,8 @@ import openthinks.libs.sql.dhibernate.support.query.QueryFilter;
 import openthinks.libs.sql.dhibernate.support.query.Relativization;
 
 /**
- * used for multiple {@link QueryFilter} as bracket
+ * Used for multiple {@link QueryFilter} as bracket;<BR>
+ * All children in {@link QueryFilterGroup} will be as a whole, "<B>()</B>"  bracket pair will wrapped outside.
  * 
  * @author minjdai
  * 
@@ -42,34 +43,21 @@ public class QueryFilterGroup extends AbstractQueryFilter<QueryFilterGroup> {
 
 	private final List<QueryFilter> queryFilters;
 
-	/**
-	 * 
-	 */
 	public QueryFilterGroup() {
 		this.queryFilters = new ArrayList<QueryFilter>();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * sql.dhibernate.support.query.QueryFilter#append(sql.dhibernate.support
-	 * .query.QueryFilter)
-	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public <T extends QueryFilter> T append(QueryFilter filter) {
-
+		if (filter instanceof AbstractQueryFilter) {
+			((AbstractQueryFilter<?>) filter).filterClass(this.getFilterClass());
+		}
 		this.queryFilters.add(filter);
 
 		return (T) this;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see sql.dhibernate.support.query.impl.AbstractQueryFilter#toSQL()
-	 */
 	@Override
 	public StringBuffer toSQL() {
 		StringBuffer buffer = new StringBuffer();
@@ -84,7 +72,7 @@ public class QueryFilterGroup extends AbstractQueryFilter<QueryFilterGroup> {
 	}
 
 	/**
-	 * @param filter
+	 * @param filter QueryFilter
 	 * @return
 	 */
 	private Object processSingleFilter(QueryFilter filter) {
@@ -102,11 +90,6 @@ public class QueryFilterGroup extends AbstractQueryFilter<QueryFilterGroup> {
 		return buffer;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see sql.dhibernate.support.query.impl.Relativization#parameters()
-	 */
 	@Override
 	public Object[] parameters() {
 		Object[] paramters = new Object[0];
@@ -115,10 +98,8 @@ public class QueryFilterGroup extends AbstractQueryFilter<QueryFilterGroup> {
 				Object[] temps = processSingleFilterParameter(filter);
 				if (temps == null || temps.length == 0)
 					continue;
-				Object[] newParameters = Arrays.copyOf(paramters,
-						paramters.length + temps.length);
-				System.arraycopy(temps, 0, newParameters, paramters.length,
-						temps.length);
+				Object[] newParameters = Arrays.copyOf(paramters, paramters.length + temps.length);
+				System.arraycopy(temps, 0, newParameters, paramters.length, temps.length);
 				paramters = newParameters;
 			}
 		}
@@ -137,10 +118,8 @@ public class QueryFilterGroup extends AbstractQueryFilter<QueryFilterGroup> {
 				Object[] temps = ((Relativization) first).parameters();
 				if (temps == null || temps.length == 0)
 					continue;
-				Object[] newParameters = Arrays.copyOf(paramters,
-						paramters.length + temps.length);
-				System.arraycopy(temps, 0, newParameters, paramters.length,
-						temps.length);
+				Object[] newParameters = Arrays.copyOf(paramters, paramters.length + temps.length);
+				System.arraycopy(temps, 0, newParameters, paramters.length, temps.length);
 				paramters = newParameters;
 			}
 			if (!first.hasNext()) {

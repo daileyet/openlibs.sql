@@ -21,6 +21,11 @@ import org.apache.log4j.Logger;
  */
 public interface Session {
 
+	/**
+	 * create a {@link Query} for this given entity class
+	 * @param clz Class<T> entity class type
+	 * @return Query<T>
+	 */
 	public <T> Query<T> createQuery(Class<T> clz);
 
 	/**
@@ -28,9 +33,9 @@ public interface Session {
 	 * 
 	 * @param clz
 	 *            实体类型clz<BR>
-	 *            1.Entity子类默认第一个熟悉为ID列<BR>
+	 *            1.{@link Entity}子类默认第一个属性为ID列<BR>
 	 *            2.JPA标注的实体类标准 {@link javax.persistence.Id}
-	 * @param id
+	 * @param id Serializable
 	 *            主键值
 	 * @return Object 数据库表所对应的实体对象
 	 */
@@ -102,7 +107,7 @@ public interface Session {
 	 * 
 	 * @param clz
 	 *            查询的实体Class类型,<span style=color:red>可以不是Entity的子类</span><BR>
-	 *            1.Entity子类<BR>
+	 *            1.{@link Entity}子类<BR>
 	 *            2.JPA注解方式
 	 * @since 2010/11/17
 	 * @return List<E> 任何实体类的集合列表
@@ -310,10 +315,14 @@ public interface Session {
 	 */
 	public Configurator getConfigurator();
 
+	/**
+	 * judge database connection is auto-close after execute DML
+	 * @return Boolean
+	 */
 	public Boolean isAutoClose();
 
 	/**
-	 * controller connection auto-close when after execute DML
+	 * controller database connection auto-close when after execute DML
 	 * 
 	 */
 	public void enableAutoClose();

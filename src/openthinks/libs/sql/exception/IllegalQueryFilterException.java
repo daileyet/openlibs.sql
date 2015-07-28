@@ -17,7 +17,7 @@
  * under the License. 
  * 
  * @Title: IllegalQueryFilterException.java 
- * @Package sql.dhibernate.support.query.impl 
+ * @Package openthinks.libs.sql.exception
  * @Description: TODO
  * @author minjdai 
  * @date 2013-12-4

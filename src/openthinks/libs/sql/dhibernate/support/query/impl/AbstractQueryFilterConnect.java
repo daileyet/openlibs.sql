@@ -17,7 +17,7 @@
  * under the License. 
  * 
  * @Title: AndConnect.java 
- * @Package sql.dhibernate.support.query 
+ * @Package openthinks.libs.sql.dhibernate.support.query.impl 
  * @Description: TODO
  * @author minjdai 
  * @date 2013-12-4
@@ -29,8 +29,7 @@ import openthinks.libs.sql.dhibernate.support.query.QueryFilter;
 import openthinks.libs.sql.dhibernate.support.query.QueryFilterConnect;
 import openthinks.libs.sql.dhibernate.support.query.Relativization;
 
-public abstract class AbstractQueryFilterConnect implements QueryFilterConnect,
-		Relativization {
+public abstract class AbstractQueryFilterConnect implements QueryFilterConnect, Relativization {
 	private QueryFilter appenedFilter;
 
 	/**
@@ -41,13 +40,6 @@ public abstract class AbstractQueryFilterConnect implements QueryFilterConnect,
 		return appenedFilter;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * sql.dhibernate.support.query.QueryFilter#append(sql.dhibernate.support
-	 * .query.QueryFilter)
-	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public <T extends QueryFilter> T append(QueryFilter filter) {
@@ -59,6 +51,10 @@ public abstract class AbstractQueryFilterConnect implements QueryFilterConnect,
 		return (T) this;
 	}
 
+	/**
+	 * get last appended {@link QueryFilter}, it will iterate the appended filter, until no next filter appended to it
+	 * @return QueryFilter
+	 */
 	protected QueryFilter getLastAppendedFilter() {
 		QueryFilter tmp = this.appenedFilter;
 		if (tmp == null)
@@ -74,21 +70,11 @@ public abstract class AbstractQueryFilterConnect implements QueryFilterConnect,
 		return next() == null ? false : true;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see sql.dhibernate.support.query.impl.Relativization#toSQL()
-	 */
 	@Override
 	public StringBuffer toSQL() {
 		return new StringBuffer(toString());
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see sql.dhibernate.support.query.impl.Relativization#parameters()
-	 */
 	@Override
 	public Object[] parameters() {
 		return new Object[0];

@@ -17,7 +17,7 @@
  * under the License. 
  * 
  * @Title: Queryer.java 
- * @Package sql.dhibernate.support.query.impl 
+ * @Package openthinks.libs.sql.dhibernate.support.query.impl
  * @Description: TODO
  * @author minjdai 
  * @date 2013-11-25
@@ -35,40 +35,32 @@ import openthinks.libs.sql.lang.reflect.ReflectEngine;
 import openthinks.libs.utilities.Converter;
 
 /**
+ * The implementation of {@link Query}
  * @author minjdai
  * 
  */
 public class Queryer<T> implements Query<T> {
 	private Class<T> queryObjectType;
+	//the last query filter element
 	private QueryFilter queryFilter;
+	//the first query filter element 
 	private QueryFilter firstFilter;
 	private final Session session;
 
 	/**
-	 * 
+	 * initial a instance by given {@link Session}
+	 * @param session Session
 	 */
 	public Queryer(Session session) {
 		this.session = session;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see sql.dhibernate.support.query.Query#queryObject(java.lang.Class)
-	 */
 	@Override
-	public Query<T> queryObject(Class<T> clz) {
+	public Queryer<T> queryObject(Class<T> clz) {
 		this.queryObjectType = clz;
 		return this;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * sql.dhibernate.support.query.Query#addFilter(sql.dhibernate.support.query
-	 * .QueryFilter[])
-	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public Query<T> addFilter(QueryFilter... filters) {
@@ -88,19 +80,12 @@ public class Queryer<T> implements Query<T> {
 		return this;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see sql.dhibernate.support.query.Query#execute()
-	 */
 	@Override
 	public List<T> execute() {
-		FilterTemplate template = ReflectEngine.createSQLTemplate(
-				queryObjectType, this.firstFilter);
+		FilterTemplate template = ReflectEngine.createSQLTemplate(queryObjectType, this.firstFilter);
 		String sql = template.generateSQL();
 		Object[] parameters_ = template.getParameters();
-		String[] parameters = Converter.source(parameters_).convert2Array(
-				String.class);
+		String[] parameters = Converter.source(parameters_).convert2Array(String.class);
 		return session.list(queryObjectType, sql, parameters);
 	}
 }

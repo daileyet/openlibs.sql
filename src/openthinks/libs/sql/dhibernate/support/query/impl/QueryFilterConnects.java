@@ -17,7 +17,7 @@
  * under the License. 
  * 
  * @Title: QueryFilterConnects.java 
- * @Package sql.dhibernate.support.query.impl 
+ * @Package openthinks.libs.sql.dhibernate.support.query.impl
  * @Description: TODO
  * @author minjdai 
  * @date 2013-12-4
@@ -28,18 +28,24 @@ package openthinks.libs.sql.dhibernate.support.query.impl;
 import openthinks.libs.sql.dhibernate.support.query.QueryFilterConnect;
 
 /**
+ * The factory of {@link QueryFilterConnect}
  * @author minjdai
  * 
  */
 public class QueryFilterConnects {
 
 	/**
-	 * @return
+	 * create a {@link AndFilterConnect}
+	 * @return QueryFilterConnect
 	 */
 	public static QueryFilterConnect and() {
 		return new AndFilterConnect();
 	}
 
+	/**
+	 * create a {@link OrFilterConnect}
+	 * @return QueryFilterConnect
+	 */
 	public static QueryFilterConnect or() {
 		return new OrFilterConnect();
 	}

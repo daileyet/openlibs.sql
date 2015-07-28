@@ -17,7 +17,7 @@
  * under the License. 
  * 
  * @Title: NotEqualsFliter.java 
- * @Package sql.dhibernate.support.query.impl 
+ * @Package openthinks.libs.sql.dhibernate.support.query.impl
  * @Description: TODO
  * @author minjdai 
  * @date 2013-12-3
@@ -26,20 +26,17 @@
 package openthinks.libs.sql.dhibernate.support.query.impl;
 
 /**
+ * NotEqual query filter as <B>!=</B> or <B><></B> in SQL statement
  * @author minjdai
- * 
  */
 public class NotEqualsFliter extends AbstractQueryFilter<NotEqualsFliter> {
 
 	private Object neqValue;
 
-	/**
-	 * 
-	 */
 	public NotEqualsFliter() {
 	}
 
-	public AbstractQueryFilter<NotEqualsFliter> neq(Object value) {
+	public NotEqualsFliter neq(Object value) {
 		this.neqValue = value;
 		return this;
 	}
@@ -52,11 +49,6 @@ public class NotEqualsFliter extends AbstractQueryFilter<NotEqualsFliter> {
 		return neqValue;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see sql.dhibernate.support.query.impl.AbstractQueryFilter#toSQL()
-	 */
 	@Override
 	public StringBuffer toSQL() {
 		StringBuffer buffer = super.getSQLPart();
@@ -68,11 +60,6 @@ public class NotEqualsFliter extends AbstractQueryFilter<NotEqualsFliter> {
 		return buffer;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see sql.dhibernate.support.query.impl.Relativization#parameters()
-	 */
 	@Override
 	public Object[] parameters() {
 		if (getNeqValue() != null) {

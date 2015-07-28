@@ -17,7 +17,7 @@
  * under the License. 
  * 
  * @Title: FilterTemplate.java 
- * @Package sql.dhibernate.support 
+ * @Package openthinks.libs.sql.dhibernate.support 
  * @Description: TODO
  * @author minjdai 
  * @date 2013-12-2
@@ -28,8 +28,8 @@ package openthinks.libs.sql.dhibernate.support;
 import openthinks.libs.sql.dhibernate.support.query.QueryFilter;
 
 /**
+ * generate the query filter part sql, which the <B>WHERE</B> part in <B>SELECT</B> statement
  * @author minjdai
- * 
  */
 public interface FilterTemplate extends Template {
 
@@ -41,6 +41,10 @@ public interface FilterTemplate extends Template {
 	 */
 	public void setFilter(QueryFilter filters);
 
+	/**
+	 * get the filter values
+	 * @return Object[]
+	 */
 	public Object[] getParameters();
 
 }

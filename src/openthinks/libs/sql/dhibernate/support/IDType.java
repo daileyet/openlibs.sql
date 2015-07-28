@@ -17,7 +17,7 @@
  * under the License. 
  * 
  * @Title: IDType.java 
- * @Package sql.dhibernate.support 
+ * @Package openthinks.libs.sql.dhibernate.support 
  * @Description: TODO
  * @author dailey 
  * @date 2012-11-9
@@ -26,7 +26,7 @@
 package openthinks.libs.sql.dhibernate.support;
 
 /**
- * The primary key type for database table
+ * The generate strategy of primary key value for database table
  * @author dailey
  *
  */

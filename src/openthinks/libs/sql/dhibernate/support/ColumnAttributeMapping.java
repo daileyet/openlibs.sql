@@ -17,7 +17,7 @@
  * under the License. 
  * 
  * @Title: ColumnAttributeMapping.java 
- * @Package sql.dhibernate.support 
+ * @Package openthinks.libs.sql.dhibernate.support 
  * @Description: TODO
  * @author dailey 
  * @date 2012-11-9

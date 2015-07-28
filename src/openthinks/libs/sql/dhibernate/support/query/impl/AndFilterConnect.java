@@ -17,7 +17,7 @@
  * under the License. 
  * 
  * @Title: AndFilterConnect.java 
- * @Package sql.dhibernate.support.query.impl 
+ * @Package openthinks.libs.sql.dhibernate.support.query.impl
  * @Description: TODO
  * @author minjdai 
  * @date 2013-12-4
@@ -26,16 +26,12 @@
 package openthinks.libs.sql.dhibernate.support.query.impl;
 
 /**
+ * And filter connect as <B>AND</B> in SQL statement
  * @author minjdai
  * 
  */
 public class AndFilterConnect extends AbstractQueryFilterConnect {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
 		return " AND ";

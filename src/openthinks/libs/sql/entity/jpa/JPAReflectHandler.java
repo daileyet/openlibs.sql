@@ -17,7 +17,7 @@
  * under the License. 
  * 
  * @Title: JPAReflectHandler.java 
- * @Package sql.entity.jpa 
+ * @Package openthinks.libs.sql.entity.jpa 
  * @Description: TODO
  * @author dailey 
  * @date 2012-11-6
