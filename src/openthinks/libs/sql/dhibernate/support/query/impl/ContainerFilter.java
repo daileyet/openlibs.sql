@@ -33,6 +33,18 @@ package openthinks.libs.sql.dhibernate.support.query.impl;
 public class ContainerFilter extends AbstractQueryFilter<ContainerFilter> {
 	private Object dynamicValue;
 
+	public ContainerFilter() {
+		super();
+	}
+
+	public ContainerFilter(Class<?> filterClass, String filterName) {
+		super(filterClass, filterName);
+	}
+
+	public ContainerFilter(Class<?> filterClass) {
+		super(filterClass);
+	}
+
 	/**
 	 * represent the statement : like '%<i>parameter</i>%'
 	 * @param value Object

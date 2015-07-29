@@ -36,6 +36,14 @@ public class EqualsFilter extends AbstractQueryFilter<EqualsFilter> {
 	public EqualsFilter() {
 	}
 
+	public EqualsFilter(Class<?> filterClass, String filterName) {
+		super(filterClass, filterName);
+	}
+
+	public EqualsFilter(Class<?> filterClass) {
+		super(filterClass);
+	}
+
 	public EqualsFilter eq(Object value) {
 		this.eqValue = value;
 		return this;

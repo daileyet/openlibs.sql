@@ -41,21 +41,32 @@ import openthinks.libs.sql.dhibernate.support.query.Relativization;
  */
 public class QueryFilterGroup extends AbstractQueryFilter<QueryFilterGroup> {
 
-	private final List<QueryFilter> queryFilters;
+	private final List<QueryFilter> queryFilters = new ArrayList<QueryFilter>();
 
 	public QueryFilterGroup() {
-		this.queryFilters = new ArrayList<QueryFilter>();
 	}
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public <T extends QueryFilter> T append(QueryFilter filter) {
+	public QueryFilterGroup(Class<?> filterClass, String filterName) {
+		super(filterClass, filterName);
+	}
+
+	public QueryFilterGroup(Class<?> filterClass) {
+		super(filterClass);
+	}
+
+	/**
+	 * add the given query filter into this group, as a part of this group<BR>
+	 * different from {@link #append(QueryFilter)}
+	 * @param filter the child of {@link QueryFilter}
+	 * @return QueryFilterGroup
+	 */
+	public QueryFilterGroup push(QueryFilter filter) {
 		if (filter instanceof AbstractQueryFilter) {
 			((AbstractQueryFilter<?>) filter).filterClass(this.getFilterClass());
 		}
 		this.queryFilters.add(filter);
 
-		return (T) this;
+		return this;
 	}
 
 	@Override
@@ -80,6 +91,9 @@ public class QueryFilterGroup extends AbstractQueryFilter<QueryFilterGroup> {
 		StringBuffer buffer = new StringBuffer();
 		for (;;) {
 			if (first instanceof Relativization) {
+				if (first instanceof AbstractQueryFilter) {//set filter entity class again
+					((AbstractQueryFilter<?>) first).filterClass(this.getFilterClass());
+				}
 				buffer.append(((Relativization) first).toSQL());
 			}
 			if (!first.hasNext()) {
@@ -116,11 +130,12 @@ public class QueryFilterGroup extends AbstractQueryFilter<QueryFilterGroup> {
 		for (;;) {
 			if (first instanceof Relativization) {
 				Object[] temps = ((Relativization) first).parameters();
-				if (temps == null || temps.length == 0)
-					continue;
-				Object[] newParameters = Arrays.copyOf(paramters, paramters.length + temps.length);
-				System.arraycopy(temps, 0, newParameters, paramters.length, temps.length);
-				paramters = newParameters;
+				if (temps == null || temps.length == 0) {//nothing to do
+				} else {
+					Object[] newParameters = Arrays.copyOf(paramters, paramters.length + temps.length);
+					System.arraycopy(temps, 0, newParameters, paramters.length, temps.length);
+					paramters = newParameters;
+				}
 			}
 			if (!first.hasNext()) {
 				break;

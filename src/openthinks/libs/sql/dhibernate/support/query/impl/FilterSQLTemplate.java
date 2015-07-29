@@ -28,7 +28,6 @@ package openthinks.libs.sql.dhibernate.support.query.impl;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -54,58 +53,65 @@ public class FilterSQLTemplate extends StandardSQLTemplate implements FilterTemp
 		setType(SQLType.QUERY);
 	}
 
-	@SuppressWarnings("unchecked")
+	/**
+	 * process the first head QueryFilter and iterate the next element;<BR>
+	 * it will go to add default QueryFilterConnect between two AbstractQueryFilter;<BR>
+	 * after the above operations, it will return the last element QueryFilter.  
+	 * @param first QueryFilter the head of QueryFilter
+	 * @return QueryFilter
+	 */
 	protected QueryFilter getProcessNext(QueryFilter first) {
 		QueryFilter next = null;
 		if (first == null)
 			return next;
 
-		if (first instanceof QueryFilterGroup) {//process group
-			final List<QueryFilter> filters = ((QueryFilterGroup) first).getQueryFilters();
-			LinkedList<QueryFilter> filtersTemp = new LinkedList<QueryFilter>();
-			for (Iterator<QueryFilter> it = filters.iterator(); it.hasNext();) {
-				QueryFilter e = it.next();
-				getProcessNext(e);
-				filtersTemp.add(e);
-				filtersTemp.add(QueryFilterConnects.and());
-			}
-			if (filtersTemp.getLast() instanceof QueryFilterConnect) {
-				filtersTemp.removeLast();
-			}
-			filters.clear();
-			filters.addAll(filtersTemp);
+		if (first instanceof QueryFilterGroup) {//process group add query filter connect between abstract query filters
+			processGroup((QueryFilterGroup) first);
 		}
 
-		while (first.hasNext()) {
+		while (first.hasNext()) {//iterate the next element
 			next = first.next();
 			if (first instanceof QueryFilterConnect && next instanceof QueryFilterConnect)
 				throw new IllegalQueryFilterException();
 
-			// add QueryFilterConnect between AbstractQueryFilters
+			// add AndFilterConnect between AbstractQueryFilters
 			if (!(first instanceof QueryFilterConnect) && !(next instanceof QueryFilterConnect)) {
 				QueryFilter qf = QueryFilterConnects.and().append(next);
-				((AbstractQueryFilter<QueryFilter>) first).appenedFilter = qf;
+				((AbstractQueryFilter<?>) first).appenedFilter = qf;
 			}
 			first = next;
 
 			if (first instanceof QueryFilterGroup) {
-				final List<QueryFilter> filters = ((QueryFilterGroup) first).getQueryFilters();
-				LinkedList<QueryFilter> filtersTemp = new LinkedList<QueryFilter>();
-				for (Iterator<QueryFilter> it = filters.iterator(); it.hasNext();) {
-					QueryFilter e = it.next();
-					getProcessNext(e);
-					filtersTemp.add(e);
-					filtersTemp.add(QueryFilterConnects.and());
-				}
-				if (filtersTemp.getLast() instanceof QueryFilterConnect) {
-					filtersTemp.removeLast();
-				}
-				filters.clear();
-				filters.addAll(filtersTemp);
+				processGroup((QueryFilterGroup) first);
 			}
 
 		}
 		return next;
+	}
+
+	/**
+	 * process the QueryFilterGroup element;<BR>
+	 * it will go to add default QueryFilterConnect between two AbstractQueryFilter in this group;<BR>
+	 * @param filterGroup QueryFilterGroup
+	 */
+	protected void processGroup(QueryFilterGroup filterGroup) {
+		final List<QueryFilter> filters = filterGroup.getQueryFilters();
+		LinkedList<QueryFilter> filtersTemp = new LinkedList<QueryFilter>();
+		for (int index = 0, next_index = index + 1, count = filters.size(); index < count; index++) {
+			QueryFilter e = filters.get(index);
+			QueryFilter next_e = next_index < count ? filters.get(next_index) : null;
+			getProcessNext(e);
+			filtersTemp.add(e);
+			//only add default AndFilterConnect when current and next element are both AbstractQueryFilter
+			if (e instanceof AbstractQueryFilter && next_e instanceof AbstractQueryFilter) {
+				filtersTemp.add(QueryFilterConnects.and());
+			}
+		}
+		if (filtersTemp.getLast() instanceof QueryFilterConnect) {
+			filtersTemp.removeLast();
+		}
+		filters.clear();
+		filters.addAll(filtersTemp);
 	}
 
 	@Override
@@ -117,22 +123,6 @@ public class FilterSQLTemplate extends StandardSQLTemplate implements FilterTemp
 		buffer.append(super.generateSQL());
 		buffer.append(" WHERE ");
 		QueryFilter first = this.queryFilter;
-		// QueryFilter next;
-		// TODO
-		// if (first != null)
-		// while (first.hasNext()) {
-		// next = first.next();
-		// if (first instanceof QueryFilterConnect
-		// && next instanceof QueryFilterConnect)
-		// throw new IllegalQueryFilterException();
-		// // add QueryFilterConnect between AbstractQueryFilters
-		// if (!(first instanceof QueryFilterConnect)
-		// && !(next instanceof QueryFilterConnect)) {
-		// QueryFilter qf = QueryFilterConnects.and().append(next);
-		// ((AbstractQueryFilter<QueryFilter>) first).appenedFilter = qf;
-		// }
-		// first = next;
-		// }
 
 		getProcessNext(first);
 

@@ -36,6 +36,14 @@ public class NotEqualsFliter extends AbstractQueryFilter<NotEqualsFliter> {
 	public NotEqualsFliter() {
 	}
 
+	public NotEqualsFliter(Class<?> filterClass, String filterName) {
+		super(filterClass, filterName);
+	}
+
+	public NotEqualsFliter(Class<?> filterClass) {
+		super(filterClass);
+	}
+
 	public NotEqualsFliter neq(Object value) {
 		this.neqValue = value;
 		return this;
