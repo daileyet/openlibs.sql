@@ -43,6 +43,20 @@ public abstract class AbstractQueryFilter<E extends QueryFilter> implements Quer
 	private String filterName;
 	protected QueryFilter appenedFilter;
 
+	public AbstractQueryFilter() {
+	}
+
+	public AbstractQueryFilter(Class<?> filterClass) {
+		super();
+		this.filterClass = filterClass;
+	}
+
+	public AbstractQueryFilter(Class<?> filterClass, String filterName) {
+		super();
+		this.filterClass = filterClass;
+		this.filterName = filterName;
+	}
+
 	/**
 	 * @return the queryFilters
 	 */

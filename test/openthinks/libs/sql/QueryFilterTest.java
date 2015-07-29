@@ -45,21 +45,24 @@ public class QueryFilterTest {
 		Session session = new TestSession();
 		Query<Message> query = session.createQuery(Message.class);
 		query.addFilter(new EqualsFilter().filter("messageId").eq("123"));
+		query.addFilter(QueryFilterConnects.or());
+		query.addFilter(QueryFilterConnects.or());
 		query.addFilter(new ContainerFilter().filter("content").include("abc"));
 		query.addFilter(QueryFilterConnects.or());
 
-		QueryFilter appended1 = new QueryFilterGroup();
-
+		QueryFilterGroup appended1 = new QueryFilterGroup();
 		QueryFilter lasted = null;
 
 		lasted = new ContainerFilter().filter("content").startWith("BEGIN");
-		appended1.append(lasted);
+		appended1.push(lasted);
 		lasted = new NotEqualsFliter().filter("messageId").neq("234");
-		appended1.append(lasted);
+		appended1.push(lasted);
 		lasted = new NotEqualsFliter().filter("locale").neq("CN");
-		appended1.append(lasted);
+		appended1.push(lasted);
 
 		query.addFilter(appended1);
+
+		query.addFilter(new EqualsFilter().filter("locale").eq("US"));
 		query.execute();
 	}
 
