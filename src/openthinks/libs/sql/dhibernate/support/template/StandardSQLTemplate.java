@@ -17,20 +17,23 @@
  * under the License. 
  * 
  * @Title: StandardSQLTemplate.java 
- * @Package openthinks.libs.sql.dhibernate.support
+ * @Package openthinks.libs.sql.dhibernate.support.template
  * @Description: TODO
  * @author dailey 
  * @date 2012-11-8
  * @version V1.0 
  */
-package openthinks.libs.sql.dhibernate.support;
+package openthinks.libs.sql.dhibernate.support.template;
 
-import static openthinks.libs.sql.dhibernate.support.SQLDialectUtils.wrapColumnName;
-import static openthinks.libs.sql.dhibernate.support.SQLDialectUtils.wrapColumnValue;
+import static openthinks.libs.sql.dhibernate.support.template.SQLDialectUtils.wrapColumnName;
+import static openthinks.libs.sql.dhibernate.support.template.SQLDialectUtils.wrapColumnValue;
 
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
 
+import openthinks.libs.sql.entity.ColumnAttribute;
+import openthinks.libs.sql.entity.ColumnAttributeMapping;
+import openthinks.libs.sql.entity.key.IDType;
 import openthinks.libs.sql.entity.key.IdGenerator;
 import openthinks.libs.sql.lang.reflect.ReflectEngine;
 import openthinks.libs.utilities.Checker;

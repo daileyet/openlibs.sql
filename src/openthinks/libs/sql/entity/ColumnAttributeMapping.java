@@ -17,13 +17,13 @@
  * under the License. 
  * 
  * @Title: ColumnAttributeMapping.java 
- * @Package openthinks.libs.sql.dhibernate.support 
+ * @Package openthinks.libs.sql.entity 
  * @Description: TODO
  * @author dailey 
  * @date 2012-11-9
  * @version V1.0 
  */
-package openthinks.libs.sql.dhibernate.support;
+package openthinks.libs.sql.entity;
 
 import java.util.HashSet;
 import java.util.Iterator;

@@ -17,13 +17,13 @@
  * under the License. 
  * 
  * @Title: SQLDialectUtils.java 
- * @Package openthinks.libs.sql.dhibernate.support 
+ * @Package openthinks.libs.sql.dhibernate.support.template
  * @Description: TODO
  * @author minjdai 
  * @date 2013-12-2
  * @version V1.0 
  */
-package openthinks.libs.sql.dhibernate.support;
+package openthinks.libs.sql.dhibernate.support.template;
 
 import openthinks.libs.sql.lang.Configurator;
 import openthinks.libs.sql.lang.ConfiguratorFactory;

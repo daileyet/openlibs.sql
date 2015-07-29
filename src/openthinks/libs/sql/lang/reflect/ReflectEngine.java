@@ -29,12 +29,12 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 
-import openthinks.libs.sql.dhibernate.support.ColumnAttributeMapping;
-import openthinks.libs.sql.dhibernate.support.FilterTemplate;
-import openthinks.libs.sql.dhibernate.support.StandardSQLTemplate;
-import openthinks.libs.sql.dhibernate.support.Template;
 import openthinks.libs.sql.dhibernate.support.query.QueryFilter;
 import openthinks.libs.sql.dhibernate.support.query.impl.FilterSQLTemplate;
+import openthinks.libs.sql.dhibernate.support.template.FilterTemplate;
+import openthinks.libs.sql.dhibernate.support.template.StandardSQLTemplate;
+import openthinks.libs.sql.dhibernate.support.template.Template;
+import openthinks.libs.sql.entity.ColumnAttributeMapping;
 import openthinks.libs.sql.entity.Entity;
 import openthinks.libs.sql.entity.jpa.EntityReflectHandler;
 import openthinks.libs.sql.entity.jpa.IReflectHandler;
@@ -155,7 +155,7 @@ public abstract class ReflectEngine {
 	}
 
 	/**
-	 * create template for standard sql by entity class<BR>
+	 * create template for standard SQL by entity class<BR>
 	 * 1. JPA annotation on param entityClass<BR>
 	 * 2. subclass from {@link Entity}
 	 * 
@@ -170,7 +170,14 @@ public abstract class ReflectEngine {
 		return template;
 	}
 
-	//TODO
+	/**
+	 * create template for standard query SQL by entity class<BR>
+	 * 1. JPA annotation on param entityClass<BR>
+	 * 2. subclass from {@link Entity}
+	 * @param entityClass  Class<T>
+	 * @param filter	QueryFilter
+	 * @return FilterTemplate
+	 */
 	public static <T> FilterTemplate createSQLTemplate(Class<T> entityClass, QueryFilter filter) {
 		FilterTemplate template = null;
 		ColumnAttributeMapping columnAttributeMapping = parseEntityClass(entityClass);

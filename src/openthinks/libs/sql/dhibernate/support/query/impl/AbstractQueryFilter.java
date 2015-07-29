@@ -25,10 +25,10 @@
  */
 package openthinks.libs.sql.dhibernate.support.query.impl;
 
-import openthinks.libs.sql.dhibernate.support.ColumnAttribute;
-import openthinks.libs.sql.dhibernate.support.SQLDialectUtils;
 import openthinks.libs.sql.dhibernate.support.query.QueryFilter;
 import openthinks.libs.sql.dhibernate.support.query.Relativization;
+import openthinks.libs.sql.dhibernate.support.template.SQLDialectUtils;
+import openthinks.libs.sql.entity.ColumnAttribute;
 import openthinks.libs.sql.lang.reflect.ReflectEngine;
 import openthinks.libs.utilities.Checker;
 

@@ -16,35 +16,41 @@
  * specific language governing permissions and limitations 
  * under the License. 
  * 
- * @Title: FilterTemplate.java 
- * @Package openthinks.libs.sql.dhibernate.support 
+ * @Title: Template.java 
+ * @Package openthinks.libs.sql.dhibernate.support.template
  * @Description: TODO
- * @author minjdai 
- * @date 2013-12-2
+ * @author dailey 
+ * @date 2012-11-8
  * @version V1.0 
  */
-package openthinks.libs.sql.dhibernate.support;
-
-import openthinks.libs.sql.dhibernate.support.query.QueryFilter;
+package openthinks.libs.sql.dhibernate.support.template;
 
 /**
- * generate the query filter part sql, which the <B>WHERE</B> part in <B>SELECT</B> statement
- * @author minjdai
+ * 
+ * Template for standard SQL
+ * @author dailey
+ *
  */
-public interface FilterTemplate extends Template {
+public interface Template {
 
 	/**
-	 * set the filter object for this template
-	 * 
-	 * @param filter
-	 *            {@link QueryFilter}
+	 * set the template's type<BR>
+	 * 1. {@link SQLType.SAVE,SQLType.INSERT,SQLType.DELETE} : insert/update/delete sql<BR>
+	 * 2. {@link SQLType.QUERY}: select sql
+	 * @param type SQLType
 	 */
-	public void setFilter(QueryFilter filters);
+	void setType(SQLType type);
 
 	/**
-	 * get the filter values
-	 * @return Object[]
+	 * set the data for the template sql values part
+	 * @param entityData
 	 */
-	public Object[] getParameters();
+	<T> void setData(T entityData);
+
+	/**
+	 * generate standard sql by {@link SQLType} and entity data
+	 * @return String
+	 */
+	String generateSQL();
 
 }

@@ -17,13 +17,13 @@
  * under the License. 
  * 
  * @Title: SQLType.java 
- * @Package openthinks.libs.sql.dhibernate.support 
+ * @Package openthinks.libs.sql.dhibernate.support.template
  * @Description: TODO
  * @author dailey 
  * @date 2012-11-8
  * @version V1.0 
  */
-package openthinks.libs.sql.dhibernate.support;
+package openthinks.libs.sql.dhibernate.support.template;
 
 /**
  * generate SQL type

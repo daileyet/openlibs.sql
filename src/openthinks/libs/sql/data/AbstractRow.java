@@ -1,7 +1,7 @@
 package openthinks.libs.sql.data;
 
 import openthinks.libs.sql.data.Row;
-import openthinks.libs.sql.dhibernate.support.ColumnAttribute;
+import openthinks.libs.sql.entity.ColumnAttribute;
 
 /**
  * 实现数据行接口的抽象行类

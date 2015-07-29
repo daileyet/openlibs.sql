@@ -27,8 +27,8 @@ package openthinks.libs.sql.entity.jpa;
 
 import java.lang.reflect.Field;
 
-import openthinks.libs.sql.dhibernate.support.ColumnAttribute;
-import openthinks.libs.sql.dhibernate.support.ColumnAttributeMapping;
+import openthinks.libs.sql.entity.ColumnAttribute;
+import openthinks.libs.sql.entity.ColumnAttributeMapping;
 import openthinks.libs.sql.entity.Entity;
 
 import org.apache.log4j.Logger;

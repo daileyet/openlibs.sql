@@ -1,6 +1,6 @@
 package openthinks.libs.sql.data;
 
-import openthinks.libs.sql.dhibernate.support.ColumnAttribute;
+import openthinks.libs.sql.entity.ColumnAttribute;
 
 /**
  * 默认实现数据行接口的抽象默认行类

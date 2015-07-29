@@ -1,11 +1,11 @@
 package openthinks.libs.sql;
 
-import openthinks.libs.sql.dhibernate.support.FilterTemplate;
 import openthinks.libs.sql.dhibernate.support.query.QueryFilter;
 import openthinks.libs.sql.dhibernate.support.query.Relativization;
 import openthinks.libs.sql.dhibernate.support.query.impl.EqualsFilter;
 import openthinks.libs.sql.dhibernate.support.query.impl.OrFilterConnect;
 import openthinks.libs.sql.dhibernate.support.query.impl.QueryFilterGroup;
+import openthinks.libs.sql.dhibernate.support.template.FilterTemplate;
 import openthinks.libs.sql.lang.reflect.ReflectEngine;
 
 import org.junit.Assert;

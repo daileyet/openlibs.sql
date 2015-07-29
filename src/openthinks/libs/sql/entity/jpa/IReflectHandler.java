@@ -25,7 +25,7 @@
  */
 package openthinks.libs.sql.entity.jpa;
 
-import openthinks.libs.sql.dhibernate.support.ColumnAttributeMapping;
+import openthinks.libs.sql.entity.ColumnAttributeMapping;
 
 /**
  * The interface to handle different entity object

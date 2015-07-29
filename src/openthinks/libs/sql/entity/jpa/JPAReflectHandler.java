@@ -37,9 +37,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import openthinks.libs.sql.dhibernate.support.ColumnAttribute;
-import openthinks.libs.sql.dhibernate.support.ColumnAttributeMapping;
-import openthinks.libs.sql.dhibernate.support.IDType;
+import openthinks.libs.sql.entity.ColumnAttribute;
+import openthinks.libs.sql.entity.ColumnAttributeMapping;
+import openthinks.libs.sql.entity.key.IDType;
 import openthinks.libs.sql.lang.reflect.ReflectEntity;
 import openthinks.libs.utilities.Converter;
 
