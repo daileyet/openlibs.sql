@@ -31,13 +31,13 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
-import openthinks.libs.sql.dhibernate.support.ColumnAttributeMapping;
-import openthinks.libs.sql.dhibernate.support.FilterTemplate;
-import openthinks.libs.sql.dhibernate.support.SQLType;
-import openthinks.libs.sql.dhibernate.support.StandardSQLTemplate;
 import openthinks.libs.sql.dhibernate.support.query.QueryFilter;
 import openthinks.libs.sql.dhibernate.support.query.QueryFilterConnect;
 import openthinks.libs.sql.dhibernate.support.query.Relativization;
+import openthinks.libs.sql.dhibernate.support.template.FilterTemplate;
+import openthinks.libs.sql.dhibernate.support.template.SQLType;
+import openthinks.libs.sql.dhibernate.support.template.StandardSQLTemplate;
+import openthinks.libs.sql.entity.ColumnAttributeMapping;
 import openthinks.libs.sql.exception.IllegalQueryFilterException;
 
 /**

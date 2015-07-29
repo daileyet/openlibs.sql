@@ -4,7 +4,7 @@
  */
 package openthinks.libs.sql.data;
 
-import openthinks.libs.sql.dhibernate.support.ColumnAttribute;
+import openthinks.libs.sql.entity.ColumnAttribute;
 
 /**
  * 数据表的一行实体记录接口

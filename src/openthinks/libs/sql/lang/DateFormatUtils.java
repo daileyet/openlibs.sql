@@ -1,4 +1,4 @@
-package openthinks.libs.sql.entity.key;
+package openthinks.libs.sql.lang;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

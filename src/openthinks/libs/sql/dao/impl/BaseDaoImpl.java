@@ -17,7 +17,7 @@ import java.util.List;
 import openthinks.libs.sql.dao.BaseDao;
 import openthinks.libs.sql.data.DefaultRow;
 import openthinks.libs.sql.data.Row;
-import openthinks.libs.sql.dhibernate.support.ColumnAttributeMapping;
+import openthinks.libs.sql.entity.ColumnAttributeMapping;
 import openthinks.libs.sql.entity.Entity;
 import openthinks.libs.sql.lang.Condition;
 import openthinks.libs.sql.lang.Configurator;

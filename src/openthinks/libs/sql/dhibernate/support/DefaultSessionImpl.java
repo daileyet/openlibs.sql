@@ -9,14 +9,14 @@ import openthinks.libs.sql.lang.Configurator;
  * @author dmj
  * @version 17:20 2010/11/19
  */
-class DefaultSession extends AbstractSession {
+class DefaultSessionImpl extends AbstractSession {
 	private final BaseDao baseDao;
 
-	public DefaultSession() {
+	public DefaultSessionImpl() {
 		baseDao = new SessionDaoImpl();
 	}
 
-	public DefaultSession(Configurator configurator) {
+	public DefaultSessionImpl(Configurator configurator) {
 		baseDao = new SessionDaoImpl();
 		baseDao.setConfigurator(configurator);
 	}

@@ -8,9 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import openthinks.libs.sql.data.AbstractRow;
-import openthinks.libs.sql.dhibernate.support.ColumnAttribute;
-import openthinks.libs.sql.dhibernate.support.ColumnAttributeMapping;
-import openthinks.libs.sql.dhibernate.support.IDType;
+import openthinks.libs.sql.entity.key.IDType;
 import openthinks.libs.sql.exception.EntityReflectException;
 import openthinks.libs.utilities.Converter;
 

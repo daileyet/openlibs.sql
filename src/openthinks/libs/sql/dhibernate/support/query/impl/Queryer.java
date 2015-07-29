@@ -28,9 +28,9 @@ package openthinks.libs.sql.dhibernate.support.query.impl;
 import java.util.List;
 
 import openthinks.libs.sql.dhibernate.Session;
-import openthinks.libs.sql.dhibernate.support.FilterTemplate;
 import openthinks.libs.sql.dhibernate.support.query.Query;
 import openthinks.libs.sql.dhibernate.support.query.QueryFilter;
+import openthinks.libs.sql.dhibernate.support.template.FilterTemplate;
 import openthinks.libs.sql.lang.reflect.ReflectEngine;
 import openthinks.libs.utilities.Converter;
 

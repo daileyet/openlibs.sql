@@ -17,13 +17,13 @@
  * under the License. 
  * 
  * @Title: IDType.java 
- * @Package openthinks.libs.sql.dhibernate.support 
+ * @Package openthinks.libs.sql.entity.key
  * @Description: TODO
  * @author dailey 
  * @date 2012-11-9
  * @version V1.0 
  */
-package openthinks.libs.sql.dhibernate.support;
+package openthinks.libs.sql.entity.key;
 
 /**
  * The generate strategy of primary key value for database table

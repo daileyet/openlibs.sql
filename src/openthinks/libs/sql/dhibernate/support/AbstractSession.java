@@ -35,6 +35,8 @@ import openthinks.libs.sql.data.Row;
 import openthinks.libs.sql.dhibernate.Session;
 import openthinks.libs.sql.dhibernate.support.query.Query;
 import openthinks.libs.sql.dhibernate.support.query.impl.Queryer;
+import openthinks.libs.sql.dhibernate.support.template.SQLType;
+import openthinks.libs.sql.dhibernate.support.template.Template;
 import openthinks.libs.sql.entity.Entity;
 import openthinks.libs.sql.exception.TransactionBackException;
 import openthinks.libs.sql.exception.TransactionBeginException;

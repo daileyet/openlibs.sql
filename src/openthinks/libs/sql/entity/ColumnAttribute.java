@@ -17,13 +17,15 @@
  * under the License. 
  * 
  * @Title: ColumnAttribute.java 
- * @Package openthinks.libs.sql.dhibernate.support 
+ * @Package openthinks.libs.sql.entity
  * @Description: TODO
  * @author dailey 
  * @date 2012-11-9
  * @version V1.0 
  */
-package openthinks.libs.sql.dhibernate.support;
+package openthinks.libs.sql.entity;
+
+import openthinks.libs.sql.entity.key.IDType;
 
 /**
  * The information which holds the attribute name and column name in entity and table
