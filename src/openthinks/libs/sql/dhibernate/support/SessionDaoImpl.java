@@ -85,7 +85,7 @@ class SessionDaoImpl extends BaseDaoImpl {
 				super.closeConnection(conn);
 			if (isUsePool()) {
 				ConnectionManager.closeConnection(getConfigurator(), conn);
-				conn = null;
+				this.connection = null;
 			}
 		} finally {
 			lock.unlock();
