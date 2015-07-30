@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations 
  * under the License. 
  * 
- * @Title: NotEqualsFliter.java 
+ * @Title: NotEqualsFilter.java 
  * @Package openthinks.libs.sql.dhibernate.support.query.impl
  * @Description: TODO
  * @author minjdai 
@@ -29,22 +29,22 @@ package openthinks.libs.sql.dhibernate.support.query.impl;
  * NotEqual query filter as <B>!=</B> or <B><></B> in SQL statement
  * @author minjdai
  */
-public class NotEqualsFliter extends AbstractQueryFilter<NotEqualsFliter> {
+public class NotEqualsFilter extends AbstractQueryFilter<NotEqualsFilter> {
 
 	private Object neqValue;
 
-	public NotEqualsFliter() {
+	public NotEqualsFilter() {
 	}
 
-	public NotEqualsFliter(Class<?> filterClass, String filterName) {
+	public NotEqualsFilter(Class<?> filterClass, String filterName) {
 		super(filterClass, filterName);
 	}
 
-	public NotEqualsFliter(Class<?> filterClass) {
+	public NotEqualsFilter(Class<?> filterClass) {
 		super(filterClass);
 	}
 
-	public NotEqualsFliter neq(Object value) {
+	public NotEqualsFilter neq(Object value) {
 		this.neqValue = value;
 		return this;
 	}

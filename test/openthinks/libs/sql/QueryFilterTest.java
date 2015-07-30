@@ -30,7 +30,7 @@ import openthinks.libs.sql.dhibernate.support.query.Query;
 import openthinks.libs.sql.dhibernate.support.query.QueryFilter;
 import openthinks.libs.sql.dhibernate.support.query.impl.ContainerFilter;
 import openthinks.libs.sql.dhibernate.support.query.impl.EqualsFilter;
-import openthinks.libs.sql.dhibernate.support.query.impl.NotEqualsFliter;
+import openthinks.libs.sql.dhibernate.support.query.impl.NotEqualsFilter;
 import openthinks.libs.sql.dhibernate.support.query.impl.QueryFilterConnects;
 import openthinks.libs.sql.dhibernate.support.query.impl.QueryFilterGroup;
 import openthinks.libs.sql.dhibernate.support.test.TestSession;
@@ -55,9 +55,9 @@ public class QueryFilterTest {
 
 		lasted = new ContainerFilter().filter("content").startWith("BEGIN");
 		appended1.push(lasted);
-		lasted = new NotEqualsFliter().filter("messageId").neq("234");
+		lasted = new NotEqualsFilter().filter("messageId").neq("234");
 		appended1.push(lasted);
-		lasted = new NotEqualsFliter().filter("locale").neq("CN");
+		lasted = new NotEqualsFilter().filter("locale").neq("CN");
 		appended1.push(lasted);
 
 		query.addFilter(appended1);

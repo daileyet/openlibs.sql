@@ -32,7 +32,7 @@ import openthinks.libs.sql.dhibernate.Session;
 import openthinks.libs.sql.dhibernate.support.SessionFactory;
 import openthinks.libs.sql.dhibernate.support.query.Query;
 import openthinks.libs.sql.dhibernate.support.query.impl.EqualsFilter;
-import openthinks.libs.sql.dhibernate.support.query.impl.NotEqualsFliter;
+import openthinks.libs.sql.dhibernate.support.query.impl.NotEqualsFilter;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -98,7 +98,7 @@ public class QueryTest {
 		Query<Message> query = session.createQuery(Message.class);
 
 		List<Message> msgs = query.addFilter(new EqualsFilter().filter("messageId").eq(testMsg.getMessageId()))
-				.addFilter(new NotEqualsFliter().filter("locale").neq(Locale.CHINA.toString())).execute();
+				.addFilter(new NotEqualsFilter().filter("locale").neq(Locale.CHINA.toString())).execute();
 
 		Assert.assertEquals(1, msgs.size());
 

@@ -113,9 +113,10 @@ public abstract class AbstractQueryFilter<E extends QueryFilter> implements Quer
 	 * @param clz Class<?>
 	 * @return QueryFilter
 	 */
-	QueryFilter filterClass(Class<?> clz) {
+	@SuppressWarnings("unchecked")
+	public E filterClass(Class<?> clz) {
 		this.filterClass = clz;
-		return this;
+		return (E) this;
 	}
 
 	/**

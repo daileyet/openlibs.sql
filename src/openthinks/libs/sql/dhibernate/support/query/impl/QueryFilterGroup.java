@@ -46,10 +46,6 @@ public class QueryFilterGroup extends AbstractQueryFilter<QueryFilterGroup> {
 	public QueryFilterGroup() {
 	}
 
-	public QueryFilterGroup(Class<?> filterClass, String filterName) {
-		super(filterClass, filterName);
-	}
-
 	public QueryFilterGroup(Class<?> filterClass) {
 		super(filterClass);
 	}
