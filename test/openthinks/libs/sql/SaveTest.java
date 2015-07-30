@@ -38,8 +38,8 @@ import org.junit.Test;
  */
 public class SaveTest {
 
-//	@Test
-	public void testSave(){
+	@Test
+	public void testSave() {
 		Session session = SessionFactory.getSession();
 		Message message = new Message();
 		message.setLocale(Locale.CHINA.toString());
@@ -48,9 +48,9 @@ public class SaveTest {
 		session.save(message);
 		session.close();
 	}
-	
+
 	@Test
-	public void testUpdate(){
+	public void testUpdate() {
 		Session session = SessionFactory.getSession();
 		Message message = new Message();
 		message.setLocale(Locale.CHINA.toString());

@@ -124,12 +124,16 @@ public final class Configurator extends Properties {
 	}
 
 	/**
-	 * 获取数据库方言类别, current support 3 dialect: mysql, oracle, sqlserver
-	 * 
-	 * @return
+	 * 获取数据库方言类别, current support 3 dialect: mysql, oracle, sqlserver<BR>
+	 * The default value is Dialect.MYSQL
+	 * @return Dialect
 	 */
 	public Dialect getDialect() {
-		return Dialect.toDialect(getProperty(DIALECT));
+		try {
+			return Dialect.toDialect(getProperty(DIALECT));
+		} catch (Exception e) {
+			return Dialect.MYSQL;
+		}
 	}
 
 	public void setDialect(Dialect dialect) {

@@ -17,7 +17,6 @@
  * under the License. 
  * 
  * @Title: LoadTest.java 
- * @Package sql 
  * @Description: TODO
  * @author dailey 
  * @date 2012-11-5
@@ -38,7 +37,7 @@ import org.junit.Test;
  */
 public class LoadTest {
 
-	//	@Test
+	@Test
 	public void testListEntity() {
 		Session session = SessionFactory.getSession();
 		List<MessageE> list = session.list(MessageE.class, "SELECT * FROM message");
@@ -49,7 +48,7 @@ public class LoadTest {
 
 	}
 
-	//	@Test
+	@Test
 	public void testJPAList() {
 		Session session = SessionFactory.getSession();
 		List<Message> list = session.list(Message.class, "SELECT * FROM message");
@@ -59,7 +58,7 @@ public class LoadTest {
 		session.close();
 	}
 
-	//	@Test
+	@Test
 	public void testListByClass() {
 		Session session = SessionFactory.getSession();
 		List<Message> list = session.list(Message.class);

@@ -30,9 +30,9 @@ public class SessionFactory {
 	 */
 	public static Session getSession() {
 		if (defaultConfigurator == null)
-			return new DefaultSession();
+			return new DefaultSessionImpl();
 		else
-			return new DefaultSession(defaultConfigurator);
+			return new DefaultSessionImpl(defaultConfigurator);
 	}
 
 	/**
@@ -42,6 +42,6 @@ public class SessionFactory {
 	 * @return Session
 	 */
 	public static Session getSession(Configurator configurator) {
-		return new DefaultSession(configurator);
+		return new DefaultSessionImpl(configurator);
 	}
 }
