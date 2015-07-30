@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import openthinks.libs.sql.dao.BaseDao;
 import openthinks.libs.sql.data.DefaultRow;
 import openthinks.libs.sql.data.Row;
@@ -24,8 +26,6 @@ import openthinks.libs.sql.lang.Configurator;
 import openthinks.libs.sql.lang.ConfiguratorFactory;
 import openthinks.libs.sql.lang.reflect.ReflectEngine;
 import openthinks.libs.utilities.Checker;
-
-import org.apache.log4j.Logger;
 
 /**
  * BaseDao接口默认实现类
@@ -444,6 +444,9 @@ public abstract class BaseDaoImpl implements BaseDao {
 			} catch (SQLException e) {
 				logger.error(e);
 			}
+		}
+		if(conn != null && isUsePool() ){
+			//TODO put it back to pool
 		}
 	}
 
