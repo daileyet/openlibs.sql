@@ -2,7 +2,10 @@ package openthinks.libs.sql.dhibernate.support;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
+import openthinks.libs.sql.dao.ConnectionManager;
 import openthinks.libs.sql.dao.impl.BaseDaoImpl;
 
 /**
@@ -17,6 +20,7 @@ class SessionDaoImpl extends BaseDaoImpl {
 	 */
 	private Connection connection = null;
 	private Boolean autoClose = true;
+	private Lock lock = new ReentrantLock();
 
 	/**
 	 * @param autoClose
@@ -46,9 +50,14 @@ class SessionDaoImpl extends BaseDaoImpl {
 	 */
 	@Override
 	public Connection getConn() throws ClassNotFoundException, SQLException {
-		if (connection == null)
-			connection = super.getConn();
-		return connection;
+		lock.lock();
+		try {
+			if (connection == null)
+				connection = ConnectionManager.getConnection(getConfigurator());
+			return connection;
+		} finally {
+			lock.unlock();
+		}
 	}
 
 	/**
@@ -59,17 +68,27 @@ class SessionDaoImpl extends BaseDaoImpl {
 	 */
 	@Override
 	public void setConn(Connection connection) {
-		closeConnection(this.connection);
-		this.connection = connection;
+		lock.lock();
+		try {
+			closeConnection(this.connection);
+			this.connection = connection;
+		} finally {
+			lock.unlock();
+		}
 	}
 
 	@Override
 	public void closeConnection(Connection conn) {
-		if (isAutoClose())
-			super.closeConnection(conn);
-		if (isUsePool()) {
-			// this.connection = null;
-			//TODO put back it to pool
+		lock.lock();
+		try {
+			if (isAutoClose())
+				super.closeConnection(conn);
+			if (isUsePool()) {
+				ConnectionManager.closeConnection(getConfigurator(), conn);
+				this.connection = null;
+			}
+		} finally {
+			lock.unlock();
 		}
 
 	}

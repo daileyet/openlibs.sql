@@ -51,15 +51,15 @@ public final class Filters {
 		return new ContainerFilter().include(value);
 	}
 
-	public static AbstractQueryFilter<EqualsFilter> eq(String attributeName, Object value) {
+	public static QueryFilter eq(String attributeName, Object value) {
 		return new EqualsFilter(null, attributeName).eq(value);
 	}
 
-	public static AbstractQueryFilter<NotEqualsFilter> neq(String attributeName, Object value) {
+	public static QueryFilter neq(String attributeName, Object value) {
 		return new NotEqualsFilter(null, attributeName).neq(value);
 	}
 
-	public static AbstractQueryFilter<ContainerFilter> include(String attributeName, Object value) {
+	public static QueryFilter include(String attributeName, Object value) {
 		return new ContainerFilter(null, attributeName).include(value);
 	}
 
