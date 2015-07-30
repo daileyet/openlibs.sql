@@ -1,11 +1,8 @@
 # openlibs.sql
 The lib of java database ORM simple implementation
 
-标签（空格分隔）： Github Java Readme
-
 ---
 
-[TOC]
 #### **Session基本用法**
 ```java
 // get session instance by its factory
