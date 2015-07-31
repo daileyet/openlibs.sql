@@ -81,9 +81,6 @@ public abstract class AbstractSession implements Session {
 	 */
 	public abstract BaseDao getBaseDao();
 
-	/**
-	 * @return Boolean if is autoClose
-	 */
 	@Override
 	public Boolean isAutoClose() {
 		return autoClose;

@@ -14,8 +14,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.log4j.Logger;
-
 import openthinks.libs.sql.dao.BaseDao;
 import openthinks.libs.sql.data.DefaultRow;
 import openthinks.libs.sql.data.Row;
@@ -26,6 +24,8 @@ import openthinks.libs.sql.lang.Configurator;
 import openthinks.libs.sql.lang.ConfiguratorFactory;
 import openthinks.libs.sql.lang.reflect.ReflectEngine;
 import openthinks.libs.utilities.Checker;
+
+import org.apache.log4j.Logger;
 
 /**
  * BaseDao接口默认实现类
@@ -54,8 +54,7 @@ public abstract class BaseDaoImpl implements BaseDao {
 					setLogger(logger);
 			}
 			if (configurator == null) {
-				Configurator config = ConfiguratorFactory
-						.getDefaultInstance(this.getClass());
+				Configurator config = ConfiguratorFactory.getDefaultInstance(this.getClass());
 				if (config != null)
 					setConfigurator(config);
 			}
@@ -111,10 +110,8 @@ public abstract class BaseDaoImpl implements BaseDao {
 		this.configurator = configurator;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see sql.dao.BaseDao#isUsePool()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean isUsePool() {
@@ -159,8 +156,7 @@ public abstract class BaseDaoImpl implements BaseDao {
 	 */
 	@Override
 	public ResultSet executeQuery(Condition condition) {
-		return condition == null ? null : executeQuery(Condition
-				.getFullSql(condition));
+		return condition == null ? null : executeQuery(Condition.getFullSql(condition));
 	}
 
 	/**
@@ -198,8 +194,7 @@ public abstract class BaseDaoImpl implements BaseDao {
 	 */
 	@Override
 	public Object executeScalar(Condition condition) {
-		return condition == null ? null : executeScalar(Condition
-				.getFullSql(condition));
+		return condition == null ? null : executeScalar(Condition.getFullSql(condition));
 	}
 
 	/**
@@ -251,8 +246,8 @@ public abstract class BaseDaoImpl implements BaseDao {
 	@Override
 	public Connection getConn() throws ClassNotFoundException, SQLException {
 		Class.forName(configurator.getDriver());
-		Connection conn = DriverManager.getConnection(configurator.getUrl(),
-				configurator.getUserName(), configurator.getUserPwd());
+		Connection conn = DriverManager.getConnection(configurator.getUrl(), configurator.getUserName(),
+				configurator.getUserPwd());
 		return conn;
 	}
 
@@ -277,8 +272,7 @@ public abstract class BaseDaoImpl implements BaseDao {
 					for (int i = 1; i <= count; i++) {
 						values[i - 1] = rs.getObject(rsmd.getColumnName(i));
 					}
-					Row row = new DefaultRow(columnAttributeMapping.toArray(),
-							values);// 创建一行记录
+					Row row = new DefaultRow(columnAttributeMapping.toArray(), values);// 创建一行记录
 					list.add(row);
 				}
 			} catch (SQLException ex) {
@@ -309,6 +303,7 @@ public abstract class BaseDaoImpl implements BaseDao {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Deprecated
 	@Override
 	public <T extends Entity> List<T> listEntity(Class<T> clz, String sql) {
 		return listEntity(clz, sql, null);
@@ -317,26 +312,23 @@ public abstract class BaseDaoImpl implements BaseDao {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Deprecated
 	@Override
-	public <T extends Entity> List<T> listEntity(Class<T> clz, String sql,
-			String[] params) {
+	public <T extends Entity> List<T> listEntity(Class<T> clz, String sql, String[] params) {
 		return list(clz, sql, params);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
+	@Deprecated
 	@Override
-	public <T extends Entity> List<T> listEntity(Class<T> clz,
-			Condition condition) {
-		return condition == null ? Collections.<T> emptyList() : listEntity(
-				clz, Condition.getFullSql(condition));
+	public <T extends Entity> List<T> listEntity(Class<T> clz, Condition condition) {
+		return condition == null ? Collections.<T> emptyList() : listEntity(clz, Condition.getFullSql(condition));
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see sql.dao.BaseDao#list(java.lang.Class)
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public <T> List<T> list(Class<T> clz) {
@@ -375,8 +367,7 @@ public abstract class BaseDaoImpl implements BaseDao {
 						try {
 							String columnName = rsmd.getColumnName(i);
 							Object columnValue = rs.getObject(columnName);
-							ReflectEngine.propertyReflect(entity, columnName,
-									columnValue);
+							ReflectEngine.propertyReflect(entity, columnName, columnValue);
 						} catch (Exception e) {
 							logger.warn(e);
 							continue;
@@ -400,8 +391,7 @@ public abstract class BaseDaoImpl implements BaseDao {
 	 */
 	@Override
 	public <T> List<T> list(Class<T> clz, Condition condition) {
-		return condition == null ? Collections.<T> emptyList() : list(clz,
-				Condition.getFullSql(condition));
+		return condition == null ? Collections.<T> emptyList() : list(clz, Condition.getFullSql(condition));
 	}
 
 	/**
@@ -445,7 +435,7 @@ public abstract class BaseDaoImpl implements BaseDao {
 				logger.error(e);
 			}
 		}
-		if(conn != null && isUsePool() ){
+		if (conn != null && isUsePool()) {
 			//TODO put it back to pool
 		}
 	}
