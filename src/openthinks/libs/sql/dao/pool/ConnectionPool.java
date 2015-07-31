@@ -26,6 +26,7 @@
 package openthinks.libs.sql.dao.pool;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 /**
  * The pool for {@link Connection}
@@ -34,38 +35,32 @@ import java.sql.Connection;
  */
 public interface ConnectionPool {
 
+	String MAX_ACTIVE = "";
+
 	/**
 	 * request a {@link Connection}, maybe it is a new or it is already existed
 	 * @return Connection
+	 * @throws ClassNotFoundException 
+	 * @throws SQLException 
 	 */
-	Connection request();
+	Connection request() throws ClassNotFoundException, SQLException;
 
 	/**
 	 * recycle the {@link Connection}s
 	 * @param conns Connection[]
 	 */
 	void recycle(Connection... conns);
-	
+
 	/**
-	 * really close the given {@link Connection}s
-	 * @param conns Connection[]
-	 */
-	void destroy(Connection... conns);
-	
-	/**
-	 * current count of active {@link Connection} in pool
+	 * current count of free {@link Connection} in pool
 	 * @return Integer
 	 */
 	int size();
-	
+
 	/**
-	 * the capacity or max count of the pool for holding {@link Connection}
-	 * @return Integer
+	 * really close all holding {@link Connection}s, and reject other actions
 	 */
-	int capacity();
-	
-	/**
-	 * really close all holding {@link Connection}s
-	 */
-	void destroyAll();
+	void shutdown();
+
+	boolean isShutdown();
 }

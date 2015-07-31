@@ -25,7 +25,12 @@
 */
 package openthinks.libs.sql.dao.pool;
 
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+import openthinks.libs.sql.dao.pool.impl.SimpleConnectionPool;
 import openthinks.libs.sql.lang.Configurator;
+import openthinks.libs.utilities.Checker;
 
 /**
  * The management of {@link ConnectionPool}
@@ -33,14 +38,25 @@ import openthinks.libs.sql.lang.Configurator;
  *
  */
 public class ConnectionPoolManager {
+	private static ConnectionPool singletonPoolInstance;
+	private static Lock lock = new ReentrantLock();
 
 	/**
 	 * @param configurator Configurator
 	 * @return ConnectionPool
 	 */
 	public static ConnectionPool getInstance(Configurator configurator) {
-		// TODO Auto-generated method stub
-		return null;
+		Checker.require(configurator).notNull();
+		if (!configurator.isUsePool())
+			throw new IllegalArgumentException("Current configuration for database without using pool.");
+		lock.lock();
+		try {
+			if (singletonPoolInstance == null || singletonPoolInstance.isShutdown()) {
+				singletonPoolInstance = new SimpleConnectionPool(configurator);
+			}
+		} finally {
+			lock.unlock();
+		}
+		return singletonPoolInstance;
 	}
-
 }

@@ -52,7 +52,7 @@ class SessionDaoImpl extends BaseDaoImpl {
 	public Connection getConn() throws ClassNotFoundException, SQLException {
 		lock.lock();
 		try {
-			if (connection == null)
+			if (connection == null || connection.isClosed())
 				connection = ConnectionManager.getConnection(getConfigurator());
 			return connection;
 		} finally {
@@ -83,10 +83,9 @@ class SessionDaoImpl extends BaseDaoImpl {
 		try {
 			if (isAutoClose())
 				super.closeConnection(conn);
-			if (isUsePool()) {
+			if (isUsePool())
 				ConnectionManager.closeConnection(getConfigurator(), conn);
-				this.connection = null;
-			}
+			this.connection = null;
 		} finally {
 			lock.unlock();
 		}
