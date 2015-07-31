@@ -60,4 +60,21 @@ public class SaveTest {
 		session.close();
 	}
 
+	public static void main(String[] args) {
+		Session session = SessionFactory.getSession();
+		session.list(Message.class);
+		session.close();
+
+		session = SessionFactory.getSession();
+		session.list(Message.class);
+		session.close();
+
+		session = SessionFactory.getSession();
+		session.list(Message.class);
+		session.close();
+
+		session = SessionFactory.getSession();
+		session.list(Message.class);
+		session.close();
+	}
 }
