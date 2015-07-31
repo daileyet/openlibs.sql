@@ -37,7 +37,6 @@ import openthinks.libs.sql.dhibernate.support.query.Query;
 import openthinks.libs.sql.dhibernate.support.query.impl.Queryer;
 import openthinks.libs.sql.dhibernate.support.template.SQLType;
 import openthinks.libs.sql.dhibernate.support.template.Template;
-import openthinks.libs.sql.entity.Entity;
 import openthinks.libs.sql.exception.TransactionBackException;
 import openthinks.libs.sql.exception.TransactionBeginException;
 import openthinks.libs.sql.exception.TransactionEndException;
@@ -141,10 +140,11 @@ public abstract class AbstractSession implements Session {
 		return get(clz, sql, null);
 	}
 
-	@Override
-	public <T extends Entity> T get(Entity entity, String sql) {
-		return get(entity, sql, null);
-	}
+	//	@Deprecated
+	//	@Override
+	//	public <T extends Entity> T get(Entity entity, String sql) {
+	//		return get(entity, sql, null);
+	//	}
 
 	/**
 	 * {@inheritDoc}
@@ -184,40 +184,41 @@ public abstract class AbstractSession implements Session {
 		return entity;
 	}
 
-	@Override
-	@SuppressWarnings("unchecked")
-	public <T extends Entity> T get(Entity entity, String sql, String[] params) {
-
-		if (entity == null)
-			throw new NullPointerException("传入的entity不能为空");
-		ResultSet rs = null;
-		try {
-			rs = getBaseDao().executeQuery(sql, params);
-			if (rs != null) {
-				ResultSetMetaData rsmd = rs.getMetaData();
-				int count = rsmd.getColumnCount();
-				while (rs.next()) {
-					for (int i = 1; i <= count; i++) {
-						try {
-							String columnName = rsmd.getColumnName(i);
-							Object columnValue = rs.getObject(columnName);
-							ReflectEngine.propertyReflect(entity, columnName, columnValue);
-							// entity.set(columnName, columnValue);
-						} catch (Exception e) {
-							getBaseDao().getLogger().warn(e.getMessage());
-							continue;
-						}
-					}
-					break;
-				}
-			}
-		} catch (Exception ex) {
-			getBaseDao().getLogger().error(ex.getMessage());
-		} finally {
-			getBaseDao().closeAll(rs);
-		}
-		return ((T) entity);
-	}
+	//	@Deprecated
+	//	@Override
+	//	@SuppressWarnings("unchecked")
+	//	public <T extends Entity> T get(Entity entity, String sql, String[] params) {
+	//
+	//		if (entity == null)
+	//			throw new NullPointerException("传入的entity不能为空");
+	//		ResultSet rs = null;
+	//		try {
+	//			rs = getBaseDao().executeQuery(sql, params);
+	//			if (rs != null) {
+	//				ResultSetMetaData rsmd = rs.getMetaData();
+	//				int count = rsmd.getColumnCount();
+	//				while (rs.next()) {
+	//					for (int i = 1; i <= count; i++) {
+	//						try {
+	//							String columnName = rsmd.getColumnName(i);
+	//							Object columnValue = rs.getObject(columnName);
+	//							ReflectEngine.propertyReflect(entity, columnName, columnValue);
+	//							// entity.set(columnName, columnValue);
+	//						} catch (Exception e) {
+	//							getBaseDao().getLogger().warn(e.getMessage());
+	//							continue;
+	//						}
+	//					}
+	//					break;
+	//				}
+	//			}
+	//		} catch (Exception ex) {
+	//			getBaseDao().getLogger().error(ex.getMessage());
+	//		} finally {
+	//			getBaseDao().closeAll(rs);
+	//		}
+	//		return ((T) entity);
+	//	}
 
 	@Override
 	public <T> List<T> list(Class<T> clz) {
@@ -232,11 +233,12 @@ public abstract class AbstractSession implements Session {
 		return condition == null ? null : get(clz, Condition.getFullSql(condition));
 	}
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public <T extends Entity> T get(Entity entity, Condition condition) {
-		return (T) (condition == null ? null : get(entity, Condition.getFullSql(condition)));
-	}
+	//	@Deprecated
+	//	@SuppressWarnings("unchecked")
+	//	@Override
+	//	public <T extends Entity> T get(Entity entity, Condition condition) {
+	//		return (T) (condition == null ? null : get(entity, Condition.getFullSql(condition)));
+	//	}
 
 	/**
 	 * {@inheritDoc}

@@ -30,6 +30,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 /**
+ * The maps between entity property name and  table column name
  * @author dailey
  *
  */

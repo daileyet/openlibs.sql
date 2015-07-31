@@ -19,7 +19,7 @@ public class FilterSqlTemplateTest {
 
 	@Before
 	public void setUp() {
-		queryObjectType = Message.class;
+		queryObjectType = MessageJPA.class;
 	}
 
 	@Test

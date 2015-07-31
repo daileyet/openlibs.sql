@@ -43,7 +43,7 @@ public class QueryFilterTest {
 
 	void testEqual() {
 		Session session = new TestSession();
-		Query<Message> query = session.createQuery(Message.class);
+		Query<MessageJPA> query = session.createQuery(MessageJPA.class);
 		query.addFilter(new EqualsFilter().filter("messageId").eq("123"));
 		query.addFilter(QueryFilterConnects.or());
 		query.addFilter(QueryFilterConnects.or());

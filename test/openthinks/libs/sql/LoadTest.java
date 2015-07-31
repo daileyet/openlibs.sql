@@ -40,38 +40,43 @@ public class LoadTest {
 	@Test
 	public void testListEntity() {
 		Session session = SessionFactory.getSession();
-		List<MessageE> list = session.list(MessageE.class, "SELECT * FROM message");
-		for (MessageE entity : list) {
-			System.out.println(entity);
-		}
-		session.close();
-
-	}
-
-	@Test
-	public void testJPAList() {
-		Session session = SessionFactory.getSession();
 		List<Message> list = session.list(Message.class, "SELECT * FROM message");
 		for (Message entity : list) {
 			System.out.println(entity);
 		}
+
+		list = session.list(Message.class, "SELECT * FROM message");
+		for (Message entity : list) {
+			System.out.println(entity);
+		}
 		session.close();
+
 	}
 
-	@Test
-	public void testListByClass() {
+	//	@Test
+	public void testJPAList() {
 		Session session = SessionFactory.getSession();
-		List<Message> list = session.list(Message.class);
-		for (Message entity : list) {
+		List<MessageJPA> list = session.list(MessageJPA.class, "SELECT * FROM message");
+		for (MessageJPA entity : list) {
 			System.out.println(entity);
 		}
 		session.close();
 	}
 
-	@Test
+	//	@Test
+	public void testListByClass() {
+		Session session = SessionFactory.getSession();
+		List<MessageJPA> list = session.list(MessageJPA.class);
+		for (MessageJPA entity : list) {
+			System.out.println(entity);
+		}
+		session.close();
+	}
+
+	//	@Test
 	public void testGetById() {
 		Session session = SessionFactory.getSession();
-		Message message = session.load(Message.class, "1000");
+		MessageJPA message = session.load(MessageJPA.class, "1000");
 		System.out.println(message);
 		session.close();
 	}

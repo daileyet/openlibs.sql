@@ -18,18 +18,18 @@ public class FilterSqlTemplateTest2 {
 
 	@Before
 	public void setUp() {
-		queryObjectType = Message.class;
+		queryObjectType = MessageJPA.class;
 	}
 
 	@Test
 	public void testQueryFilter() {
 
-		relativization = Filters.eq("").filter("messageId").filterClass(Message.class);
+		relativization = Filters.eq("").filter("messageId").filterClass(MessageJPA.class);
 		String actual = relativization.toSQL().toString();
 		String expected = "`message_id` = ?";
 		Assert.assertEquals(expected.toLowerCase(), actual.toLowerCase().trim());
 
-		relativization = Filters.eq(null).filter("messageId").filterClass(Message.class);
+		relativization = Filters.eq(null).filter("messageId").filterClass(MessageJPA.class);
 		actual = relativization.toSQL().toString();
 		expected = "`message_id` is null";
 		Assert.assertEquals(expected.toLowerCase(), actual.toLowerCase().trim());

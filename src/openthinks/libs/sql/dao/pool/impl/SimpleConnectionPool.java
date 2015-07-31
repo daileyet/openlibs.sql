@@ -45,7 +45,6 @@ import org.apache.log4j.Logger;
  *
  */
 public class SimpleConnectionPool implements ConnectionPool {
-	private static final Object MAX_IDLE = null;
 	private final ConcurrentLinkedQueue<Connection> connectionQueue;
 	private final Configurator configurator;
 	private final Lock lock;
@@ -198,6 +197,7 @@ public class SimpleConnectionPool implements ConnectionPool {
 		}
 	}
 
+	@Override
 	public boolean isShutdown() {
 		return rejectAction.get();
 	}

@@ -35,7 +35,8 @@ import java.sql.SQLException;
  */
 public interface ConnectionPool {
 
-	String MAX_ACTIVE = "";
+	String MAX_ACTIVE = "MAX_ACTIVE";
+	String MAX_IDLE = "MAX_IDLE";
 
 	/**
 	 * request a {@link Connection}, maybe it is a new or it is already existed
