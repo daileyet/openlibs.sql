@@ -1,78 +1,41 @@
 package openthinks.libs.sql;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import openthinks.libs.sql.entity.Entity;
 
-@Entity
-@Table(name = "message")
-public class Message {
+public class Message extends Entity {
 
-	@Id
-	@Column(name = "message_id")
-	private String messageId;
-	@Column(name = "message_locale")
-	private String locale;
-	@Column(name = "message_content")
-	private String content;
+	private String message_id;
+	private String message_locale;
+	private String message_content;
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see i18n.IMessage#getContent()
-	 */
 	public String getContent() {
-		return content;
+		return message_content;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see i18n.IMessage#getLocale()
-	 */
 	public String getLocale() {
-		return locale;
+		return message_locale;
 	}
 
-	/**
-	 * @return the messageId
-	 */
-	public String getMessageId() {
-		return messageId;
+	public String getId() {
+		return message_id;
 	}
 
-	/**
-	 * @param messageId
-	 *            the messageId to set
-	 */
-	public void setMessageId(String messageId) {
-		this.messageId = messageId;
+	public void setId(String messageId) {
+		this.message_id = messageId;
 	}
 
-	/**
-	 * @param locale
-	 *            the locale to set
-	 */
 	public void setLocale(String locale) {
-		this.locale = locale;
+		this.message_locale = locale;
 	}
 
-	/**
-	 * @param content
-	 *            the content to set
-	 */
 	public void setContent(String content) {
-		this.content = content;
+		this.message_content = content;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
-		return "Message [messageId=" + messageId + ", locale=" + locale + ", content=" + content + "]";
+		return "MessageE [message_id=" + message_id + ", message_locale=" + message_locale + ", message_content="
+				+ message_content + "]";
 	}
+
 }

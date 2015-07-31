@@ -6,8 +6,10 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import openthinks.libs.sql.data.AbstractRow;
+import openthinks.libs.sql.dhibernate.Session;
 import openthinks.libs.sql.entity.key.IDType;
 import openthinks.libs.sql.exception.EntityReflectException;
 import openthinks.libs.utilities.Converter;
@@ -16,33 +18,34 @@ import openthinks.libs.utilities.Converter;
  * 对应数据库表的实体类
  * The simple entity which reference the table in database;<BR>
  * required:<BR>
- * 	<li>the attribute(property) name in this entity need same as the column name in database table
+ * 	<li>the field or property name in this entity need same as the column name in database table
  * 	<li>the first attribute in this entity map to the primary key column in database table
+ *  <li>the entity class name need same as table name while call {@link Session} high level API
  * @author dmj
  */
 public abstract class Entity extends AbstractRow {
 	/**
-	 * 实体类对象的属性名称数组
+	 * 实体类对象的属性名称Map
 	 */
-	private static String[] propertyNames = null;
+	private static Map<Class<? extends Entity>, ColumnAttributeMapping> entityMetaDataCache = new ConcurrentHashMap<Class<? extends Entity>, ColumnAttributeMapping>();
 
 	private final Map<String, PropertyDescriptor> propertyDescMap = new HashMap<String, PropertyDescriptor>();
 
 	/**
 	 * 返回所有属性的名称 子类无需重写该方法
 	 * 
-	 * @return String[] 列名称字符串数组
+	 * @return ColumnAttribute[] 列名称字符串数组
 	 */
 	@Override
 	public ColumnAttribute[] getColumnAttributes() {
-		ColumnAttributeMapping columnAttributeMapping = new ColumnAttributeMapping();
-		if (propertyNames == null) {
+		ColumnAttributeMapping columnAttributeMapping = entityMetaDataCache.get(this.getClass());
+		if (columnAttributeMapping == null) {
+			columnAttributeMapping = new ColumnAttributeMapping();
 			try {
 				Field[] fields = this.getClass().getDeclaredFields();
-				propertyNames = new String[fields.length];
-				for (int i = 0; i < propertyNames.length; i++) {
-					propertyNames[i] = fields[i].getName();
-					ColumnAttribute columnAttribute = new ColumnAttribute(propertyNames[i], propertyNames[i]);
+				for (int i = 0; i < fields.length; i++) {
+					String propertyName = fields[i].getName();
+					ColumnAttribute columnAttribute = new ColumnAttribute(propertyName, propertyName);
 					if (i == 0) {
 						columnAttribute.setIdType(IDType.MANUAL);
 						Class<?> type = fields[i].getType();
@@ -52,6 +55,7 @@ public abstract class Entity extends AbstractRow {
 					}
 					columnAttributeMapping.map(columnAttribute);
 				}
+				entityMetaDataCache.put(this.getClass(), columnAttributeMapping);
 			} catch (SecurityException e) {
 				throw new EntityReflectException("属性字段安全", e.getCause());
 			} catch (Exception e) {
@@ -82,18 +86,18 @@ public abstract class Entity extends AbstractRow {
 	public Object get(String propertyName) {
 		boolean isThrow = false;
 		Object ret = null;
-		try {
-			PropertyDescriptor propertyDescriptor = getPropertyDescriptor(propertyName);
-			Method method = propertyDescriptor.getReadMethod();
-			ret = method.invoke(this);
+		try {//get property value directly by access the filed
+			Field filed = this.getClass().getDeclaredField(propertyName);
+			filed.setAccessible(true);
+			ret = filed.get(this);
 		} catch (Exception e) {
 			isThrow = true;
 		}
-		if (isThrow) {//get field value directly by access the filed
-			try {
-				Field filed = this.getClass().getDeclaredField(propertyName);
-				filed.setAccessible(true);
-				ret = filed.get(this);
+		if (isThrow) {
+			try {//get property value by method
+				PropertyDescriptor propertyDescriptor = getPropertyDescriptor(propertyName);
+				Method method = propertyDescriptor.getReadMethod();
+				ret = method.invoke(this);
 			} catch (Exception e) {
 				throw new EntityReflectException(propertyName + "属性", e.getCause());
 			}
@@ -113,26 +117,26 @@ public abstract class Entity extends AbstractRow {
 	@Override
 	public void set(String propertyName, Object e) {
 		boolean isThrow = false;
-		try {
-			PropertyDescriptor propertyDescriptor = getPropertyDescriptor(propertyName);
-			Method method = propertyDescriptor.getWriteMethod();
-			Class<?>[] parameterTypes = method.getParameterTypes();
-			if (parameterTypes != null && parameterTypes.length == 1) {
-				method.invoke(this, Converter.source(e).convertToSingle(parameterTypes[0]));
-			} else {
-				method.invoke(this, e);
-			}
+		try {//set property value directly by access the filed
+			Field filed = getClass().getDeclaredField(propertyName);
+			filed.setAccessible(true);
+			filed.set(this, Converter.source(e).convertToSingle(filed.getType()));
 		} catch (Exception ex) {
 			// throw new
 			// EntityReflectException(ReflectEntity.getSetMethodName(propertyName)
 			// + "方法", ex.getCause());
 			isThrow = true;
 		}
-		if (isThrow) {//set field value directly by access the filed
+		if (isThrow) {
 			try {
-				Field filed = getClass().getDeclaredField(propertyName);
-				filed.setAccessible(true);
-				filed.set(this, Converter.source(e).convertToSingle(filed.getType()));
+				PropertyDescriptor propertyDescriptor = getPropertyDescriptor(propertyName);
+				Method method = propertyDescriptor.getWriteMethod();
+				Class<?>[] parameterTypes = method.getParameterTypes();
+				if (parameterTypes != null && parameterTypes.length == 1) {
+					method.invoke(this, Converter.source(e).convertToSingle(parameterTypes[0]));
+				} else {
+					method.invoke(this, e);
+				}
 			} catch (Exception ex) {
 				throw new EntityReflectException(propertyName + "属性", ex.getCause());
 			}

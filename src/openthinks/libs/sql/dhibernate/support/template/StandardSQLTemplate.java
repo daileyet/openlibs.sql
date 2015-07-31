@@ -38,6 +38,8 @@ import openthinks.libs.sql.entity.key.IdGenerator;
 import openthinks.libs.sql.lang.reflect.ReflectEngine;
 import openthinks.libs.utilities.Checker;
 
+import org.apache.log4j.Logger;
+
 /**
  * @author dailey
  * 
@@ -48,6 +50,7 @@ public class StandardSQLTemplate implements Template {
 	private Object data;
 	protected final ColumnAttributeMapping mapping;
 	protected final Class<?> entityType;
+	private final Logger logger = Logger.getLogger(StandardSQLTemplate.class);
 
 	/**
 	 * @param columnAttributeMapping {@link ColumnAttributeMapping}
@@ -189,20 +192,20 @@ public class StandardSQLTemplate implements Template {
 	 */
 	protected Object getPropertyValue(String propertyName) {
 		Object value = null;
-		try {//first try get value by its getter method
-			PropertyDescriptor propertyDescriptor = new PropertyDescriptor(propertyName, data.getClass());
-			return propertyDescriptor.getReadMethod().invoke(data);
+		try {//first try get value by its field directly
+			Field field = entityType.getDeclaredField(propertyName);
+			field.setAccessible(true);
+			value = field.get(data);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.info(e.getMessage());
 			value = null;
 		}
-		if (value == null) {//secondly try get value by its field directly
+		if (value == null) {//secondly try get value by its getter method
 			try {
-				Field field = entityType.getDeclaredField(propertyName);
-				field.setAccessible(true);
-				value = field.get(data);
+				PropertyDescriptor propertyDescriptor = new PropertyDescriptor(propertyName, data.getClass());
+				return propertyDescriptor.getReadMethod().invoke(data);
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error(e.getMessage());
 				value = null;
 			}
 		}

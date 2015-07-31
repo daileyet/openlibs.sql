@@ -38,10 +38,10 @@ import org.junit.Test;
  */
 public class SaveTest {
 
-	@Test
-	public void testSave() {
+	//	@Test
+	public void testSaveJPA() {
 		Session session = SessionFactory.getSession();
-		Message message = new Message();
+		MessageJPA message = new MessageJPA();
 		message.setLocale(Locale.CHINA.toString());
 		message.setContent("HELLO");
 		message.setMessageId("2000");
@@ -49,10 +49,10 @@ public class SaveTest {
 		session.close();
 	}
 
-	@Test
+	//	@Test
 	public void testUpdate() {
 		Session session = SessionFactory.getSession();
-		Message message = new Message();
+		MessageJPA message = new MessageJPA();
 		message.setLocale(Locale.CHINA.toString());
 		message.setContent("中国你好");
 		message.setMessageId("2000");
@@ -60,21 +60,20 @@ public class SaveTest {
 		session.close();
 	}
 
-	public static void main(String[] args) {
+	@Test
+	public void testSaveEntity() {
+		Message message = new Message();
+		message.setLocale(Locale.CHINA.toString());
+		message.setContent("实体类1");
+		message.setId("3000");
 		Session session = SessionFactory.getSession();
-		session.list(Message.class);
-		session.close();
+		session.save(message);
 
-		session = SessionFactory.getSession();
-		session.list(Message.class);
-		session.close();
-
-		session = SessionFactory.getSession();
-		session.list(Message.class);
-		session.close();
-
-		session = SessionFactory.getSession();
-		session.list(Message.class);
+		message = new Message();
+		message.setLocale(Locale.CHINA.toString());
+		message.setContent("实体类2");
+		message.setId("3001");
+		session.save(message);
 		session.close();
 	}
 }

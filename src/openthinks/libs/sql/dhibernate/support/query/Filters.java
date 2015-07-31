@@ -51,6 +51,14 @@ public final class Filters {
 		return new ContainerFilter().include(value);
 	}
 
+	public static AbstractQueryFilter<ContainerFilter> startWith(Object value) {
+		return new ContainerFilter().startWith(value);
+	}
+
+	public static AbstractQueryFilter<ContainerFilter> endWith(Object value) {
+		return new ContainerFilter().endWith(value);
+	}
+
 	public static QueryFilter eq(String attributeName, Object value) {
 		return new EqualsFilter(null, attributeName).eq(value);
 	}
@@ -61,6 +69,14 @@ public final class Filters {
 
 	public static QueryFilter include(String attributeName, Object value) {
 		return new ContainerFilter(null, attributeName).include(value);
+	}
+
+	public static QueryFilter startWith(String attributeName, Object value) {
+		return new ContainerFilter(null, attributeName).startWith(value);
+	}
+
+	public static QueryFilter endWith(String attributeName, Object value) {
+		return new ContainerFilter(null, attributeName).endWith(value);
 	}
 
 	public static QueryFilterConnect or() {

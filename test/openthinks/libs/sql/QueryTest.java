@@ -45,8 +45,8 @@ import org.junit.Test;
  */
 public class QueryTest {
 	Session session;
-	final Message testMsg = new Message();
-	final Message testMsg2 = new Message();
+	final MessageJPA testMsg = new MessageJPA();
+	final MessageJPA testMsg2 = new MessageJPA();
 
 	/**
 	 * @throws java.lang.Exception
@@ -79,14 +79,14 @@ public class QueryTest {
 	@Test
 	public void simpleQuerytest() {
 
-		Query<Message> query = session.createQuery(Message.class);
+		Query<MessageJPA> query = session.createQuery(MessageJPA.class);
 
-		List<Message> msgs = query.addFilter(new EqualsFilter().filter("messageId").eq(testMsg.getMessageId()))
+		List<MessageJPA> msgs = query.addFilter(new EqualsFilter().filter("messageId").eq(testMsg.getMessageId()))
 				.execute();
 
 		Assert.assertEquals(2, msgs.size());
 
-		for (Message e : msgs) {
+		for (MessageJPA e : msgs) {
 			Assert.assertEquals(testMsg.getMessageId(), e.getMessageId());
 		}
 
@@ -95,14 +95,14 @@ public class QueryTest {
 	@Test
 	public void simpleQuerytest2() {
 
-		Query<Message> query = session.createQuery(Message.class);
+		Query<MessageJPA> query = session.createQuery(MessageJPA.class);
 
-		List<Message> msgs = query.addFilter(new EqualsFilter().filter("messageId").eq(testMsg.getMessageId()))
+		List<MessageJPA> msgs = query.addFilter(new EqualsFilter().filter("messageId").eq(testMsg.getMessageId()))
 				.addFilter(new NotEqualsFilter().filter("locale").neq(Locale.CHINA.toString())).execute();
 
 		Assert.assertEquals(1, msgs.size());
 
-		Message msg = msgs.get(0);
+		MessageJPA msg = msgs.get(0);
 
 		Assert.assertNotNull(msg);
 
