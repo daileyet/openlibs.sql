@@ -5,6 +5,7 @@ import java.util.List;
 
 import openthinks.libs.sql.dao.BaseDao;
 import openthinks.libs.sql.data.Row;
+import openthinks.libs.sql.dhibernate.support.TransactionLevel;
 import openthinks.libs.sql.dhibernate.support.query.Query;
 import openthinks.libs.sql.entity.Entity;
 import openthinks.libs.sql.exception.TransactionException;
@@ -49,6 +50,22 @@ public interface Session {
 	 *             事务异常
 	 */
 	public void beginTransaction() throws TransactionException;
+
+	/**
+	 * 开启事务
+	 * 
+	 * @throws TransactionException
+	 *             事务异常
+	 */
+	public void beginTransaction(TransactionLevel transactionLevel) throws TransactionException;
+
+	/**
+	 * 关闭事务
+	 * 
+	 * @throws TransactionException
+	 *             事务异常
+	 */
+	public void endTransaction() throws TransactionException;
 
 	/**
 	 * 提交事务
@@ -114,7 +131,7 @@ public interface Session {
 	 * @param clz
 	 *            实体类型clz<BR>
 	 *            1.{@link Entity}子类默认第一个属性为ID列,类名需与表名一致<BR>
-	 *            2.JPA标注的实体类标准 {@link javax.persistence.Id}
+	 *            2.JPA标注的实体类标准 {@link javax.persistence.Entity}
 	 * @param id Serializable
 	 *            主键值
 	 * @return Object 数据库表所对应的实体对象
@@ -127,7 +144,7 @@ public interface Session {
 	 * @param object T
 	 * 			    实体类型T<BR>
 	 *            1.{@link Entity}子类默认第一个属性为ID列,类名需与表名一致<BR>
-	 *            2.JPA标注的实体类标准 {@link javax.persistence.Id}
+	 *            2.JPA标注的实体类标准 {@link javax.persistence.Entity}
 	 */
 	public <T> void save(T object);
 
@@ -135,7 +152,7 @@ public interface Session {
 	 * 持久化对象,根据持久化的对象主键进行Update
 	 * 			    实体类型T<BR>
 	 *            1.{@link Entity}子类默认第一个属性为ID列,类名需与表名一致<BR>
-	 *            2.JPA标注的实体类标准 {@link javax.persistence.Id}
+	 *            2.JPA标注的实体类标准 {@link javax.persistence.Entity}
 	 * @param object T
 	 */
 	public <T> void update(T object);
@@ -144,7 +161,7 @@ public interface Session {
 	 * 删除对象,根据持久化的对象主键进行Delete
 	 * 			    实体类型T<BR>
 	 *            1.{@link Entity}子类默认第一个属性为ID列,类名需与表名一致<BR>
-	 *            2.JPA标注的实体类标准 {@link javax.persistence.Id}
+	 *            2.JPA标注的实体类标准 {@link javax.persistence.Entity}
 	 * @param object T
 	 */
 	public <T> void delete(T object);
@@ -171,7 +188,7 @@ public interface Session {
 	 * @param clz
 	 *            实体类型clz<BR>
 	 *            1.{@link Entity}子类<BR>
-	 *            2.JPA标注的实体类标准 {@link javax.persistence.Id}
+	 *            2.JPA标注的实体类标准 {@link javax.persistence.Entity}
 	 * @param sql
 	 *            完整标准查询语句,<span style=color:red;>不支持多表查询语句</span>
 	 * @return Object 数据库表所对应的实体对象
@@ -186,7 +203,7 @@ public interface Session {
 	 * @param clz
 	 *            实体类型clz<BR>
 	 *            1.{@link Entity}子类<BR>
-	 *            2.JPA标注的实体类标准 {@link javax.persistence.Id}
+	 *            2.JPA标注的实体类标准 {@link javax.persistence.Entity}
 	 * @param sql
 	 *            完整标准查询语句,<span style=color:red;>不支持多表查询语句</span>
 	 * @param params
@@ -203,7 +220,7 @@ public interface Session {
 	 * @param clz
 	 *            实体类型clz<BR>
 	 *            1.{@link Entity}子类<BR>
-	 *            2.JPA标注的实体类标准 {@link javax.persistence.Id}
+	 *            2.JPA标注的实体类标准 {@link javax.persistence.Entity}
 	 * @param condition
 	 *            专用于生成带条件的完整查询语句的对象,<span style=color:red;>不支持多表查询</span>
 	 * @return Object 数据库表所对应的实体对象

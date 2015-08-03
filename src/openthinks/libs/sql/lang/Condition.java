@@ -3,6 +3,7 @@ package openthinks.libs.sql.lang;
 import java.util.HashMap;
 import java.util.Map;
 
+import openthinks.libs.sql.entity.Entity;
 import openthinks.libs.sql.lang.reflect.ReflectEngine;
 import openthinks.libs.utilities.Checker;
 
@@ -18,13 +19,19 @@ public class Condition {
 	private Map<String, String> absMatch; // 绝对匹配
 	private Map<String, String> likeMatch; // 模糊匹配
 	private Map<String, String> order; // 排序
-	private boolean defaultOrder = UP;// 默认排序
+
+	private Order defaultOrder = Order.ASC;// 升序排序常量字段
+
+	/**
+	 * Sort by order
+	 */
+	public enum Order {
+		ASC, DESC;
+	}
 
 	/**
 	 * 条件类型常量
 	 */
-	public static final boolean UP = true;// 升序排序常量字段
-	public static final boolean DOWN = false;// 降序排序常量字段
 	public static final int BEGIN = 0;// 开始即大于
 	public static final int END = 1;// 结束即小于
 	public static final int ABSMATCH = 2;
@@ -59,15 +66,35 @@ public class Condition {
 	/**
 	 * 创建只查询有条件的Condition对象
 	 */
-	public Condition() {
+	private Condition() {
 		this("");
 	}
 
+	/**
+	 * build the Condition which only has condition part(WHERE)
+	 * @return Condition
+	 */
 	public static Condition build() {
-
 		return new Condition();
 	}
 
+	/**
+	 * build the complete Condition which both has condition part(WHERE) and body part(UPDATE,SELECT,DELETE)
+	 * @param sqlPart String body part UPDATE,SELECT,DELETE etc.
+	 * @return Condition
+	 */
+	public static Condition build(String sqlPart) {
+		return new Condition(sqlPart);
+	}
+
+	/**
+	 * build the complete Condition which both has condition part(WHERE) and body part(UPDATE,SELECT,DELETE)
+	 * @param queryObject Class<?> 
+	 * 	 		 实体类型<BR>
+	 *            1.{@link Entity}子类默认第一个属性为ID列,类名需与表名一致<BR>
+	 *            2.JPA标注的实体类标准 
+	 * @return Condition
+	 */
 	public static Condition build(Class<?> queryObject) {
 
 		return new Condition(queryObject);
@@ -78,7 +105,7 @@ public class Condition {
 	 * 
 	 * @param sqlPart
 	 */
-	public Condition(String sqlPart) {
+	private Condition(String sqlPart) {
 		setSqlPart(sqlPart);
 		begin = new HashMap<String, String>();
 		end = new HashMap<String, String>();
@@ -93,6 +120,7 @@ public class Condition {
 	 * @param queryObject Class<?>
 	 */
 	public Condition(Class<?> queryObject) {
+		this();
 		String persistName = ReflectEngine.getEntityTable(queryObject);
 		Checker.require(persistName).notNull();
 		setSqlPart("SELECT * FROM " + persistName);
@@ -108,7 +136,7 @@ public class Condition {
 	 * @param value
 	 *            :String 查询条件值
 	 */
-	public Condition addCondition(final int type, String key, String value) {
+	public Condition addItem(final int type, String key, String value) {
 		if (getCondition(type) != null)
 			getCondition(type).put(key, value);
 		return this;
@@ -124,8 +152,8 @@ public class Condition {
 	 * @param value
 	 *            :Object 查询条件值
 	 */
-	public Condition addCondition(final int type, String key, Object value) {
-		return addCondition(type, key, value.toString());
+	public Condition addItem(final int type, String key, Object value) {
+		return addItem(type, key, value.toString());
 	}
 
 	/**
@@ -163,7 +191,7 @@ public class Condition {
 	 * @param type
 	 *            :查询条件类型
 	 */
-	public Condition clearCondtition(final int type) {
+	public Condition clearCondtitionItem(final int type) {
 		if (getCondition(type) != null)
 			getCondition(type).clear();
 		return this;
@@ -177,7 +205,7 @@ public class Condition {
 	 * @return
 	 */
 	public boolean empty(final int type) {
-		return getCondition(type) == null ? false : getCondition(type).isEmpty();
+		return getCondition(type) == null ? true : getCondition(type).isEmpty();
 	}
 
 	/**
@@ -202,7 +230,6 @@ public class Condition {
 		return condition == null ? null : getFullSql(condition.getSqlPart(), condition);
 	}
 
-	// TODO re-write
 	/**
 	 * 返回完整的查询条件语句
 	 * 
@@ -237,7 +264,7 @@ public class Condition {
 					ret.append(" and " + key + " > '" + value + "'");
 				}
 			}
-			if (!condition.empty(Condition.BEGIN)) {// 结束位置
+			if (!condition.empty(Condition.END)) {// 结束位置
 				for (String key : condition.getEnd().keySet()) {
 					String value = condition.getEnd().get(key);
 					ret.append(" and " + key + " < '" + value + "'");
@@ -247,11 +274,17 @@ public class Condition {
 				ret.append(" order by ");
 				for (String key : condition.getOrder().keySet()) {
 					ret.append(key);
+					ret.append(" ");
+					String value = condition.getOrder().get(key);
+					if (value == null) {
+						ret.append(condition.getDefaultOrder());
+					} else {
+						ret.append(value);
+					}
 					ret.append(",");
 				}
 				ret.deleteCharAt(ret.length() - 1);
-				if (condition.isDefaultOrder() == Condition.DOWN)
-					ret.append(" DESC ");
+
 			}
 		}
 		return sqlpart + ret;
@@ -282,7 +315,7 @@ public class Condition {
 	 * 
 	 * @return boolean
 	 */
-	public boolean isDefaultOrder() {
+	public Order getDefaultOrder() {
 		return defaultOrder;
 	}
 
@@ -292,7 +325,7 @@ public class Condition {
 	 * @param defaultOrder
 	 *            :boolean
 	 */
-	public Condition setDefaultOrder(boolean defaultOrder) {
+	public Condition setDefaultOrder(Order defaultOrder) {
 		this.defaultOrder = defaultOrder;
 		return this;
 	}
