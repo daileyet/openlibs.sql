@@ -36,7 +36,7 @@ public interface FilterTemplate extends Template {
 	/**
 	 * set the filter object for this template
 	 * 
-	 * @param filter
+	 * @param filters
 	 *            {@link QueryFilter}
 	 */
 	public void setFilter(QueryFilter filters);

@@ -35,15 +35,16 @@ public interface Template {
 
 	/**
 	 * set the template's type<BR>
-	 * 1. {@link SQLType.SAVE,SQLType.INSERT,SQLType.DELETE} : insert/update/delete sql<BR>
-	 * 2. {@link SQLType.QUERY}: select sql
+	 * 1. SQLType.SAVE SQLType.INSERT SQLType.DELETE  : insert/update/delete sql<BR>
+	 * 2. SQLType.QUERY : select sql
 	 * @param type SQLType
 	 */
 	void setType(SQLType type);
 
 	/**
 	 * set the data for the template sql values part
-	 * @param entityData
+	 * @param entityData entity object
+	 * @param <T> entity class
 	 */
 	<T> void setData(T entityData);
 

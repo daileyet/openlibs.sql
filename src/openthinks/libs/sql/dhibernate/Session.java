@@ -5,6 +5,7 @@ import java.util.List;
 
 import openthinks.libs.sql.dao.BaseDao;
 import openthinks.libs.sql.data.Row;
+import openthinks.libs.sql.dhibernate.support.TransactionLevel;
 import openthinks.libs.sql.dhibernate.support.query.Query;
 import openthinks.libs.sql.entity.Entity;
 import openthinks.libs.sql.exception.TransactionException;
@@ -49,6 +50,21 @@ public interface Session {
 	 *             事务异常
 	 */
 	public void beginTransaction() throws TransactionException;
+
+	/**
+	 * 开启事务并设置事务级别
+	 * @param transactionLevel TransactionLevel
+	 * @throws TransactionException TransactionException
+	 */
+	public void beginTransaction(TransactionLevel transactionLevel) throws TransactionException;
+
+	/**
+	 * 关闭事务
+	 * 
+	 * @throws TransactionException
+	 *             事务异常
+	 */
+	public void endTransaction() throws TransactionException;
 
 	/**
 	 * 提交事务
@@ -104,8 +120,9 @@ public interface Session {
 	*/
 	/**
 	 * create a {@link Query} for this given entity class
-	 * @param clz Class<T> entity class type
-	 * @return Query<T>
+	 * @param clz Class entity class type
+	 * @param <T> the entity class type
+	 * @return Query
 	 */
 	public <T> Query<T> createQuery(Class<T> clz);
 
@@ -114,20 +131,21 @@ public interface Session {
 	 * @param clz
 	 *            实体类型clz<BR>
 	 *            1.{@link Entity}子类默认第一个属性为ID列,类名需与表名一致<BR>
-	 *            2.JPA标注的实体类标准 {@link javax.persistence.Id}
+	 *            2.JPA标注的实体类标准 {@link javax.persistence.Entity}
 	 * @param id Serializable
 	 *            主键值
+	 * @param <T> the entity class type
 	 * @return Object 数据库表所对应的实体对象
 	 */
 	public <T> T load(Class<T> clz, Serializable id);
 
 	/**
 	 * 持久化对象,进行Insert
-	 * 
+	 * @param <T> the entity class type
 	 * @param object T
 	 * 			    实体类型T<BR>
 	 *            1.{@link Entity}子类默认第一个属性为ID列,类名需与表名一致<BR>
-	 *            2.JPA标注的实体类标准 {@link javax.persistence.Id}
+	 *            2.JPA标注的实体类标准 {@link javax.persistence.Entity}
 	 */
 	public <T> void save(T object);
 
@@ -135,8 +153,9 @@ public interface Session {
 	 * 持久化对象,根据持久化的对象主键进行Update
 	 * 			    实体类型T<BR>
 	 *            1.{@link Entity}子类默认第一个属性为ID列,类名需与表名一致<BR>
-	 *            2.JPA标注的实体类标准 {@link javax.persistence.Id}
+	 *            2.JPA标注的实体类标准 {@link javax.persistence.Entity}
 	 * @param object T
+	 * @param <T> the entity class type
 	 */
 	public <T> void update(T object);
 
@@ -144,8 +163,9 @@ public interface Session {
 	 * 删除对象,根据持久化的对象主键进行Delete
 	 * 			    实体类型T<BR>
 	 *            1.{@link Entity}子类默认第一个属性为ID列,类名需与表名一致<BR>
-	 *            2.JPA标注的实体类标准 {@link javax.persistence.Id}
+	 *            2.JPA标注的实体类标准 {@link javax.persistence.Entity}
 	 * @param object T
+	 * @param <T> the entity class type
 	 */
 	public <T> void delete(T object);
 
@@ -156,8 +176,9 @@ public interface Session {
 	 *            查询的实体Class类型,<span style=color:red>可以不是Entity的子类</span><BR>
 	 *            1.{@link Entity}子类子类默认第一个属性为ID列,类名需与表名一致<BR>
 	 *            2.JPA注解方式
+	 * @param <T> the entity class type          
 	 * @since 2010/11/17
-	 * @return List<E> 任何实体类的集合列表
+	 * @return List 任何实体类的集合列表
 	 */
 	public <T> List<T> list(Class<T> clz);
 
@@ -171,10 +192,11 @@ public interface Session {
 	 * @param clz
 	 *            实体类型clz<BR>
 	 *            1.{@link Entity}子类<BR>
-	 *            2.JPA标注的实体类标准 {@link javax.persistence.Id}
+	 *            2.JPA标注的实体类标准 {@link javax.persistence.Entity}
 	 * @param sql
 	 *            完整标准查询语句,<span style=color:red;>不支持多表查询语句</span>
-	 * @return Object 数据库表所对应的实体对象
+	 * @param <T> the entity class type
+	 * @return T 数据库表所对应的实体对象
 	 */
 	public <T> T get(Class<T> clz, String sql);
 
@@ -186,12 +208,13 @@ public interface Session {
 	 * @param clz
 	 *            实体类型clz<BR>
 	 *            1.{@link Entity}子类<BR>
-	 *            2.JPA标注的实体类标准 {@link javax.persistence.Id}
+	 *            2.JPA标注的实体类标准 {@link javax.persistence.Entity}
 	 * @param sql
 	 *            完整标准查询语句,<span style=color:red;>不支持多表查询语句</span>
 	 * @param params
 	 *            sql语句依赖的参数数组
-	 * @return Object 数据库表所对应的实体对象
+	 * @param <T> the entity class type
+	 * @return T 数据库表所对应的实体对象
 	 */
 	public <T> T get(Class<T> clz, String sql, String[] params);
 
@@ -203,10 +226,11 @@ public interface Session {
 	 * @param clz
 	 *            实体类型clz<BR>
 	 *            1.{@link Entity}子类<BR>
-	 *            2.JPA标注的实体类标准 {@link javax.persistence.Id}
+	 *            2.JPA标注的实体类标准 {@link javax.persistence.Entity}
 	 * @param condition
 	 *            专用于生成带条件的完整查询语句的对象,<span style=color:red;>不支持多表查询</span>
-	 * @return Object 数据库表所对应的实体对象
+	 * @param <T> the entity class type
+	 * @return T 数据库表所对应的实体对象
 	 */
 	public <T> T get(Class<T> clz, Condition condition);
 
@@ -219,7 +243,8 @@ public interface Session {
 	 *            实体类型clz
 	 * @param sql
 	 *            标准查询语句,<span style=color:red;>不支持多表查询语句</span>
-	 * @return List<T> 数据库表所对应的实体对象列表集合
+	 * @param <T> the entity class type
+	 * @return List 数据库表所对应的实体对象列表集合
 	 */
 	public <T> List<T> list(Class<T> clz, String sql);
 
@@ -232,7 +257,8 @@ public interface Session {
 	 *            标准查询语句,<span style=color:red;>不支持多表查询语句</span>
 	 * @param params
 	 *            sql语句依赖的参数数组
-	 * @return List<T> 数据库表所对应的实体对象列表集合
+	 * @param <T> the entity class type
+	 * @return List 数据库表所对应的实体对象列表集合
 	 */
 	public <T> List<T> list(Class<T> clz, String sql, String[] params);
 
@@ -243,7 +269,8 @@ public interface Session {
 	 *            实体类型clz
 	 * @param condition
 	 *            专用于生成带条件的sql语句的对象,<span style=color:red;>不支持多表查询</span>
-	 * @return List<T> 数据库表所对应的实体对象列表集合
+	 * @param <T> the entity class type
+	 * @return List 数据库表所对应的实体对象列表集合
 	 */
 	public <T> List<T> list(Class<T> clz, Condition condition);
 
@@ -254,7 +281,7 @@ public interface Session {
 	 *            标准查询sql语句,<span style=color:red>支持跨表查询</span>
 	 * @param params
 	 *            sql语句依赖的具体参数数组
-	 * @return List<Row> 实现Row接口类型的集合列表
+	 * @return List 实现Row接口类型的集合列表
 	 */
 	public List<Row> list(String sql, String[] params);
 
@@ -263,7 +290,7 @@ public interface Session {
 	 * 
 	 * @param sql
 	 *            标准查询sql语句,<span style=color:red>支持跨表查询</span>
-	 * @return List<Row> 实现Row接口类型的集合列表
+	 * @return List 实现Row接口类型的集合列表
 	 */
 	public List<Row> list(String sql);
 
@@ -272,7 +299,7 @@ public interface Session {
 	 * 
 	 * @param condition
 	 *            专用于生成带条件的sql语句的对象
-	 * @return List<Row> 实现Row接口类型的集合列表
+	 * @return List 实现Row接口类型的集合列表
 	 */
 	public List<Row> list(Condition condition);
 
@@ -288,7 +315,7 @@ public interface Session {
 	 * 
 	 * @param sql
 	 *            增加标准sql语句
-	 * @param int 影响行数
+	 * @return int 影响行数
 	 */
 	public int add(String sql);
 
@@ -299,7 +326,7 @@ public interface Session {
 	 *            增加标准sql语句
 	 * @param params
 	 *            依赖的具体参数数组
-	 * @param int 影响行数
+	 * @return int 影响行数
 	 */
 	public int add(String sql, String[] params);
 
@@ -308,7 +335,7 @@ public interface Session {
 	 * 
 	 * @param condition
 	 *            专用于生成带条件的sql语句的对象
-	 * @param int 影响行数
+	 * @return int 影响行数
 	 */
 	public int add(Condition condition);
 
@@ -317,7 +344,7 @@ public interface Session {
 	 * 
 	 * @param sql
 	 *            更新标准sql语句
-	 * @param int 影响行数
+	 * @return int 影响行数
 	 */
 	public int update(String sql);
 
@@ -328,7 +355,7 @@ public interface Session {
 	 *            更新标准sql语句
 	 * @param params
 	 *            依赖的具体参数数组
-	 * @param int 影响行数
+	 * @return int 影响行数
 	 */
 	public int update(String sql, String[] params);
 
@@ -337,7 +364,7 @@ public interface Session {
 	 * 
 	 * @param condition
 	 *            专用于生成带条件的sql语句的对象
-	 * @param int 影响行数
+	 * @return int 影响行数
 	 */
 	public int update(Condition condition);
 
@@ -346,7 +373,7 @@ public interface Session {
 	 * 
 	 * @param sql
 	 *            删除标准sql语句
-	 * @param int 影响行数
+	 * @return int 影响行数
 	 */
 	public int delete(String sql);
 
@@ -357,7 +384,7 @@ public interface Session {
 	 *            删除标准sql语句
 	 * @param params
 	 *            依赖的具体参数数组
-	 * @param int 影响行数
+	 * @return int 影响行数
 	 */
 	public int delete(String sql, String[] params);
 
@@ -366,7 +393,7 @@ public interface Session {
 	 * 
 	 * @param condition
 	 *            专用于生成带条件的sql语句的对象
-	 * @param int 影响行数
+	 * @return int 影响行数
 	 */
 	public int delete(Condition condition);
 

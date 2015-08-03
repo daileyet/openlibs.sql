@@ -55,7 +55,7 @@ public interface Row {
 	/**
 	 * 设置列名称为columnName的列值为e
 	 * @param columnName 列名称
-	 * @param e
+	 * @param e Object
 	 */
 	public void set(String columnName, Object e);
 }

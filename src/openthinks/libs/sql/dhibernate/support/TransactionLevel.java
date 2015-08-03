@@ -16,53 +16,50 @@
  * specific language governing permissions and limitations
  * under the License.
  *
-* @Title: ConnectionPool.java 
-* @Package openthinks.libs.sql.dao.pool 
+* @Title: TransactionLevel.java 
+* @Package openthinks.libs.sql.dhibernate.support
 * @Description: TODO
 * @author dailey.yet@outlook.com  
-* @date Jul 30, 2015
+* @date Aug 3, 2015
 * @version V1.0   
 */
-package openthinks.libs.sql.dao.pool;
+package openthinks.libs.sql.dhibernate.support;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 
 /**
- * The pool for {@link Connection}
+ * Related the transaction isolation level with {@link Connection}
  * @author dailey.yet@outlook.com
  *
  */
-public interface ConnectionPool {
+public enum TransactionLevel {
+	/**
+	 * @see Connection#TRANSACTION_READ_COMMITTED
+	 */
+	TRANSACTION_READ_UNCOMMITTED(Connection.TRANSACTION_READ_COMMITTED),
+	/**
+	 * @see Connection#TRANSACTION_READ_COMMITTED
+	 */
+	TRANSACTION_READ_COMMITTED(Connection.TRANSACTION_READ_COMMITTED),
+	/**
+	 * @see Connection#TRANSACTION_REPEATABLE_READ
+	 */
+	TRANSACTION_REPEATABLE_READ(Connection.TRANSACTION_REPEATABLE_READ),
+	/**
+	 * @see Connection#TRANSACTION_SERIALIZABLE
+	 */
+	TRANSACTION_SERIALIZABLE(Connection.TRANSACTION_SERIALIZABLE);
+	private int level;
 
-	String MAX_ACTIVE = "MAX_ACTIVE";
-	String MAX_IDLE = "MAX_IDLE";
-	String POOL_CLASS = "POOL_CLASS";
+	private TransactionLevel(final int level) {
+		this.level = level;
+	}
 
 	/**
-	 * request a {@link Connection}, maybe it is a new or it is already existed
-	 * @return Connection
-	 * @throws ClassNotFoundException throw when driver class not find
-	 * @throws SQLException throw when access database error
+	 * @return int the transaction isolation level
 	 */
-	Connection request() throws ClassNotFoundException, SQLException;
+	public int level() {
+		return this.level;
+	}
 
-	/**
-	 * recycle the {@link Connection}s
-	 * @param conns Connection[]
-	 */
-	void recycle(Connection... conns);
-
-	/**
-	 * current count of free {@link Connection} in pool
-	 * @return Integer
-	 */
-	int size();
-
-	/**
-	 * really close all holding {@link Connection}s, and reject other actions
-	 */
-	void shutdown();
-
-	boolean isShutdown();
 }

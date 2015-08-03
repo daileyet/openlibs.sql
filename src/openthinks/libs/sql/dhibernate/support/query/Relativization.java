@@ -36,14 +36,14 @@ public interface Relativization {
 	/**
 	 * get relationship sql
 	 * 
-	 * @return
+	 * @return StringBuffer
 	 */
 	public abstract StringBuffer toSQL();
 
 	/**
 	 * the parameters for placeholder in generated sql
 	 * 
-	 * @return
+	 * @return Object[]
 	 */
 	public Object[] parameters();
 

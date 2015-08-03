@@ -31,7 +31,6 @@ import org.apache.log4j.Logger;
  * BaseDao接口默认实现类
  * 
  * @author dmj
- * @param <E>
  */
 public abstract class BaseDaoImpl implements BaseDao {
 	/**

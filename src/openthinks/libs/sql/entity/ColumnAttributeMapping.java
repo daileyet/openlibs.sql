@@ -50,8 +50,8 @@ public class ColumnAttributeMapping implements Iterable<ColumnAttribute> {
 	}
 
 	/**
-	 * @param columnName
-	 * @return
+	 * @param columnName String
+	 * @return ColumnAttribute
 	 */
 	public ColumnAttribute findByColumn(String columnName) {
 		ColumnAttribute findColumnAttribute = null;
@@ -89,7 +89,7 @@ public class ColumnAttributeMapping implements Iterable<ColumnAttribute> {
 	}
 
 	/**
-	 * @return
+	 * @return ColumnAttribute[]
 	 */
 	public ColumnAttribute[] toArray() {
 		return set.toArray(new ColumnAttribute[0]);

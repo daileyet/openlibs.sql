@@ -36,21 +36,24 @@ public interface Query<T> {
 
 	/**
 	 * set query entity class
-	 * @param clz Class<T> entity class
-	 * @return Query<T>
+	 * @param clz Class entity class
+	 * @param T entity class type
+	 * @return Query
 	 */
 	public Query<T> queryObject(Class<T> clz);
 
 	/**
 	 * append the filter on this entity class
 	 * @param filter {@link QueryFilter}
-	 * @return Query<T>
+	 * @param T entity class type
+	 * @return Query
 	 */
 	public Query<T> addFilter(QueryFilter... filter);
 
 	/**
 	 * generate the query SQL and executed;fetch the result as entity List
-	 * @return
+	 * @param T entity class type
+	 * @return List
 	 */
 	public List<T> execute();
 

@@ -44,8 +44,8 @@ public class ColumnAttribute {
 	}
 
 	/**
-	 * @param columnName
-	 * @param attributeName
+	 * @param columnName String
+	 * @param attributeName String
 	 */
 	public ColumnAttribute(String columnName, String attributeName) {
 		super();

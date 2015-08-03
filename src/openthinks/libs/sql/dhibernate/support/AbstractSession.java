@@ -31,6 +31,7 @@ import java.sql.ResultSetMetaData;
 import java.util.List;
 
 import openthinks.libs.sql.dao.BaseDao;
+import openthinks.libs.sql.dao.pool.ConnectionPool;
 import openthinks.libs.sql.data.Row;
 import openthinks.libs.sql.dhibernate.Session;
 import openthinks.libs.sql.dhibernate.support.query.Query;
@@ -55,7 +56,7 @@ import org.apache.log4j.Logger;
 public abstract class AbstractSession implements Session {
 
 	/**
-	 * 操作数据库的接口
+	 * 操作数据库的接口,是否自动关闭连接
 	 */
 	private Boolean autoClose = true;
 
@@ -67,6 +68,8 @@ public abstract class AbstractSession implements Session {
 	}
 
 	/**
+	 * the flag for close connection when complete an DAO action in Session<BR>
+	 * no affect for using {@link ConnectionPool}
 	 * @param autoClose
 	 *            the autoClose to set
 	 */
@@ -292,7 +295,7 @@ public abstract class AbstractSession implements Session {
 	 */
 	@Override
 	public Condition createCondition() {
-		return new Condition();
+		return Condition.build();
 	}
 
 	/**
@@ -383,6 +386,34 @@ public abstract class AbstractSession implements Session {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public void beginTransaction(TransactionLevel transactionLevel) throws TransactionException {
+		try {
+			getBaseDao().getConn().setAutoCommit(false);
+			Checker.require(transactionLevel).notNull();
+			getBaseDao().getConn().setTransactionIsolation(transactionLevel.level());
+		} catch (Exception e) {
+			throw new TransactionBeginException(e.getCause());
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void endTransaction() throws TransactionException {
+		try {
+			if (!getBaseDao().getConn().getAutoCommit()) {
+				getBaseDao().getConn().setAutoCommit(true);
+			}
+		} catch (Exception e) {
+			throw new TransactionBeginException(e.getCause());
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public void commit() throws TransactionException {
 		try {
 			getBaseDao().getConn().commit();
@@ -409,6 +440,7 @@ public abstract class AbstractSession implements Session {
 	@Override
 	public void close() {
 		try {
+			endTransaction();
 			getBaseDao().closeConnection(getBaseDao().getConn());
 		} catch (Exception e) {
 			getLogger().error(e.getMessage());

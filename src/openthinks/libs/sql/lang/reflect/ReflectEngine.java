@@ -55,7 +55,7 @@ public abstract class ReflectEngine {
 
 	/**
 	 * register new {@link IReflectHandler} to bind given parameter entityClass
-	 * @param entityClass Class<?>
+	 * @param entityClass Class
 	 * @param hander IReflectHandler
 	 */
 	public static void register(Class<?> entityClass, IReflectHandler hander) {
@@ -69,6 +69,7 @@ public abstract class ReflectEngine {
 	 * 		2. Subclass of {@link Entity}
 	 * @param columnName 	column name in database table
 	 * @param columnValue	column name value in database table row
+	 * @param <T> entity class
 	 * @return boolean handle success or not
 	 */
 	public static <T> boolean propertyReflect(T entity, String columnName, Object columnValue) {
@@ -90,9 +91,10 @@ public abstract class ReflectEngine {
 
 	/**
 	 * get entity corresponding table name
-	 * @param entityClazz Class<T>
+	 * @param entityClazz Class
 	 * 		1. JPA annotation<BR>
 	 * 		2. Subclass of {@link Entity}
+	 * @param <T> entity class type
 	 * @return String table name
 	 */
 	public static <T> String getEntityTable(Class<T> entityClazz) {
@@ -114,9 +116,10 @@ public abstract class ReflectEngine {
 
 	/**
 	 * get entity corresponding table primary key
-	 * @param entityClazz Class<T>
+	 * @param entityClazz Class
 	 * 		1. JPA annotation<BR>
 	 * 		2. Subclass of {@link Entity}
+	 * @param <T> entity class
 	 * @return String primary key name
 	 */
 	public static <T> String getEntityID(Class<T> entityClazz) {
@@ -138,9 +141,10 @@ public abstract class ReflectEngine {
 
 	/**
 	 * parse entity class to {@link ColumnAttributeMapping}
-	 * @param entityClass Class<T><BR>
+	 * @param entityClass Class<BR>
 	 * 		1. JPA annotation<BR>
 	 * 		2. Subclass of {@link Entity}
+	 * @param <T> entity Class
 	 * @return {@link ColumnAttributeMapping}
 	 */
 	public static <T> ColumnAttributeMapping parseEntityClass(Class<T> entityClass) {
@@ -160,7 +164,8 @@ public abstract class ReflectEngine {
 	 * 2. subclass from {@link Entity}
 	 * 
 	 * @param entityClass
-	 *            Class<T>
+	 *            Class
+	 * @param <T> entity class type
 	 * @return Template
 	 */
 	public static <T> Template createSQLTemplate(Class<T> entityClass) {
@@ -174,8 +179,9 @@ public abstract class ReflectEngine {
 	 * create template for standard query SQL by entity class<BR>
 	 * 1. JPA annotation on param entityClass<BR>
 	 * 2. subclass from {@link Entity}
-	 * @param entityClass  Class<T>
+	 * @param entityClass  Class
 	 * @param filter	QueryFilter
+	 * @param <T> entity class type
 	 * @return FilterTemplate
 	 */
 	public static <T> FilterTemplate createSQLTemplate(Class<T> entityClass, QueryFilter filter) {

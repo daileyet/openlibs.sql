@@ -55,6 +55,7 @@ public class SimpleConnectionPool implements ConnectionPool {
 
 	/**
 	 * 
+	 * @param configurator Configurator
 	 */
 	public SimpleConnectionPool(Configurator configurator) {
 		this.connectionQueue = new ConcurrentLinkedQueue<Connection>();
