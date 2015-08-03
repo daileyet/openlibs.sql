@@ -42,8 +42,8 @@ public interface ConnectionPool {
 	/**
 	 * request a {@link Connection}, maybe it is a new or it is already existed
 	 * @return Connection
-	 * @throws ClassNotFoundException 
-	 * @throws SQLException 
+	 * @throws ClassNotFoundException throw when driver class not find
+	 * @throws SQLException throw when access database error
 	 */
 	Connection request() throws ClassNotFoundException, SQLException;
 

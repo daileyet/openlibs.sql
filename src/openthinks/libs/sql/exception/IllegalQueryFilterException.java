@@ -44,7 +44,7 @@ public class IllegalQueryFilterException extends RuntimeException {
 	}
 
 	/**
-	 * @param message
+	 * @param message String
 	 */
 	public IllegalQueryFilterException(String message) {
 		super(message);
@@ -52,7 +52,7 @@ public class IllegalQueryFilterException extends RuntimeException {
 	}
 
 	/**
-	 * @param cause
+	 * @param cause Throwable
 	 */
 	public IllegalQueryFilterException(Throwable cause) {
 		super(cause);
@@ -60,8 +60,8 @@ public class IllegalQueryFilterException extends RuntimeException {
 	}
 
 	/**
-	 * @param message
-	 * @param cause
+	 * @param message String
+	 * @param cause Throwable
 	 */
 	public IllegalQueryFilterException(String message, Throwable cause) {
 		super(message, cause);

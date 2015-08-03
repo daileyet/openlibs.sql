@@ -45,6 +45,7 @@ public class Condition {
 	 * 
 	 * @param sqlPart
 	 *            前部分sql语句
+	 * @return Condition
 	 */
 	public Condition setSqlPart(String sqlPart) {
 		if (sqlPart == null)
@@ -79,7 +80,7 @@ public class Condition {
 	}
 
 	/**
-	 * build the complete Condition which both has condition part(WHERE) and body part(UPDATE,SELECT,DELETE)
+	 * build the complete Condition which both has condition part WHERE  and body part UPDATE,SELECT,DELETE
 	 * @param sqlPart String body part UPDATE,SELECT,DELETE etc.
 	 * @return Condition
 	 */
@@ -88,8 +89,8 @@ public class Condition {
 	}
 
 	/**
-	 * build the complete Condition which both has condition part(WHERE) and body part(UPDATE,SELECT,DELETE)
-	 * @param queryObject Class<?> 
+	 * build the complete Condition which both has condition part WHERE  and body part UPDATE,SELECT,DELETE 
+	 * @param queryObject Class 
 	 * 	 		 实体类型<BR>
 	 *            1.{@link Entity}子类默认第一个属性为ID列,类名需与表名一致<BR>
 	 *            2.JPA标注的实体类标准 
@@ -135,6 +136,7 @@ public class Condition {
 	 *            :String 查询条件字段
 	 * @param value
 	 *            :String 查询条件值
+	 * @return Condition
 	 */
 	public Condition addItem(final int type, String key, String value) {
 		if (getCondition(type) != null)
@@ -151,6 +153,7 @@ public class Condition {
 	 *            :String 查询条件字段
 	 * @param value
 	 *            :Object 查询条件值
+	 * @return Condition
 	 */
 	public Condition addItem(final int type, String key, Object value) {
 		return addItem(type, key, value.toString());
@@ -324,6 +327,7 @@ public class Condition {
 	 * 
 	 * @param defaultOrder
 	 *            :boolean
+	 * @return Condition
 	 */
 	public Condition setDefaultOrder(Order defaultOrder) {
 		this.defaultOrder = defaultOrder;
