@@ -1,6 +1,5 @@
 # openlibs.sql
 The lib of java database ORM simple implementation
-
 ---
 #### **Session基本用法**
 ```java
@@ -25,9 +24,9 @@ session.close();
 
 #### **配置文件和类使用**
 
-配置文件名称:&nbsp;&nbsp;&nbsp;&nbsp;dbconfig.properties
-配置文件类:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Configurator
-配置文件工厂类: ConfiguratorFactory
+ - 配置文件名称: dbconfig.properties
+ - 配置文件类: Configurator
+ - 配置文件工厂类: ConfiguratorFactory
 
 ##### **数据库属性文件**
 
@@ -288,6 +287,12 @@ public class ConditionTest {
 }
 ```
 ###### **智能QueryFilter查询**
+目前实现的filter有 
+
+> Filters.eq, Filters.neq
+> Filters.include, Filters.startWith, Filters.endWith
+> Filters.and, Filters.or, Filters.group
+
 ```java
 Session session =  SessionFactory.getSession();
 // 获取Query对象
