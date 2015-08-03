@@ -1,8 +1,9 @@
 # openlibs.sql
-
 The lib of java database ORM simple implementation
 
+
 ---
+
 #### **Session基本用法**
 ```java
 // get session instance by its factory
@@ -315,8 +316,13 @@ List<MessageJPA> list = query.execute();
 session.close();
 ```
 ##### **简单事务**
-开启事务 `session.beginTransaction();` 另外 `session.beginTransaction(TransactionLevel.TRANSACTION_READ_UNCOMMITTED)` 设置事务级别
-关闭事务 `session.endTransaction();` 另外 `session.close();` 也会默认关闭事务,如果开启的话.
+
+ - 开启事务 `session.beginTransaction();` 另外
+   `session.beginTransaction(TransactionLevel.TRANSACTION_READ_UNCOMMITTED)`
+   设置事务级别
+ - 关闭事务 `session.endTransaction();` 另外 `session.close();`
+   也会默认关闭事务,如果开启的话.
+
 例子:
 ```java
 public class TransactionTest {
