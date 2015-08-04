@@ -1,0 +1,17 @@
+openthinks.libs.sql.dao
+openthinks.libs.sql.dao.impl
+openthinks.libs.sql.dao.pool
+openthinks.libs.sql.dao.pool.impl
+openthinks.libs.sql.data
+openthinks.libs.sql.dhibernate
+openthinks.libs.sql.dhibernate.support
+openthinks.libs.sql.dhibernate.support.query
+openthinks.libs.sql.dhibernate.support.query.impl
+openthinks.libs.sql.dhibernate.support.template
+openthinks.libs.sql.dhibernate.support.test
+openthinks.libs.sql.entity
+openthinks.libs.sql.entity.jpa
+openthinks.libs.sql.entity.key
+openthinks.libs.sql.exception
+openthinks.libs.sql.lang
+openthinks.libs.sql.lang.reflect
