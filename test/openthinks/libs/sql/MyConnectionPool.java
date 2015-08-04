@@ -26,6 +26,7 @@
 package openthinks.libs.sql;
 
 import openthinks.libs.sql.dao.pool.impl.SimpleConnectionPool;
+import openthinks.libs.sql.lang.Configurator;
 import openthinks.libs.sql.lang.ConfiguratorFactory;
 
 /**
@@ -34,13 +35,13 @@ import openthinks.libs.sql.lang.ConfiguratorFactory;
  */
 public class MyConnectionPool extends SimpleConnectionPool {
 
-	//	/**
-	//	 * @param configurator
-	//	 */
-	//	public MyConnectionPool(Configurator configurator) {
-	//		super(configurator);
-	//		System.out.println("Constructor");
-	//	}
+	/**
+	 * @param configurator
+	 */
+	public MyConnectionPool(Configurator configurator) {
+		super(configurator);
+		System.out.println("Constructor");
+	}
 
 	public MyConnectionPool() {
 		super(ConfiguratorFactory.getDefaultInstance());
