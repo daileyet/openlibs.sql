@@ -54,7 +54,7 @@ public class StandardSQLTemplate implements Template {
 
 	/**
 	 * @param columnAttributeMapping {@link ColumnAttributeMapping}
-	 * @param entityType Class<?> entity class
+	 * @param entityType Class entity class
 	 */
 	public StandardSQLTemplate(final ColumnAttributeMapping columnAttributeMapping, final Class<?> entityType) {
 		this.mapping = columnAttributeMapping;

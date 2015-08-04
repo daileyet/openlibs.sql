@@ -110,7 +110,7 @@ public abstract class AbstractQueryFilter<E extends QueryFilter> implements Quer
 
 	/**
 	 * set entity class
-	 * @param clz Class<?>
+	 * @param clz Class
 	 * @return QueryFilter
 	 */
 	@SuppressWarnings("unchecked")

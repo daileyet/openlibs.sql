@@ -31,7 +31,8 @@ import openthinks.libs.sql.dhibernate.support.query.impl.OrFilterConnect;
 /**
  * General {@link QueryFilter} Connector
  * 
- * @see {@link AndFilterConnect} {@link OrFilterConnect}
+ * @see AndFilterConnect 
+ * @see OrFilterConnect 
  * @author minjdai
  * 
  */

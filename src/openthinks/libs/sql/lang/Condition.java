@@ -118,7 +118,7 @@ public class Condition {
 	/**
 	 * auto build the front query sql by the given parameter {@link Class}
 	 * This parameter {@link Class} must be {@link Entity} or its sub class, or the class which include the annotation of JPA
-	 * @param queryObject Class<?>
+	 * @param queryObject Class
 	 */
 	public Condition(Class<?> queryObject) {
 		this();
@@ -193,6 +193,7 @@ public class Condition {
 	 * 
 	 * @param type
 	 *            :查询条件类型
+	 * @return Condition
 	 */
 	public Condition clearCondtitionItem(final int type) {
 		if (getCondition(type) != null)
@@ -205,7 +206,7 @@ public class Condition {
 	 * 
 	 * @param type
 	 *            :查询条件类型
-	 * @return
+	 * @return boolean
 	 */
 	public boolean empty(final int type) {
 		return getCondition(type) == null ? true : getCondition(type).isEmpty();
@@ -216,7 +217,7 @@ public class Condition {
 	 * 
 	 * @param type
 	 *            :查询条件类型
-	 * @return
+	 * @return int
 	 */
 	public int size(final int type) {
 		return getCondition(type) == null ? 0 : getCondition(type).size();

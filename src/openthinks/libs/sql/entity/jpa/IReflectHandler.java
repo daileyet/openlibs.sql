@@ -36,9 +36,10 @@ public interface IReflectHandler {
 
 	/**
 	 * parse entity class to {@link ColumnAttributeMapping}
-	 * @param entityClass Class<T><BR>
+	 * @param entityClass Class<BR>
 	 * 		1. JPA annotation<BR>
 	 * 		2. Subclass of {@link Entity}
+	 * @param <T> entity class type
 	 * @return {@link ColumnAttributeMapping}
 	 */
 	public <T> ColumnAttributeMapping parseEntityClass(Class<T> entityClass);
@@ -50,24 +51,27 @@ public interface IReflectHandler {
 	 * 		2. Subclass of {@link Entity}
 	 * @param columnName 	column name in database table
 	 * @param columnValue	column name value in database table row
+	 * @param <T> entity class type
 	 * @return boolean handle success or not
 	 */
 	public <T> boolean handColumnField(T entity, String columnName, Object columnValue);
 
 	/**
 	 * get entity corresponding table name
-	 * @param entityClazz Class<T>
+	 * @param entityClazz Class
 	 * 		1. JPA annotation<BR>
 	 * 		2. Subclass of {@link Entity}
+	 * @param <T> entity class type
 	 * @return String table name
 	 */
 	public <T> String getEntityTableName(Class<T> entityClazz);
 
 	/**
 	 * get entity corresponding table primary key
-	 * @param entityClazz Class<T>
+	 * @param entityClazz Class
 	 * 		1. JPA annotation<BR>
 	 * 		2. Subclass of {@link Entity}
+	 * @param <T> entity class type
 	 * @return String primary key name
 	 */
 	public <T> String getEntityIDName(Class<T> entityClazz);

@@ -20,7 +20,6 @@ import org.apache.log4j.Logger;
  * 
  * @author dmj
  * @version 2010/11/15
- * @param <T>
  */
 public interface BaseDao {
 
@@ -428,7 +427,7 @@ public interface BaseDao {
 	/**
 	 * 设置日志记录器
 	 * 
-	 * @param logger
+	 * @return Logger
 	 *            日志记录器
 	 */
 	public Logger getLogger();

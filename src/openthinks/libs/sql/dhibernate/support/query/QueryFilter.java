@@ -41,6 +41,7 @@ public interface QueryFilter {
 	 * 
 	 * @param filter
 	 *            QueryFilter
+	 * @param T entity class type
 	 * @return current QueryFilter instance, not appended instance
 	 */
 	public <T extends QueryFilter> T append(QueryFilter filter);
