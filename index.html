@@ -1,44 +1,72 @@
 <!DOCTYPE html>
 <html lang="en-us">
-  <head>
-    <meta charset="UTF-8">
-    <title>Openlibs.sql by daileyet</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
-  </head>
-  <body>
-    <section class="page-header">
-      <h1 class="project-name">Openlibs.sql</h1>
-      <h2 class="project-tagline">The lib of java database ORM simple implementation</h2>
-      <a href="https://github.com/daileyet/openlibs.sql" class="btn">View on GitHub</a>
-      <a href="https://github.com/daileyet/openlibs.sql/zipball/master" class="btn">Download .zip</a>
-      <a href="https://github.com/daileyet/openlibs.sql/tarball/master" class="btn">Download .tar.gz</a>
-    </section>
 
-    <section class="main-content">
-      <h1>
+	<head>
+		<meta charset="UTF-8">
+		<title>Openlibs.sql by daileyet</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+		<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+		<link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+	</head>
+
+	<body>
+		<section class="page-header">
+			<h1 class="project-name">Openlibs.sql</h1>
+			<h2 class="project-tagline">The lib of java database ORM simple implementation</h2>
+			<a href="https://github.com/daileyet/openlibs.sql" class="btn">View on GitHub</a>
+			<a href="https://github.com/daileyet/openlibs.sql/zipball/master" class="btn">Download .zip</a>
+			<a href="https://github.com/daileyet/openlibs.sql/tarball/master" class="btn">Download .tar.gz</a>
+		</section>
+
+		<section class="main-content">
+			<h1>
 <a id="openlibssql" class="anchor" href="#openlibssql" aria-hidden="true"><span class="octicon octicon-link"></span></a>openlibs.sql</h1>
 
-<p>The lib of java database ORM simple implementation</p>
+			<p>The lib of java database ORM simple implementation</p>
 
-<hr>
-
-<h4>
+			<hr>
+			<div class="toc">
+				<ul>
+					<li><a href="#session基本用法">Session基本用法</a></li>
+					<li><a href="#配置文件和类使用">配置文件和类使用</a>
+						<ul>
+							<li><a href="#数据库属性文件">数据库属性文件</a></li>
+							<li><a href="#配置类用法">配置类用法</a></li>
+						</ul>
+					</li>
+					<li><a href="#session高级用法">Session高级用法</a>
+						<ul>
+							<li><a href="#实体类定义">实体类定义</a></li>
+							<li><a href="#增删改">增删改</a></li>
+							<li><a href="#条件查询">条件查询</a>
+								<ul>
+									<li><a href="#直接sql语句查询">直接SQL语句查询</a></li>
+									<li><a href="#简单条件类查询">简单条件类查询</a></li>
+									<li><a href="#智能queryfilter查询">智能QueryFilter查询</a></li>
+								</ul>
+							</li>
+							<li><a href="#简单事务">简单事务</a></li>
+							<li><a href="#连接池">连接池</a></li>
+						</ul>
+					</li>
+					<li><a href="#JavaDoc">Java Doc</a></li>
+				</ul>
+			</div>
+			<h4>
 <a id="session基本用法" class="anchor" href="#session%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Session基本用法</strong>
 </h4>
 
-<div class="highlight highlight-java"><pre><span class="pl-c">// get session instance by its factory</span>
+			<div class="highlight highlight-java"><pre><span class="pl-c">// get session instance by its factory</span>
 <span class="pl-smi">Session</span> session <span class="pl-k">=</span> <span class="pl-smi">SessionFactory</span><span class="pl-k">.</span>getSession();</pre></div>
 
-<div class="highlight highlight-java"><pre><span class="pl-c">// fetch a entity by its key</span>
+			<div class="highlight highlight-java"><pre><span class="pl-c">// fetch a entity by its key</span>
 <span class="pl-smi">Message</span> message <span class="pl-k">=</span> session<span class="pl-k">.</span>load(<span class="pl-smi">Message</span><span class="pl-k">.</span>class, <span class="pl-s"><span class="pl-pds">"</span>1000<span class="pl-pds">"</span></span>);
 <span class="pl-c">//TODO</span>
 session<span class="pl-k">.</span>close();<span class="pl-c">// close session</span></pre></div>
 
-<div class="highlight highlight-java"><pre><span class="pl-c">// save a entity to table</span>
+			<div class="highlight highlight-java"><pre><span class="pl-c">// save a entity to table</span>
 <span class="pl-smi">Message</span> message <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">Message</span>();
 message<span class="pl-k">.</span>setLocale(<span class="pl-smi">Locale</span><span class="pl-c1"><span class="pl-k">.</span>CHINA</span><span class="pl-k">.</span>toString());
 message<span class="pl-k">.</span>setContent(<span class="pl-s"><span class="pl-pds">"</span>HELLO<span class="pl-pds">"</span></span>);
@@ -46,23 +74,23 @@ message<span class="pl-k">.</span>setMessageId(<span class="pl-s"><span class="p
 session<span class="pl-k">.</span>save(message);
 session<span class="pl-k">.</span>close();</pre></div>
 
-<h4>
+			<h4>
 <a id="配置文件和类使用" class="anchor" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%92%8C%E7%B1%BB%E4%BD%BF%E7%94%A8" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>配置文件和类使用</strong>
 </h4>
 
-<ul>
-<li>配置文件名称: dbconfig.properties</li>
-<li>配置文件类: Configurator</li>
-<li>配置文件工厂类: ConfiguratorFactory</li>
-</ul>
+			<ul>
+				<li>配置文件名称: dbconfig.properties</li>
+				<li>配置文件类: <a href="doc/openthinks/libs/sql/lang/Configurator.html">Configurator</a></li>
+				<li>配置文件工厂类: <a href="doc/openthinks/libs/sql/lang/ConfiguratorFactory.html">ConfiguratorFactory</a></li>
+			</ul>
 
-<h5>
+			<h5>
 <a id="数据库属性文件" class="anchor" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E5%B1%9E%E6%80%A7%E6%96%87%E4%BB%B6" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>数据库属性文件</strong>
 </h5>
 
-<p>格式如下:</p>
+			<p>格式如下:</p>
 
-<pre><code>#driver name
+			<pre><code>#driver name
 DRIVER=com.mysql.jdbc.Driver
 #database url
 URL=jdbc:mysql://localhost:3306/opendb
@@ -74,14 +102,14 @@ USERPWD=123456
 DIALECT=MYSQL
 </code></pre>
 
-<h5>
+			<h5>
 <a id="配置类用法" class="anchor" href="#%E9%85%8D%E7%BD%AE%E7%B1%BB%E7%94%A8%E6%B3%95" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>配置类用法</strong>
 </h5>
 
-<p>Configurator的属性一一对应配置文件dbconfig.properties里的键
-所以可以新建一个配置类实例，替代配置文件:</p>
+			<p>Configurator的属性一一对应配置文件dbconfig.properties里的键 所以可以新建一个配置类实例，替代配置文件:
+			</p>
 
-<div class="highlight highlight-java"><pre><span class="pl-smi">Configurator</span> conf <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">Configurator</span>();
+			<div class="highlight highlight-java"><pre><span class="pl-smi">Configurator</span> conf <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">Configurator</span>();
 conf<span class="pl-k">.</span>setDriver(<span class="pl-s"><span class="pl-pds">"</span>xxx<span class="pl-pds">"</span></span>);
 conf<span class="pl-k">.</span>setUrl(<span class="pl-s"><span class="pl-pds">"</span>xxx<span class="pl-pds">"</span></span>);
 conf<span class="pl-k">.</span>setUserName(<span class="pl-s"><span class="pl-pds">"</span>xxx<span class="pl-pds">"</span></span>);
@@ -91,9 +119,9 @@ conf<span class="pl-k">.</span>setUsePool(<span class="pl-c1">true</span>);
 <span class="pl-c">// option, default value is Dialect.MYSQL</span>
 conf<span class="pl-k">.</span>setDialect(<span class="pl-smi">Dialect</span><span class="pl-c1"><span class="pl-k">.</span>ORACLE</span>);</pre></div>
 
-<p>ConfiguratorFactory类负责创建Configurator的实例</p>
+			<p>ConfiguratorFactory类负责创建Configurator的实例</p>
 
-<div class="highlight highlight-java"><pre><span class="pl-c">// 方法1: 获得默认的配置类实例,将从默认配置文件dbconfig.properties中读取配置并实例化</span>
+			<div class="highlight highlight-java"><pre><span class="pl-c">// 方法1: 获得默认的配置类实例,将从默认配置文件dbconfig.properties中读取配置并实例化</span>
 <span class="pl-smi">Configurator</span> fileConf <span class="pl-k">=</span> <span class="pl-smi">ConfiguratorFactory</span><span class="pl-k">.</span>getDefaultInstance();
 <span class="pl-c">// 方法2: 获得新的配置类实例,将复制已有的配置实例</span>
 <span class="pl-smi">Configurator</span> codeConf <span class="pl-k">=</span> <span class="pl-smi">ConfiguratorFactory</span><span class="pl-k">.</span>getInstance(conf);
@@ -104,27 +132,27 @@ conf<span class="pl-k">.</span>setDialect(<span class="pl-smi">Dialect</span><sp
 <span class="pl-smi">File</span> file <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">File</span>(<span class="pl-s"><span class="pl-pds">"</span>C:<span class="pl-cce">\p</span>ath<span class="pl-cce">\f</span>ilename.properties<span class="pl-pds">"</span></span>);
 <span class="pl-smi">Configurator</span> externalConf <span class="pl-k">=</span> <span class="pl-smi">ConfiguratorFactory</span><span class="pl-k">.</span>getInstance(file);</pre></div>
 
-<h4>
+			<h4>
 <a id="session高级用法" class="anchor" href="#session%E9%AB%98%E7%BA%A7%E7%94%A8%E6%B3%95" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Session高级用法</strong>
 </h4>
 
-<h5>
+			<h5>
 <a id="实体类定义" class="anchor" href="#%E5%AE%9E%E4%BD%93%E7%B1%BB%E5%AE%9A%E4%B9%89" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>实体类定义</strong>
 </h5>
 
-<p>目前支持两种类型的实体类: 继承自Entity类,带有JPA注解的POJO类</p>
+			<p>目前支持两种类型的实体类: 继承自<a href="doc/openthinks/libs/sql/entity/Entity.html">Entity</a>类,带有JPA注解的POJO类</p>
 
-<p>openthinks.libs.sql.entity.Entity实例简单对应数据库中的表的一条记录,因此要求该实体类定义时注意以下事项:</p>
+			<p>openthinks.libs.sql.entity.Entity实例简单对应数据库中的表的一条记录,因此要求该实体类定义时注意以下事项:</p>
 
-<ol>
-<li>该实体类中的字段或属性名需要与对应表列名一样</li>
-<li>该实体类中定义的第一个字段作为对应表的主键</li>
-<li>该实体类的名称需与表名相同(仅在调用Session的高级API)</li>
-</ol>
+			<ol>
+				<li>该实体类中的字段或属性名需要与对应表列名一样</li>
+				<li>该实体类中定义的第一个字段作为对应表的主键</li>
+				<li>该实体类的名称需与表名相同(仅在调用Session的高级API)</li>
+			</ol>
 
-<p>例子:</p>
+			<p>例子:</p>
 
-<pre><code>//table structure
+			<pre><code>//table structure
 create table message(
     message_id varchar(100),
     message_local varchar(100),
@@ -132,7 +160,7 @@ create table message(
 );
 </code></pre>
 
-<div class="highlight highlight-java"><pre><span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">Message</span> <span class="pl-k">extends</span> <span class="pl-e">Entity</span> {
+			<div class="highlight highlight-java"><pre><span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">Message</span> <span class="pl-k">extends</span> <span class="pl-e">Entity</span> {
     <span class="pl-k">private</span> <span class="pl-smi">String</span> message_id;
     <span class="pl-k">private</span> <span class="pl-smi">String</span> message_locale;
     <span class="pl-k">private</span> <span class="pl-smi">String</span> message_content;
@@ -156,9 +184,9 @@ create table message(
     }
 }</pre></div>
 
-<p>JPA注解的POJO类没有额外的限制</p>
+			<p>JPA注解的POJO类没有额外的限制</p>
 
-<div class="highlight highlight-java"><pre><span class="pl-k">import</span> <span class="pl-smi">javax.persistence.Column</span>;
+			<div class="highlight highlight-java"><pre><span class="pl-k">import</span> <span class="pl-smi">javax.persistence.Column</span>;
 <span class="pl-k">import</span> <span class="pl-smi">javax.persistence.Entity</span>;
 <span class="pl-k">import</span> <span class="pl-smi">javax.persistence.Id</span>;
 <span class="pl-k">import</span> <span class="pl-smi">javax.persistence.Table</span>;
@@ -177,13 +205,13 @@ create table message(
 <span class="pl-c">    */</span>
 }</pre></div>
 
-<h5>
+			<h5>
 <a id="增删改" class="anchor" href="#%E5%A2%9E%E5%88%A0%E6%94%B9" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>增删改</strong>
 </h5>
 
-<p>在Session的DAO API中分为两大类，一类是无需编写SQL(High level);另一类是需要自行构造SQL(Low level).</p>
+			<p>在Session的DAO API中分为两大类，一类是无需编写SQL(High level);另一类是需要自行构造SQL(Low level).</p>
 
-<div class="highlight highlight-java"><pre><span class="pl-c">//&lt;T&gt; void openthinks.libs.sql.dhibernate.Session.save(T object)</span>
+			<div class="highlight highlight-java"><pre><span class="pl-c">//&lt;T&gt; void openthinks.libs.sql.dhibernate.Session.save(T object)</span>
 <span class="pl-c">// High level</span>
 <span class="pl-smi">Session</span> session <span class="pl-k">=</span> <span class="pl-smi">SessionFactory</span><span class="pl-k">.</span>getSession();
 <span class="pl-smi">MessageJPA</span> messageJPA <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">MessageJPA</span>();
@@ -204,7 +232,7 @@ session<span class="pl-k">.</span>save(messageEntity);
 <span class="pl-k">int</span> affectRow <span class="pl-k">=</span> session<span class="pl-k">.</span>add(saveSQL,params);
 session<span class="pl-k">.</span>close();</pre></div>
 
-<div class="highlight highlight-java"><pre><span class="pl-c">//&lt;T&gt; void openthinks.libs.sql.dhibernate.Session.update(T object)</span>
+			<div class="highlight highlight-java"><pre><span class="pl-c">//&lt;T&gt; void openthinks.libs.sql.dhibernate.Session.update(T object)</span>
 <span class="pl-smi">Session</span> session <span class="pl-k">=</span> <span class="pl-smi">SessionFactory</span><span class="pl-k">.</span>getSession();
 <span class="pl-smi">MessageJPA</span> message <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">MessageJPA</span>();
 message<span class="pl-k">.</span>setLocale(<span class="pl-smi">Locale</span><span class="pl-c1"><span class="pl-k">.</span>CHINA</span><span class="pl-k">.</span>toString());
@@ -218,7 +246,7 @@ session<span class="pl-k">.</span>update(message);
 session<span class="pl-k">.</span>update();
 session<span class="pl-k">.</span>close();</pre></div>
 
-<div class="highlight highlight-java"><pre><span class="pl-c">//&lt;T&gt; void openthinks.libs.sql.dhibernate.Session.delete(T object)</span>
+			<div class="highlight highlight-java"><pre><span class="pl-c">//&lt;T&gt; void openthinks.libs.sql.dhibernate.Session.delete(T object)</span>
 <span class="pl-smi">MessageJPA</span> messageJPA <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">MessageJPA</span>();
 messageJPA<span class="pl-k">.</span>setLocale(<span class="pl-smi">Locale</span><span class="pl-c1"><span class="pl-k">.</span>US</span><span class="pl-k">.</span>toString());
 messageJPA<span class="pl-k">.</span>setContent(<span class="pl-s"><span class="pl-pds">"</span>HELLO<span class="pl-pds">"</span></span>);
@@ -232,25 +260,25 @@ session<span class="pl-k">.</span>delete(messageJPA);
 session<span class="pl-k">.</span>delete(deleteSQL,params);
 session<span class="pl-k">.</span>close();</pre></div>
 
-<h5>
+			<h5>
 <a id="条件查询" class="anchor" href="#%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>条件查询</strong>
 </h5>
 
-<p>对于简单根据单一主键获取记录或获取所有表中记录,推荐使用High level API:</p>
+			<p>对于简单根据单一主键获取记录或获取所有表中记录,推荐使用High level API:</p>
 
-<pre><code>// 根据id值获取clz类型的实体对象
+			<pre><code>// 根据id值获取clz类型的实体对象
 &lt;T&gt; T openthinks.libs.sql.dhibernate.Session.load(Class&lt;T&gt; clz, Serializable id)
 // 获取所有相应实体类的集合列表
 &lt;T&gt; List&lt;T&gt; openthinks.libs.sql.dhibernate.Session.list(Class&lt;T&gt; clz)
 </code></pre>
 
-<p>而对于一些复杂的查询，可以使用接下来的方式</p>
+			<p>而对于一些复杂的查询，可以使用接下来的方式</p>
 
-<h6>
+			<h6>
 <a id="直接sql语句查询" class="anchor" href="#%E7%9B%B4%E6%8E%A5sql%E8%AF%AD%E5%8F%A5%E6%9F%A5%E8%AF%A2" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>直接SQL语句查询</strong>
 </h6>
 
-<div class="highlight highlight-java"><pre><span class="pl-smi">Session</span> session <span class="pl-k">=</span> <span class="pl-smi">SessionFactory</span><span class="pl-k">.</span>getSession();
+			<div class="highlight highlight-java"><pre><span class="pl-smi">Session</span> session <span class="pl-k">=</span> <span class="pl-smi">SessionFactory</span><span class="pl-k">.</span>getSession();
 <span class="pl-smi">String</span> querySQL <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>SELECT * FROM message WHERE message_id = ? and message_locale= ? <span class="pl-pds">"</span></span>;
 <span class="pl-smi">MessgaeJPA</span> messageJPA <span class="pl-k">=</span> session<span class="pl-k">.</span>get(<span class="pl-smi">MessageJPA</span><span class="pl-k">.</span>class, querySQL,<span class="pl-k">new</span> <span class="pl-smi">String</span>[]{<span class="pl-s"><span class="pl-pds">"</span>2000<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>zh_CN<span class="pl-pds">"</span></span>});
 <span class="pl-c">//Messgae message = session.get(Message.class, querySQL,new String[]{"2000","zh_CN"});</span>
@@ -260,18 +288,18 @@ session<span class="pl-k">.</span>close();</pre></div>
 <span class="pl-k">List&lt;<span class="pl-smi">Row</span>&gt;</span> rows <span class="pl-k">=</span> session<span class="pl-k">.</span>list(<span class="pl-s"><span class="pl-pds">"</span>SELECT * FROM message<span class="pl-pds">"</span></span>,<span class="pl-k">new</span> <span class="pl-smi">String</span>[]{});
 session<span class="pl-k">.</span>close();</pre></div>
 
-<h6>
+			<h6>
 <a id="简单条件类查询" class="anchor" href="#%E7%AE%80%E5%8D%95%E6%9D%A1%E4%BB%B6%E7%B1%BB%E6%9F%A5%E8%AF%A2" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>简单条件类查询</strong>
 </h6>
 
-<p>简单条件类: openthinks.libs.sql.lang.Condition是非常底层的,也属于Low level.
-Condition对象可以如下创建:</p>
+			<p>简单条件类: openthinks.libs.sql.lang.Condition是非常底层的,也属于Low level.
+				<a href="doc/openthinks/libs/sql/lang/Condition.html">Condition</a>对象可以如下创建:</p>
 
-<pre><code>Session session = SessionFactory.getSession();
+			<pre><code>Session session = SessionFactory.getSession();
 session.createCondition(); // same as Condition.build()
 </code></pre>
 
-<pre><code>// where 1=1
+			<pre><code>// where 1=1
 Condition condition1 = Condition.build(); 
 // SELECT * FROM message where 1=1
 Condition condition2 = Condition.build("SELECT * FROM message");
@@ -279,10 +307,9 @@ Condition condition2 = Condition.build("SELECT * FROM message");
 Condition condition3 = Condition.build(MessageJPA.class);
 </code></pre>
 
-<p>如何使用:(暂支持 绝对匹配 <em>=</em>,模糊匹配 <em>like</em>,开始于 <em>&gt;</em>,结束于 <em>&lt;</em>)
-参考以下 test case:</p>
+			<p>如何使用:(暂支持 绝对匹配 <em>=</em>,模糊匹配 <em>like</em>,开始于 <em>&gt;</em>,结束于 <em>&lt;</em>) 参考以下 test case:</p>
 
-<div class="highlight highlight-java"><pre><span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">ConditionTest</span> {
+			<div class="highlight highlight-java"><pre><span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">ConditionTest</span> {
     <span class="pl-k">private</span> <span class="pl-k">static</span> <span class="pl-smi">MessageJPA</span> message <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">MessageJPA</span>();
     <span class="pl-k">private</span> <span class="pl-k">static</span> <span class="pl-smi">MessageJPA</span> message2 <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">MessageJPA</span>();
     <span class="pl-k">@BeforeClass</span>
@@ -333,19 +360,17 @@ Condition condition3 = Condition.build(MessageJPA.class);
     }
 }</pre></div>
 
-<h6>
+			<h6>
 <a id="智能queryfilter查询" class="anchor" href="#%E6%99%BA%E8%83%BDqueryfilter%E6%9F%A5%E8%AF%A2" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>智能QueryFilter查询</strong>
 </h6>
 
-<p>目前实现的filter有 </p>
+			<p>目前实现的filter有 </p>
 
-<blockquote>
-<p>Filters.eq, Filters.neq
-Filters.include, Filters.startWith, Filters.endWith
-Filters.and, Filters.or, Filters.group</p>
-</blockquote>
+			<blockquote>
+				<p>Filters.eq, Filters.neq Filters.include, Filters.startWith, Filters.endWith Filters.and, Filters.or, Filters.group</p>
+			</blockquote>
 
-<div class="highlight highlight-java"><pre><span class="pl-smi">Session</span> session <span class="pl-k">=</span>  <span class="pl-smi">SessionFactory</span><span class="pl-k">.</span>getSession();
+			<div class="highlight highlight-java"><pre><span class="pl-smi">Session</span> session <span class="pl-k">=</span>  <span class="pl-smi">SessionFactory</span><span class="pl-k">.</span>getSession();
 <span class="pl-c">// 获取Query对象</span>
 <span class="pl-k">Query&lt;<span class="pl-smi">MessageJPA</span>&gt;</span> query <span class="pl-k">=</span> session<span class="pl-k">.</span>createQuery(<span class="pl-smi">MessageJPA</span><span class="pl-k">.</span>class);
 <span class="pl-c">// 定义具体的QueryFilter</span>
@@ -363,21 +388,21 @@ query<span class="pl-k">.</span>addFilter(group);
 <span class="pl-k">List&lt;<span class="pl-smi">MessageJPA</span>&gt;</span> list <span class="pl-k">=</span> query<span class="pl-k">.</span>execute();
 session<span class="pl-k">.</span>close();</pre></div>
 
-<h5>
+			<h5>
 <a id="简单事务" class="anchor" href="#%E7%AE%80%E5%8D%95%E4%BA%8B%E5%8A%A1" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>简单事务</strong>
 </h5>
 
-<ul>
-<li>开启事务 <code>session.beginTransaction();</code> 另外
-<code>session.beginTransaction(TransactionLevel.TRANSACTION_READ_UNCOMMITTED)</code>
-设置事务级别</li>
-<li>关闭事务 <code>session.endTransaction();</code> 另外 <code>session.close();</code>
-也会默认关闭事务,如果开启的话.</li>
-</ul>
+			<ul>
+				<li>开启事务 <code>session.beginTransaction();</code> 另外
+					<code>session.beginTransaction(TransactionLevel.TRANSACTION_READ_UNCOMMITTED)</code> 设置事务级别
+				</li>
+				<li>关闭事务 <code>session.endTransaction();</code> 另外 <code>session.close();</code> 也会默认关闭事务,如果开启的话.
+				</li>
+			</ul>
 
-<p>例子:</p>
+			<p>例子:</p>
 
-<div class="highlight highlight-java"><pre><span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">TransactionTest</span> {
+			<div class="highlight highlight-java"><pre><span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">TransactionTest</span> {
     <span class="pl-k">private</span> <span class="pl-k">static</span> <span class="pl-smi">MessageJPA</span> message <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">MessageJPA</span>();
     <span class="pl-k">@BeforeClass</span>
     <span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-k">void</span> <span class="pl-en">setUp</span>() {
@@ -415,47 +440,49 @@ session<span class="pl-k">.</span>close();</pre></div>
     }
 }</pre></div>
 
-<h5>
+			<h5>
 <a id="连接池" class="anchor" href="#%E8%BF%9E%E6%8E%A5%E6%B1%A0" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>连接池</strong>
 </h5>
 
-<p>目前支持简单的连接池实现 <code>openthinks.libs.sql.dao.pool.impl.SimpleConnectionPool</code>;
-可以自行扩展 <code>openthinks.libs.sql.dao.pool.ConnectionPool</code>接口,并替换默认的实现:</p>
+			<p>目前支持简单的连接池实现 <code>openthinks.libs.sql.dao.pool.impl.SimpleConnectionPool</code>; 可以自行扩展 <code>openthinks.libs.sql.dao.pool.ConnectionPool</code>接口,并替换默认的实现:</p>
 
-<div class="highlight highlight-java"><pre><span class="pl-smi">MyConnectionPool</span> connPool <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">MyConnectionPool</span>();<span class="pl-c">// your implemented ConnectionPool</span>
+			<div class="highlight highlight-java"><pre><span class="pl-smi">MyConnectionPool</span> connPool <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">MyConnectionPool</span>();<span class="pl-c">// your implemented ConnectionPool</span>
 <span class="pl-smi">ConnectionPoolManager</span><span class="pl-k">.</span>setSingletonPoolInstance(connPool);<span class="pl-c">// make it replace the default pool</span></pre></div>
 
-<p>当然使用连接池前,必须配置,在配置文件 dbconfig.properties 中, 加入:</p>
+			<p>当然使用连接池前,必须配置,在配置文件 dbconfig.properties 中, 加入:</p>
 
-<pre><code>USEPOOL=true
+			<pre><code>USEPOOL=true
 #可选,不配的话默认无限制
 MAX_ACTIVE=100
 #可选,不配的话默认无限制
 MAX_IDLE=10
 </code></pre>
 
-<p>对于扩展的ConnectionPool, 除了如上所述使用Code替换默认实现, 亦可以在配置文件中指明实现类名称</p>
+			<p>对于扩展的<a href="doc/openthinks/libs/sql/dao/pool/ConnectionPool.html">ConnectionPool</a>, 除了如上所述使用Code替换默认实现, 亦可以在配置文件中指明实现类名称</p>
 
-<pre><code>USEPOOL=true
+			<pre><code>USEPOOL=true
 POOL_CLASS=openthinks.libs.sql.MyConnectionPool
 </code></pre>
 
-<p>需要注意事项是构造函数的定义:</p>
+			<p>需要注意事项是构造函数的定义:</p>
 
-<ol>
-<li>MyConnectionPool(Configuration) 和 MyConnectionPool() 至少需要定义一个</li>
-<li>MyConnectionPool() 需要自行获取配置类,以确保获取到数据库连接</li>
-<li>优先使用 MyConnectionPool(Configuration) 构造函数</li>
-</ol>
+			<ol>
+				<li>MyConnectionPool(Configuration) 和 MyConnectionPool() 至少需要定义一个</li>
+				<li>MyConnectionPool() 需要自行获取配置类,以确保获取到数据库连接</li>
+				<li>优先使用 MyConnectionPool(Configuration) 构造函数</li>
+			</ol>
 
-      <footer class="site-footer">
-        <span class="site-footer-owner"><a href="https://github.com/daileyet/openlibs.sql">Openlibs.sql</a> is maintained by <a href="https://github.com/daileyet">daileyet</a>.</span>
+			<p>
+				<h4><a id="JavaDoc" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Java Doc</strong></h4> Click <a href="doc/index.html">here</a>
+			</p>
+			<footer class="site-footer">
+				<span class="site-footer-owner"><a href="https://github.com/daileyet/openlibs.sql">Openlibs.sql</a> is maintained by <a href="https://github.com/daileyet">daileyet</a>.</span>
 
-        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
-      </footer>
+				<span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+			</footer>
 
-    </section>
+		</section>
 
-  
-  </body>
+	</body>
+
 </html>
