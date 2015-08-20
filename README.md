@@ -1,7 +1,15 @@
 # openlibs.sql
 The lib of java database ORM simple implementation
 
+#### Get it by Maven
 
+```xml
+<dependency>
+  <groupId>com.openthinks.libs</groupId>
+  <artifactId>sql</artifactId>
+  <version>2.0</version>
+</dependency>
+```
 ---
 
 #### **Session基本用法**
@@ -34,7 +42,7 @@ session.close();
 ##### **数据库属性文件**
 
 格式如下:
-```
+```properties
 #driver name
 DRIVER=com.mysql.jdbc.Driver
 #database url
@@ -79,7 +87,7 @@ Configurator externalConf = ConfiguratorFactory.getInstance(file);
 ##### **实体类定义**
 目前支持两种类型的实体类: 继承自Entity类,带有JPA注解的POJO类
 
-openthinks.libs.sql.entity.Entity实例简单对应数据库中的表的一条记录,因此要求该实体类定义时注意以下事项:
+com.openthinks.libs.sql.entity.Entity实例简单对应数据库中的表的一条记录,因此要求该实体类定义时注意以下事项:
 
  1. 该实体类中的字段或属性名需要与对应表列名一样
  2. 该实体类中定义的第一个字段作为对应表的主键
@@ -146,7 +154,7 @@ public class MessageJPA {
 在Session的DAO API中分为两大类，一类是无需编写SQL(High level);另一类是需要自行构造SQL(Low level).
 
 ```java
-//<T> void openthinks.libs.sql.dhibernate.Session.save(T object)
+//<T> void com.openthinks.libs.sql.dhibernate.Session.save(T object)
 // High level
 Session session = SessionFactory.getSession();
 MessageJPA messageJPA = new MessageJPA();
@@ -160,7 +168,7 @@ messageEntity.setContent("你好");
 messageEntity.setId("3000");
 session.save(messageEntity);
 
-//int openthinks.libs.sql.dhibernate.Session.add(String sql, String[] params)
+//int com.openthinks.libs.sql.dhibernate.Session.add(String sql, String[] params)
 // Low level
 String saveSQL = "INSERT INTO message(message_id,message_locale,message_content) values(?,?,?)";
 String[] params = {"4000","en_US","Hello again"};
@@ -169,7 +177,7 @@ session.close();
 ```
 
 ```java
-//<T> void openthinks.libs.sql.dhibernate.Session.update(T object)
+//<T> void com.openthinks.libs.sql.dhibernate.Session.update(T object)
 Session session = SessionFactory.getSession();
 MessageJPA message = new MessageJPA();
 message.setLocale(Locale.CHINA.toString());
@@ -177,7 +185,7 @@ message.setContent("中国你好");
 message.setMessageId("2000");
 session.update(message);
 
-//int openthinks.libs.sql.dhibernate.Session.update(String sql, String[] params)
+//int com.openthinks.libs.sql.dhibernate.Session.update(String sql, String[] params)
 String updateSQL = "update message set message_content = ? where message_id =? and message_locale=?";
 String[] params = {"您好","zh_CN","2000"};
 session.update();
@@ -185,7 +193,7 @@ session.close();
 ```
 
 ```java
-//<T> void openthinks.libs.sql.dhibernate.Session.delete(T object)
+//<T> void com.openthinks.libs.sql.dhibernate.Session.delete(T object)
 MessageJPA messageJPA = new MessageJPA();
 messageJPA.setLocale(Locale.US.toString());
 messageJPA.setContent("HELLO");
@@ -193,7 +201,7 @@ messageJPA.setMessageId("2000");
 Session session = SessionFactory.getSession();
 session.delete(messageJPA);
 
-//int openthinks.libs.sql.dhibernate.Session.delete(String sql, String[] params)
+//int com.openthinks.libs.sql.dhibernate.Session.delete(String sql, String[] params)
 String deleteSQL = "delete message where message_id =? and message_locale=?";
 String[] params = {"zh_CN","2000"};
 session.delete(deleteSQL,params);
@@ -203,9 +211,9 @@ session.close();
 对于简单根据单一主键获取记录或获取所有表中记录,推荐使用High level API:
 ```
 // 根据id值获取clz类型的实体对象
-<T> T openthinks.libs.sql.dhibernate.Session.load(Class<T> clz, Serializable id)
+<T> T com.openthinks.libs.sql.dhibernate.Session.load(Class<T> clz, Serializable id)
 // 获取所有相应实体类的集合列表
-<T> List<T> openthinks.libs.sql.dhibernate.Session.list(Class<T> clz)
+<T> List<T> com.openthinks.libs.sql.dhibernate.Session.list(Class<T> clz)
 ```
 而对于一些复杂的查询，可以使用接下来的方式
 ###### **直接SQL语句查询**
@@ -221,7 +229,7 @@ List<Row> rows = session.list("SELECT * FROM message",new String[]{});
 session.close();
 ```
 ###### **简单条件类查询**
-简单条件类: openthinks.libs.sql.lang.Condition是非常底层的,也属于Low level.
+简单条件类: com.openthinks.libs.sql.lang.Condition是非常底层的,也属于Low level.
 Condition对象可以如下创建:
 ```
 Session session = SessionFactory.getSession();
@@ -365,8 +373,8 @@ public class TransactionTest {
 ```
 
 ##### **连接池**
-目前支持简单的连接池实现 `openthinks.libs.sql.dao.pool.impl.SimpleConnectionPool`;
-可以自行扩展 `openthinks.libs.sql.dao.pool.ConnectionPool`接口,并替换默认的实现:
+目前支持简单的连接池实现 `com.openthinks.libs.sql.dao.pool.impl.SimpleConnectionPool`;
+可以自行扩展 `com.openthinks.libs.sql.dao.pool.ConnectionPool`接口,并替换默认的实现:
 ```java
 MyConnectionPool connPool = new MyConnectionPool();// your implemented ConnectionPool
 ConnectionPoolManager.setSingletonPoolInstance(connPool);// make it replace the default pool
@@ -382,7 +390,7 @@ MAX_IDLE=10
 对于扩展的ConnectionPool, 除了如上所述使用Code替换默认实现, 亦可以在配置文件中指明实现类名称
 ```
 USEPOOL=true
-POOL_CLASS=openthinks.libs.sql.MyConnectionPool
+POOL_CLASS=com.openthinks.libs.sql.MyConnectionPool
 ```
 需要注意事项是构造函数的定义:
 
