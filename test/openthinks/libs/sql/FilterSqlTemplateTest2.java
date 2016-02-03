@@ -1,15 +1,15 @@
 package openthinks.libs.sql;
 
-import openthinks.libs.sql.dhibernate.support.query.Filters;
-import openthinks.libs.sql.dhibernate.support.query.QueryFilter;
-import openthinks.libs.sql.dhibernate.support.query.Relativization;
-import openthinks.libs.sql.dhibernate.support.query.impl.QueryFilterGroup;
-import openthinks.libs.sql.dhibernate.support.template.FilterTemplate;
-import openthinks.libs.sql.lang.reflect.ReflectEngine;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import com.openthinks.libs.sql.dhibernate.support.query.Filters;
+import com.openthinks.libs.sql.dhibernate.support.query.QueryFilter;
+import com.openthinks.libs.sql.dhibernate.support.query.Relativization;
+import com.openthinks.libs.sql.dhibernate.support.query.impl.QueryFilterGroup;
+import com.openthinks.libs.sql.dhibernate.support.template.FilterTemplate;
+import com.openthinks.libs.sql.lang.reflect.ReflectEngine;
 
 public class FilterSqlTemplateTest2 {
 	Class<?> queryObjectType;

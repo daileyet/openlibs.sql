@@ -28,16 +28,16 @@ package openthinks.libs.sql;
 import java.util.List;
 import java.util.Locale;
 
-import openthinks.libs.sql.dhibernate.Session;
-import openthinks.libs.sql.dhibernate.support.SessionFactory;
-import openthinks.libs.sql.dhibernate.support.query.Query;
-import openthinks.libs.sql.dhibernate.support.query.impl.EqualsFilter;
-import openthinks.libs.sql.dhibernate.support.query.impl.NotEqualsFilter;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import com.openthinks.libs.sql.dhibernate.Session;
+import com.openthinks.libs.sql.dhibernate.support.SessionFactory;
+import com.openthinks.libs.sql.dhibernate.support.query.Query;
+import com.openthinks.libs.sql.dhibernate.support.query.impl.EqualsFilter;
+import com.openthinks.libs.sql.dhibernate.support.query.impl.NotEqualsFilter;
 
 /**
  * @author dailey.yet@outlook.com

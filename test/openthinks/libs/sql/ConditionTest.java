@@ -28,14 +28,14 @@ package openthinks.libs.sql;
 import java.util.List;
 import java.util.Locale;
 
-import openthinks.libs.sql.dhibernate.Session;
-import openthinks.libs.sql.dhibernate.support.SessionFactory;
-import openthinks.libs.sql.lang.Condition;
-
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import com.openthinks.libs.sql.dhibernate.Session;
+import com.openthinks.libs.sql.dhibernate.support.SessionFactory;
+import com.openthinks.libs.sql.lang.Condition;
 
 /**
  * @author dailey.yet@outlook.com

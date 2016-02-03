@@ -27,10 +27,10 @@ package openthinks.libs.sql;
 
 import java.util.Locale;
 
-import openthinks.libs.sql.dhibernate.Session;
-import openthinks.libs.sql.dhibernate.support.SessionFactory;
-
 import org.junit.Test;
+
+import com.openthinks.libs.sql.dhibernate.Session;
+import com.openthinks.libs.sql.dhibernate.support.SessionFactory;
 
 /**
  * @author dailey

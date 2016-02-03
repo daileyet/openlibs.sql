@@ -16,36 +16,24 @@
  * specific language governing permissions and limitations
  * under the License.
  *
-* @Title: MyConnectionPool.java 
+* @Title: Versions.java 
 * @Package openthinks.libs.sql 
 * @Description: TODO
 * @author dailey.yet@outlook.com  
-* @date Aug 3, 2015
+* @date Aug 20, 2015
 * @version V1.0   
 */
-package openthinks.libs.sql;
+package com.openthinks.libs.sql;
 
-import com.openthinks.libs.sql.dao.pool.impl.SimpleConnectionPool;
-import com.openthinks.libs.sql.lang.Configurator;
-import com.openthinks.libs.sql.lang.ConfiguratorFactory;
+import openthinks.libs.utilities.version.AppVersion;
+import openthinks.libs.utilities.version.VersionCenter;
 
 /**
+ * openthinks.libs.sql version class
  * @author dailey.yet@outlook.com
  *
  */
-public class MyConnectionPool extends SimpleConnectionPool {
-
-	/**
-	 * @param configurator
-	 */
-	public MyConnectionPool(Configurator configurator) {
-		super(configurator);
-		System.out.println("Constructor");
-	}
-
-	public MyConnectionPool() {
-		super(ConfiguratorFactory.getDefaultInstance());
-		System.out.println("no Constructor");
-	}
+@AppVersion("2.0")
+public class Versions extends VersionCenter {
 
 }

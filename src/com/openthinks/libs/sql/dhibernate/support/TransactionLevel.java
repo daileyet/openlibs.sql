@@ -16,36 +16,50 @@
  * specific language governing permissions and limitations
  * under the License.
  *
-* @Title: MyConnectionPool.java 
-* @Package openthinks.libs.sql 
+* @Title: TransactionLevel.java 
+* @Package openthinks.libs.sql.dhibernate.support
 * @Description: TODO
 * @author dailey.yet@outlook.com  
 * @date Aug 3, 2015
 * @version V1.0   
 */
-package openthinks.libs.sql;
+package com.openthinks.libs.sql.dhibernate.support;
 
-import com.openthinks.libs.sql.dao.pool.impl.SimpleConnectionPool;
-import com.openthinks.libs.sql.lang.Configurator;
-import com.openthinks.libs.sql.lang.ConfiguratorFactory;
+import java.sql.Connection;
 
 /**
+ * Related the transaction isolation level with {@link Connection}
  * @author dailey.yet@outlook.com
  *
  */
-public class MyConnectionPool extends SimpleConnectionPool {
-
+public enum TransactionLevel {
 	/**
-	 * @param configurator
+	 * @see Connection#TRANSACTION_READ_COMMITTED
 	 */
-	public MyConnectionPool(Configurator configurator) {
-		super(configurator);
-		System.out.println("Constructor");
+	TRANSACTION_READ_UNCOMMITTED(Connection.TRANSACTION_READ_COMMITTED),
+	/**
+	 * @see Connection#TRANSACTION_READ_COMMITTED
+	 */
+	TRANSACTION_READ_COMMITTED(Connection.TRANSACTION_READ_COMMITTED),
+	/**
+	 * @see Connection#TRANSACTION_REPEATABLE_READ
+	 */
+	TRANSACTION_REPEATABLE_READ(Connection.TRANSACTION_REPEATABLE_READ),
+	/**
+	 * @see Connection#TRANSACTION_SERIALIZABLE
+	 */
+	TRANSACTION_SERIALIZABLE(Connection.TRANSACTION_SERIALIZABLE);
+	private int level;
+
+	private TransactionLevel(final int level) {
+		this.level = level;
 	}
 
-	public MyConnectionPool() {
-		super(ConfiguratorFactory.getDefaultInstance());
-		System.out.println("no Constructor");
+	/**
+	 * @return int the transaction isolation level
+	 */
+	public int level() {
+		return this.level;
 	}
 
 }

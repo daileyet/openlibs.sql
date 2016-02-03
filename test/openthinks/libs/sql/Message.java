@@ -1,6 +1,6 @@
 package openthinks.libs.sql;
 
-import openthinks.libs.sql.entity.Entity;
+import com.openthinks.libs.sql.entity.Entity;
 
 public class Message extends Entity {
 

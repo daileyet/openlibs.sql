@@ -25,15 +25,15 @@
  */
 package openthinks.libs.sql;
 
-import openthinks.libs.sql.dhibernate.Session;
-import openthinks.libs.sql.dhibernate.support.query.Query;
-import openthinks.libs.sql.dhibernate.support.query.QueryFilter;
-import openthinks.libs.sql.dhibernate.support.query.impl.ContainerFilter;
-import openthinks.libs.sql.dhibernate.support.query.impl.EqualsFilter;
-import openthinks.libs.sql.dhibernate.support.query.impl.NotEqualsFilter;
-import openthinks.libs.sql.dhibernate.support.query.impl.QueryFilterConnects;
-import openthinks.libs.sql.dhibernate.support.query.impl.QueryFilterGroup;
-import openthinks.libs.sql.dhibernate.support.test.TestSession;
+import com.openthinks.libs.sql.dhibernate.Session;
+import com.openthinks.libs.sql.dhibernate.support.query.Query;
+import com.openthinks.libs.sql.dhibernate.support.query.QueryFilter;
+import com.openthinks.libs.sql.dhibernate.support.query.impl.ContainerFilter;
+import com.openthinks.libs.sql.dhibernate.support.query.impl.EqualsFilter;
+import com.openthinks.libs.sql.dhibernate.support.query.impl.NotEqualsFilter;
+import com.openthinks.libs.sql.dhibernate.support.query.impl.QueryFilterConnects;
+import com.openthinks.libs.sql.dhibernate.support.query.impl.QueryFilterGroup;
+import com.openthinks.libs.sql.dhibernate.support.test.TestSession;
 
 /**
  * @author minjdai
