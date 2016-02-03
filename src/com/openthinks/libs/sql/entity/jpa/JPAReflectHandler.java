@@ -41,8 +41,7 @@ import com.openthinks.libs.sql.entity.ColumnAttribute;
 import com.openthinks.libs.sql.entity.ColumnAttributeMapping;
 import com.openthinks.libs.sql.entity.key.IDType;
 import com.openthinks.libs.sql.lang.reflect.ReflectEntity;
-
-import openthinks.libs.utilities.Converter;
+import com.openthinks.libs.utilities.Converter;
 
 /**
  * The simple {@link IReflectHandler} implementation for JPA Annotation

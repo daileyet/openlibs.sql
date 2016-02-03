@@ -34,8 +34,7 @@ import org.apache.log4j.Logger;
 import com.openthinks.libs.sql.dao.pool.ConnectionPool;
 import com.openthinks.libs.sql.dao.pool.ConnectionPoolManager;
 import com.openthinks.libs.sql.lang.Configurator;
-
-import openthinks.libs.utilities.Checker;
+import com.openthinks.libs.utilities.Checker;
 
 /**
  * @author dailey.yet@outlook.com

@@ -31,8 +31,6 @@ import static com.openthinks.libs.sql.dhibernate.support.template.SQLDialectUtil
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
 
-import openthinks.libs.utilities.Checker;
-
 import org.apache.log4j.Logger;
 
 import com.openthinks.libs.sql.entity.ColumnAttribute;
@@ -40,6 +38,7 @@ import com.openthinks.libs.sql.entity.ColumnAttributeMapping;
 import com.openthinks.libs.sql.entity.key.IDType;
 import com.openthinks.libs.sql.entity.key.IdGenerator;
 import com.openthinks.libs.sql.lang.reflect.ReflectEngine;
+import com.openthinks.libs.utilities.Checker;
 
 /**
  * @author dailey

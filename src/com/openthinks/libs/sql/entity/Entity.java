@@ -12,8 +12,7 @@ import com.openthinks.libs.sql.data.AbstractRow;
 import com.openthinks.libs.sql.dhibernate.Session;
 import com.openthinks.libs.sql.entity.key.IDType;
 import com.openthinks.libs.sql.exception.EntityReflectException;
-
-import openthinks.libs.utilities.Converter;
+import com.openthinks.libs.utilities.Converter;
 
 /**
  * 对应数据库表的实体类

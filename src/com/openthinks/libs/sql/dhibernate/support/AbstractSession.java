@@ -30,8 +30,6 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.util.List;
 
-import openthinks.libs.utilities.Checker;
-
 import org.apache.log4j.Logger;
 
 import com.openthinks.libs.sql.dao.BaseDao;
@@ -49,6 +47,7 @@ import com.openthinks.libs.sql.exception.TransactionException;
 import com.openthinks.libs.sql.lang.Condition;
 import com.openthinks.libs.sql.lang.Configurator;
 import com.openthinks.libs.sql.lang.reflect.ReflectEngine;
+import com.openthinks.libs.utilities.Checker;
 
 /**
  * @author minjdai

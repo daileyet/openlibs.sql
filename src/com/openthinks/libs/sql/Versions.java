@@ -25,8 +25,8 @@
 */
 package com.openthinks.libs.sql;
 
-import openthinks.libs.utilities.version.AppVersion;
-import openthinks.libs.utilities.version.VersionCenter;
+import com.openthinks.libs.utilities.version.AppVersion;
+import com.openthinks.libs.utilities.version.VersionCenter;
 
 /**
  * openthinks.libs.sql version class

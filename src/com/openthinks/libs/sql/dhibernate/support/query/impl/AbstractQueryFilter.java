@@ -30,8 +30,7 @@ import com.openthinks.libs.sql.dhibernate.support.query.Relativization;
 import com.openthinks.libs.sql.dhibernate.support.template.SQLDialectUtils;
 import com.openthinks.libs.sql.entity.ColumnAttribute;
 import com.openthinks.libs.sql.lang.reflect.ReflectEngine;
-
-import openthinks.libs.utilities.Checker;
+import com.openthinks.libs.utilities.Checker;
 
 /**
  * the abstract implementation for {@link QueryFilter}

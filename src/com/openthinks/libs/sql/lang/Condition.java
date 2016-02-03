@@ -5,8 +5,7 @@ import java.util.Map;
 
 import com.openthinks.libs.sql.entity.Entity;
 import com.openthinks.libs.sql.lang.reflect.ReflectEngine;
-
-import openthinks.libs.utilities.Checker;
+import com.openthinks.libs.utilities.Checker;
 
 /**
  * 条件类

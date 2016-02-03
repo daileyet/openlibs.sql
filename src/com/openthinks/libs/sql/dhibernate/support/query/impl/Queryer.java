@@ -32,8 +32,7 @@ import com.openthinks.libs.sql.dhibernate.support.query.Query;
 import com.openthinks.libs.sql.dhibernate.support.query.QueryFilter;
 import com.openthinks.libs.sql.dhibernate.support.template.FilterTemplate;
 import com.openthinks.libs.sql.lang.reflect.ReflectEngine;
-
-import openthinks.libs.utilities.Converter;
+import com.openthinks.libs.utilities.Converter;
 
 /**
  * The implementation of {@link Query}

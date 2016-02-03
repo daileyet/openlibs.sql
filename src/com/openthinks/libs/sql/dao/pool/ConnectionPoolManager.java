@@ -28,13 +28,12 @@ package com.openthinks.libs.sql.dao.pool;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import openthinks.libs.utilities.Checker;
-import openthinks.libs.utilities.InstanceUtilities;
-
 import org.apache.log4j.Logger;
 
 import com.openthinks.libs.sql.dao.pool.impl.SimpleConnectionPool;
 import com.openthinks.libs.sql.lang.Configurator;
+import com.openthinks.libs.utilities.Checker;
+import com.openthinks.libs.utilities.InstanceUtilities;
 
 /**
  * The management of {@link ConnectionPool}
