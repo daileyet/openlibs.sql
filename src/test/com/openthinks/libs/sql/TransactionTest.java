@@ -23,7 +23,7 @@
 * @date Aug 3, 2015
 * @version V1.0   
 */
-package openthinks.libs.sql;
+package com.openthinks.libs.sql;
 
 import java.util.Locale;
 

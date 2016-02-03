@@ -1,4 +1,4 @@
-package openthinks.libs.sql;
+package com.openthinks.libs.sql;
 
 import com.openthinks.libs.sql.entity.Entity;
 

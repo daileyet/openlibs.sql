@@ -1,4 +1,4 @@
-package openthinks.libs.sql;
+package com.openthinks.libs.sql;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

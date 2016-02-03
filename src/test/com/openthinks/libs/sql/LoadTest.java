@@ -16,16 +16,15 @@
  * specific language governing permissions and limitations 
  * under the License. 
  * 
- * @Title: SaveTest.java 
- * @Package sql 
+ * @Title: LoadTest.java 
  * @Description: TODO
  * @author dailey 
- * @date 2012-11-9
+ * @date 2012-11-5
  * @version V1.0 
  */
-package openthinks.libs.sql;
+package com.openthinks.libs.sql;
 
-import java.util.Locale;
+import java.util.List;
 
 import org.junit.Test;
 
@@ -36,44 +35,50 @@ import com.openthinks.libs.sql.dhibernate.support.SessionFactory;
  * @author dailey
  *
  */
-public class SaveTest {
-
-	//	@Test
-	public void testSaveJPA() {
-		Session session = SessionFactory.getSession();
-		MessageJPA message = new MessageJPA();
-		message.setLocale(Locale.CHINA.toString());
-		message.setContent("HELLO");
-		message.setMessageId("2000");
-		session.save(message);
-		session.close();
-	}
-
-	//	@Test
-	public void testUpdate() {
-		Session session = SessionFactory.getSession();
-		MessageJPA message = new MessageJPA();
-		message.setLocale(Locale.CHINA.toString());
-		message.setContent("中国你好");
-		message.setMessageId("2000");
-		session.update(message);
-		session.close();
-	}
+public class LoadTest {
 
 	@Test
-	public void testSaveEntity() {
-		Message message = new Message();
-		message.setLocale(Locale.CHINA.toString());
-		message.setContent("实体类1");
-		message.setId("3000");
+	public void testListEntity() {
 		Session session = SessionFactory.getSession();
-		session.save(message);
+		List<Message> list = session.list(Message.class, "SELECT * FROM message");
+		for (Message entity : list) {
+			System.out.println(entity);
+		}
 
-		message = new Message();
-		message.setLocale(Locale.CHINA.toString());
-		message.setContent("实体类2");
-		message.setId("3001");
-		session.save(message);
+		list = session.list(Message.class, "SELECT * FROM message");
+		for (Message entity : list) {
+			System.out.println(entity);
+		}
+		session.close();
+
+	}
+
+	//	@Test
+	public void testJPAList() {
+		Session session = SessionFactory.getSession();
+		List<MessageJPA> list = session.list(MessageJPA.class, "SELECT * FROM message");
+		for (MessageJPA entity : list) {
+			System.out.println(entity);
+		}
 		session.close();
 	}
+
+	//	@Test
+	public void testListByClass() {
+		Session session = SessionFactory.getSession();
+		List<MessageJPA> list = session.list(MessageJPA.class);
+		for (MessageJPA entity : list) {
+			System.out.println(entity);
+		}
+		session.close();
+	}
+
+	//	@Test
+	public void testGetById() {
+		Session session = SessionFactory.getSession();
+		MessageJPA message = session.load(MessageJPA.class, "1000");
+		System.out.println(message);
+		session.close();
+	}
+
 }

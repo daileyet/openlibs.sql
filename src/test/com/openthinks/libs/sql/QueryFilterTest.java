@@ -23,7 +23,7 @@
  * @date 2013-12-2
  * @version V1.0 
  */
-package openthinks.libs.sql;
+package com.openthinks.libs.sql;
 
 import com.openthinks.libs.sql.dhibernate.Session;
 import com.openthinks.libs.sql.dhibernate.support.query.Query;

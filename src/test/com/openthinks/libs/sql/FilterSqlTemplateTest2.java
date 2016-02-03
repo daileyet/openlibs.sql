@@ -1,4 +1,4 @@
-package openthinks.libs.sql;
+package com.openthinks.libs.sql;
 
 import org.junit.Assert;
 import org.junit.Before;
