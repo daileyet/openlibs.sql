@@ -7,6 +7,7 @@ import org.junit.Test;
 import com.openthinks.libs.sql.dhibernate.support.query.Filters;
 import com.openthinks.libs.sql.dhibernate.support.query.QueryFilter;
 import com.openthinks.libs.sql.dhibernate.support.query.Relativization;
+import com.openthinks.libs.sql.dhibernate.support.query.impl.DirectFilter;
 import com.openthinks.libs.sql.dhibernate.support.query.impl.QueryFilterGroup;
 import com.openthinks.libs.sql.dhibernate.support.template.FilterTemplate;
 import com.openthinks.libs.sql.lang.reflect.ReflectEngine;
@@ -62,6 +63,17 @@ public class FilterSqlTemplateTest2 {
 		FilterTemplate template = ReflectEngine.createSQLTemplate(queryObjectType, this.firstFilter);
 		String actual = template.generateSQL();
 		String expected = "select * from `message` where  ( `message_id` = ?  or  ( `message_id` = ?  )  ) ";
+		Assert.assertEquals(expected.toLowerCase(), actual.toLowerCase());
+	}
+
+	@Test
+	public void testDirectQueryFilter() {
+		DirectFilter qf = new DirectFilter();
+		this.firstFilter = qf.filter("limit ? , ?").params(new String[] { "5", "10" });
+		FilterTemplate template = ReflectEngine.createSQLTemplate(queryObjectType, this.firstFilter);
+
+		String actual = template.generateSQL();
+		String expected = "select * from `message` where limit ? , ?";
 		Assert.assertEquals(expected.toLowerCase(), actual.toLowerCase());
 	}
 }
