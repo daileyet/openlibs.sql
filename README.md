@@ -221,7 +221,7 @@ List<Row> rows = session.list("SELECT * FROM message",new String[]{});
 session.close();
 ```
 ###### **简单条件类查询**
-简单条件类: openthinks.libs.sql.lang.Condition是非常底层的,也属于Low level.
+简单条件类: com.openthinks.libs.sql.lang.Condition是非常底层的,也属于Low level.
 Condition对象可以如下创建:
 ```
 Session session = SessionFactory.getSession();
