@@ -1,7 +1,15 @@
 # openlibs.sql
 The lib of java database ORM simple implementation
 
+#### Get it by Maven
 
+```xml
+<dependency>
+  <groupId>com.openthinks.libs</groupId>
+  <artifactId>sql</artifactId>
+  <version>2.0</version>
+</dependency>
+```
 ---
 
 #### **Session基本用法**
