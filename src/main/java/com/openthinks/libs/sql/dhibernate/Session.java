@@ -16,27 +16,26 @@ import com.openthinks.libs.sql.lang.Configurator;
 
 /**
  * 与数据库会话接口
- * <p>Include high level and low level ways to access database<BR>
+ * Include high level and low level ways to access database<BR>
  * <B>High level DAO API - auto generate SQL</B>
  * <ul>
- * <li>{@link #createQuery(Class)}
- * <li>{@link #load(Class, Serializable)}
- * <li>{@link #save(Object)}
- * <li>{@link #update(Object)}
- * <li>{@link #delete(Object)}
- * <li>{@link #list(Class)}
+ * <li>{@link #createQuery(Class)}</li>
+ * <li>{@link #load(Class, Serializable)}</li>
+ * <li>{@link #save(Object)}</li>
+ * <li>{@link #update(Object)}</li>
+ * <li>{@link #delete(Object)}</li>
+ * <li>{@link #list(Class)}</li>
  * </ul>
  * <B>Low level DAO API - manual generate SQL</B>
  * <ul>
- * <li>{@link #add(Condition)} {@link #add(String)} {@link #add(String, String[])}
- * <li>{@link #createCondition()}
- * <li>{@link #delete(Condition)} {@link #delete(String)} {@link #delete(String, String[])}
- * <li>{@link #get(Class, Condition)} {@link #get(Class, String)} {@link #get(Class, String, String[])}
- * <li>{@link #list(Condition)} {@link #list(String)} {@link #list(String, String[])}
- * <li>{@link #list(Class, Condition)} {@link #list(Class, String)} {@link #list(Class, String, String[])}
- * <li>{@link #update(Condition)} {@link #update(String)} {@link #update(String, String[])}
+ * <li>{@link #add(Condition)} {@link #add(String)} {@link #add(String, String[])}</li>
+ * <li>{@link #createCondition()}</li>
+ * <li>{@link #delete(Condition)} {@link #delete(String)} {@link #delete(String, String[])}</li>
+ * <li>{@link #get(Class, Condition)} {@link #get(Class, String)} {@link #get(Class, String, String[])}</li>
+ * <li>{@link #list(Condition)} {@link #list(String)} {@link #list(String, String[])}</li>
+ * <li>{@link #list(Class, Condition)} {@link #list(Class, String)} {@link #list(Class, String, String[])}</li>
+ * <li>{@link #update(Condition)} {@link #update(String)} {@link #update(String, String[])}</li>
  * </ul>
- * </p>
  * @author dmj
  * @version 2010/11/19
  * 

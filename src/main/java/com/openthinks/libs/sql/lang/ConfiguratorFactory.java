@@ -32,13 +32,12 @@ public class ConfiguratorFactory {
 	/**
 	 * 取得配置文件名为dbconfig.properties的数据库默认配置实例
 	 * 
+	 * @return Configurator 数据库连接属性配置实例
 	 * @throws ConfigureFileNotFoundException
 	 *             配置文件没有找到异常
-	 * @return Configurator 数据库连接属性配置实例
 	 */
 	public static Configurator getDefaultInstance() {
-		return getDefaultInstance(ConfiguratorFactory.class,
-				"dbconfig.properties");
+		return getDefaultInstance(ConfiguratorFactory.class, "dbconfig.properties");
 	}
 
 	/**
@@ -46,9 +45,9 @@ public class ConfiguratorFactory {
 	 * 
 	 * @param clz
 	 *            加载配置参数所在的类
+	 * @return Configurator 数据库连接属性配置实例
 	 * @throws ConfigureFileNotFoundException
 	 *             配置文件没有找到异常
-	 * @return Configurator 数据库连接属性配置实例
 	 */
 	public static Configurator getDefaultInstance(Class<?> clz) {
 		return getDefaultInstance(clz, "dbconfig.properties");
@@ -61,12 +60,11 @@ public class ConfiguratorFactory {
 	 *            加载配置参数所在的类
 	 * @param configureName
 	 *            配置文件名
+	 * @return Configurator 数据库连接属性配置实例
 	 * @throws ConfigureFileNotFoundException
 	 *             配置文件没有找到异常
-	 * @return Configurator 数据库连接属性配置实例
 	 */
-	public static Configurator getDefaultInstance(Class<?> clz,
-			String configureName) {
+	public static Configurator getDefaultInstance(Class<?> clz, String configureName) {
 		if (configurator == null) {
 			configurator = new Configurator();
 			InputStream in = clz.getResourceAsStream("/" + configureName);
@@ -74,8 +72,7 @@ public class ConfiguratorFactory {
 				configurator.load(in);
 			} catch (IOException e) {
 				configurator = null;
-				throw new ConfigureFileNotFoundException("数据库默认配置文件未能找到",
-						e.fillInStackTrace());
+				throw new ConfigureFileNotFoundException("数据库默认配置文件未能找到", e.fillInStackTrace());
 			}
 		}
 		return configurator;
@@ -86,17 +83,16 @@ public class ConfiguratorFactory {
 	 * 
 	 * @param file
 	 *            配置文件示例File类型对象
+	 * @return Configurator 数据库连接属性配置实例
 	 * @throws ConfigureFileNotFoundException
 	 *             配置文件没有找到异常
-	 * @return Configurator 数据库连接属性配置实例
 	 */
 	public static Configurator getInstance(File file) {
 		InputStream in = null;
 		try {
 			in = new FileInputStream(file);
 		} catch (FileNotFoundException e) {
-			throw new ConfigureFileNotFoundException("数据库配置文件未能找到",
-					e.fillInStackTrace());
+			throw new ConfigureFileNotFoundException("数据库配置文件未能找到", e.fillInStackTrace());
 		}
 		return getInstance(in);
 	}
@@ -106,9 +102,9 @@ public class ConfiguratorFactory {
 	 * 
 	 * @param in
 	 *            输入流
+	 * @return Configurator 数据库连接属性配置实例
 	 * @throws ConfigureFileNotFoundException
 	 *             配置文件没有找到异常
-	 * @return Configurator 数据库连接属性配置实例
 	 */
 	public static Configurator getInstance(InputStream in) {
 		if (configurator == null) {
@@ -118,8 +114,7 @@ public class ConfiguratorFactory {
 			configurator.load(in);
 		} catch (IOException e) {
 			configurator = null;
-			throw new ConfigureFileNotFoundException("数据库配置文件未能找到",
-					e.fillInStackTrace());
+			throw new ConfigureFileNotFoundException("数据库配置文件未能找到", e.fillInStackTrace());
 		}
 		return configurator;
 	}

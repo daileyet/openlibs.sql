@@ -29,15 +29,14 @@ import java.util.List;
 
 /**
  * <B>SELECT</B> SQL statement builder and executor interface
+ * @param <T> the entity class
  * @author minjdai
- * @param T the entity class
  */
 public interface Query<T> {
 
 	/**
 	 * set query entity class
 	 * @param clz Class entity class
-	 * @param T entity class type
 	 * @return Query
 	 */
 	public Query<T> queryObject(Class<T> clz);
@@ -45,14 +44,12 @@ public interface Query<T> {
 	/**
 	 * append the filter on this entity class
 	 * @param filter {@link QueryFilter}
-	 * @param T entity class type
 	 * @return Query
 	 */
 	public Query<T> addFilter(QueryFilter... filter);
 
 	/**
 	 * generate the query SQL and executed;fetch the result as entity List
-	 * @param T entity class type
 	 * @return List
 	 */
 	public List<T> execute();

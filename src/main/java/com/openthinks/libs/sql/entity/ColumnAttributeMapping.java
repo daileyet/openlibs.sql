@@ -35,7 +35,7 @@ import java.util.Set;
  *
  */
 public class ColumnAttributeMapping implements Iterable<ColumnAttribute> {
-	private Set<ColumnAttribute> set = new HashSet<ColumnAttribute>();
+	private Set<ColumnAttribute> set = new HashSet<>();
 
 	public void map(String columnName, String attributeName) {
 		set.add(new ColumnAttribute(columnName, attributeName));
@@ -65,9 +65,9 @@ public class ColumnAttributeMapping implements Iterable<ColumnAttribute> {
 	}
 
 	/**
-	 * 
-	 * @param attributeName
-	 * @return
+	 * find {@link ColumnAttribute} instance by attribute name
+	 * @param attributeName attribute name
+	 * @return ColumnAttribute
 	 */
 	public ColumnAttribute findByAttribute(String attributeName) {
 		ColumnAttribute findColumnAttribute = null;

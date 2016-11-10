@@ -57,7 +57,7 @@ public class ReflectEntity {
 
 	/**
 	 * 根据属性名获取取得该属性值的方法名称<br>
-	 * 将属性名第一字母大写,<font color=red>属性的类型为boolean</font><br>
+	 * 将属性名第一字母大写,<span style="color:red">属性的类型为boolean</span><br>
 	 * @param propertyName 属性名
 	 * @return String get方法名
 	 */

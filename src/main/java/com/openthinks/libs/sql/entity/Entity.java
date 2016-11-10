@@ -18,18 +18,20 @@ import com.openthinks.libs.utilities.Converter;
  * 对应数据库表的实体类
  * The simple entity which reference the table in database;<BR>
  * required:<BR>
- * 	<li>the field or property name in this entity need same as the column name in database table
- * 	<li>the first attribute in this entity map to the primary key column in database table
- *  <li>the entity class name need same as table name while call {@link Session} high level API
+ * <ul>
+ * 	<li>the field or property name in this entity need same as the column name in database table</li>
+ * 	<li>the first attribute in this entity map to the primary key column in database table</li>
+ *  <li>the entity class name need same as table name while call {@link Session} high level API</li>
+ * </ul>
  * @author dmj
  */
 public abstract class Entity extends AbstractRow {
 	/**
 	 * 实体类对象的属性名称Map
 	 */
-	private static Map<Class<? extends Entity>, ColumnAttributeMapping> entityMetaDataCache = new ConcurrentHashMap<Class<? extends Entity>, ColumnAttributeMapping>();
+	private static Map<Class<? extends Entity>, ColumnAttributeMapping> entityMetaDataCache = new ConcurrentHashMap<>();
 
-	private final Map<String, PropertyDescriptor> propertyDescMap = new HashMap<String, PropertyDescriptor>();
+	private final Map<String, PropertyDescriptor> propertyDescMap = new HashMap<>();
 
 	/**
 	 * 返回所有属性的名称 子类无需重写该方法

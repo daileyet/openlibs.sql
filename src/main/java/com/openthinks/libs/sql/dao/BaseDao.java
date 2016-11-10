@@ -170,15 +170,18 @@ public interface BaseDao {
 	 * <li>无配置默认实体类中的各属性字段与数据库表中的字段名称相同,区分大小写.</li>
 	 * </ol>
 	 * </div>
+	 * <B>NOTE:</B><BR>
+	 * 查询的实体Class类型,<span style="color:red"><b>需是Entity的子类型</b></span><BR>
+	 * 标准查询sql语句,<span style=color:red>不支持跨表查询</span><BR>
 	 * @deprecated
 	 * please use: {@link #list(Class, String)}
-	 * @see Entity 
-	 * @param clz
-	 *            查询的实体Class类型,<font color=red><b>需是Entity的子类型</b></font>
-	 * @param sql
-	 *            标准查询sql语句,<span style=color:red>不支持跨表查询</span>
 	 * @param <T> entity child class
+	 * @param clz
+	 *            查询的实体Class类型,需是Entity的子类型
+	 * @param sql
+	 *            标准查询sql语句,不支持跨表查询
 	 * @return List 实体类Entity或其子类的集合列表
+	 * @see Entity 
 	 */
 	@Deprecated
 	public <T extends Entity> List<T> listEntity(Class<T> clz, String sql);
@@ -191,17 +194,20 @@ public interface BaseDao {
 	 * <li>实体类重写父类Entity的get,set方法
 	 * <li>无配置默认实体类中的各属性字段与数据库表中的字段名称相同,区分大小写.
 	 * </ol></div>
+	 * <B>NOTE:</B><BR>
+	 * 查询的实体Class类型,<span style="color:red"><b>需是Entity的子类型</b></span><BR>
+	 * 标准查询sql语句,<span style=color:red>不支持跨表查询</span><BR>
 	 * @deprecated
 	 * please use: {@link #list(Class, String, String[])}
-	 * @see Entity 
+	 * @param <T> entity child class
 	 * @param clz
-	 *            查询的实体Class类型,<font color=red><b>需是Entity的子类型</b></font>
+	 *            查询的实体Class类型,需是Entity的子类型
 	 * @param sql
-	 *            标准查询sql语句,<span style=color:red>不支持跨表查询</span>
+	 *            标准查询sql语句,不支持跨表查询
 	 * @param params
 	 *            sql语句依赖的具体参数数组
-	 * @param <T> entity child class
 	 * @return List 实体类Entity或其子类的集合列表
+	 * @see Entity 
 	 */
 	@Deprecated
 	public <T extends Entity> List<T> listEntity(Class<T> clz, String sql, String[] params);
@@ -214,23 +220,26 @@ public interface BaseDao {
 	 * <li>实体类重写父类Entity的get,set方法
 	 * <li>无配置默认实体类中的各属性字段与数据库表中的字段名称相同,区分大小写.
 	 * </ol></div>
+	 * <B>NOTE:</B><BR>
+	 * 查询的实体Class类型,<span style="color:red"><b>需是Entity的子类型</b></span><BR>
 	 * @deprecated 
 	 * please use: {@link #list(Class, Condition)}
-	 * @see Entity 
+	 * @param <T> entity child class
 	 * @param clz
-	 *            查询的实体Class类型,<font color=red><b>需是Entity的子类型</b></font>
+	 *            查询的实体Class类型,需是Entity的子类型
 	 * @param condition
 	 *            专用于生成带条件的sql语句的对象
-	 * @param <T> entity child class
 	 * @return List 实体类Entity或其子类的集合列表
+	 * @see Entity 
 	 */
 	@Deprecated
 	public <T extends Entity> List<T> listEntity(Class<T> clz, Condition condition);
 
 	/**
 	 * 返回所有相应实体类的集合列表<br>
-	 * <div style=color:gray;> 遵循数据库表结构反射. 实体类中的各属性字段与数据库表中的字段名称相同,区分大小写.<br>
-	 * <table border=1 >
+	 * <div style="color:gray;"> 遵循数据库表结构反射. 实体类中的各属性字段与数据库表中的字段名称相同,区分大小写.<br>
+	 * <table border="1" >
+	 * <caption>Data Type</caption>
 	 * <tr>
 	 * <th>数据库表字段类型</th>
 	 * <td>整数</td>
@@ -253,13 +262,13 @@ public interface BaseDao {
 	 * </table>
 	 * </div>
 	 * 
+	 * @param <T> the entity class type
 	 * @param clz
-	 *            查询的实体Class类型,<span style=color:red>可以不是Entity的子类</span><BR>
+	 *            查询的实体Class类型,<span style="color:red">可以不是Entity的子类</span><BR>
 	 *            1.Entity子类<BR>
 	 *            2.JPA注解方式
-	 * @param <T> the entity class type
-	 * @since 2010/11/17
 	 * @return List 任何实体类的集合列表
+	 * @since 2010/11/17
 	 */
 	public <T> List<T> list(Class<T> clz);
 
@@ -267,6 +276,7 @@ public interface BaseDao {
 	 * 返回满足查询条件的实体类的集合列表<br>
 	 * <div style=color:gray;> 遵循数据库表结构反射. 实体类中的各属性字段与数据库表中的字段名称相同,区分大小写.<br>
 	 * <table border=1 >
+	 * <caption>Data Type</caption>
 	 * <tr>
 	 * <th>数据库表字段类型</th>
 	 * <td>整数</td>
@@ -289,11 +299,11 @@ public interface BaseDao {
 	 * </table>
 	 * </div>
 	 * 
+	 * @param <T> the entity class type
 	 * @param clz
-	 *            查询的实体Class类型,<span style=color:red>可以不是Entity的子类</span>
+	 *            查询的实体Class类型,可以不是Entity的子类
 	 * @param sql
 	 *            标准查询sql语句
-	 * @param <T> the entity class type
 	 * @since 2010/11/17
 	 * @return List 任何实体类的集合列表
 	 */
@@ -303,6 +313,7 @@ public interface BaseDao {
 	 * 返回满足查询条件的实体类的集合列表<br>
 	 * <div style=color:gray;> 遵循数据库表结构反射. 实体类中的各属性字段与数据库表中的字段名称相同,区分大小写.<br>
 	 * <table border=1 >
+	 * <caption>Data Type</caption>
 	 * <tr>
 	 * <th>数据库表字段类型</th>
 	 * <td>整数</td>
@@ -325,13 +336,13 @@ public interface BaseDao {
 	 * </table>
 	 * </div>
 	 * 
+	 * @param <T> the entity class type
 	 * @param clz
-	 *            查询的实体Class类型,<span style=color:red>可以不是Entity的子类</span>
+	 *            查询的实体Class类型,可以不是Entity的子类
 	 * @param sql
 	 *            标准查询sql语句
 	 * @param params
 	 *            sql依赖的具体参数数组
-	 * @param <T> the entity class type
 	 * @return List 任何实体类的集合列表
 	 */
 	public <T> List<T> list(Class<T> clz, String sql, String[] params);
@@ -340,6 +351,7 @@ public interface BaseDao {
 	 * 返回满足查询条件的实体类的集合列表<br>
 	 * <div style=color:gray;> 遵循数据库表结构反射. 实体类中的各属性字段与数据库表中的字段名称相同,区分大小写.<br>
 	 * <table border=1 >
+	 * <caption>Data Type</caption>
 	 * <tr>
 	 * <th>数据库表字段类型</th>
 	 * <td>整数</td>
@@ -362,13 +374,13 @@ public interface BaseDao {
 	 * </table>
 	 * </div>
 	 * 
+	 * @param <T> the entity class type
 	 * @param clz
-	 *            查询的实体Class类型,<span style=color:red>可以不是Entity的子类</span>
+	 *            查询的实体Class类型,可以不是Entity的子类
 	 * @param condition
 	 *            专用于生成带条件的sql语句的对象
-	 * @param <T> the entity class type
-	 * @since 2010/11/17
 	 * @return List 任何实体类的集合列表
+	 * @since 2010/11/17
 	 */
 	public <T> List<T> list(Class<T> clz, Condition condition);
 

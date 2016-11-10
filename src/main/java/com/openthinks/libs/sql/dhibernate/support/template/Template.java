@@ -43,8 +43,8 @@ public interface Template {
 
 	/**
 	 * set the data for the template sql values part
-	 * @param entityData entity object
 	 * @param <T> entity class
+	 * @param entityData entity object
 	 */
 	<T> void setData(T entityData);
 

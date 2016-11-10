@@ -58,7 +58,7 @@ public class SimpleConnectionPool implements ConnectionPool {
 	 * @param configurator Configurator
 	 */
 	public SimpleConnectionPool(Configurator configurator) {
-		this.connectionQueue = new ConcurrentLinkedQueue<Connection>();
+		this.connectionQueue = new ConcurrentLinkedQueue<>();
 		this.lock = new ReentrantLock();
 		this.configurator = configurator;
 	}
@@ -90,17 +90,17 @@ public class SimpleConnectionPool implements ConnectionPool {
 	/**
 	 * Create a new {@link Connection}
 	 * @return Connection
-	 * @throws IllegalStateException
-	 * @throws ClassNotFoundException
-	 * @throws SQLException
+	 * @throws IllegalStateException occur when pool active connections exceed max account
+	 * @throws ClassNotFoundException  occur when if the class cannot be located
+	 * @throws SQLException occur when  if a database access error occurs or the url is null
 	 */
 	protected Connection createConnection() throws IllegalStateException, ClassNotFoundException, SQLException {
 		Connection conn;
 		if (activeCount.get() >= this.maxActive())
 			throw new IllegalStateException("Reached the maximum number of database connections in pool.");
 		Class.forName(configurator.getDriver());
-		conn = DriverManager
-				.getConnection(configurator.getUrl(), configurator.getUserName(), configurator.getUserPwd());
+		conn = DriverManager.getConnection(configurator.getUrl(), configurator.getUserName(),
+				configurator.getUserPwd());
 		activeCount.incrementAndGet();
 		return conn;
 	}

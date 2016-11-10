@@ -39,9 +39,9 @@ public interface QueryFilter {
 	 * between current instance and the appended instance when appended instance is
 	 * not {@link QueryFilterConnect} type
 	 * 
+	 * @param <T> entity class type
 	 * @param filter
 	 *            QueryFilter
-	 * @param T entity class type
 	 * @return current QueryFilter instance, not appended instance
 	 */
 	public <T extends QueryFilter> T append(QueryFilter filter);

@@ -26,7 +26,7 @@
 package com.openthinks.libs.sql.dhibernate.support.query.impl;
 
 /**
- * NotEqual query filter as <B>!=</B> or <B><></B> in SQL statement
+ * NotEqual query filter as <B>!=</B> or <B>&lt;&gt;</B> in SQL statement
  * @author minjdai
  */
 public class NotEqualsFilter extends AbstractQueryFilter<NotEqualsFilter> {

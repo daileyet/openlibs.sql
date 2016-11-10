@@ -6,9 +6,9 @@ import com.openthinks.libs.sql.lang.ConfiguratorFactory;
 
 /**
  * Session的工厂类
- * 
+ * <BR>
+ * Date:	17:47 2010/11/19
  * @author dmj
- * @version 17:47 2010/11/19
  */
 public class SessionFactory {
 

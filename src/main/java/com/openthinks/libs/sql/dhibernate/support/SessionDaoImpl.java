@@ -10,9 +10,9 @@ import com.openthinks.libs.sql.dao.impl.BaseDaoImpl;
 
 /**
  * SessionDaoImpl.java 以供Session内部使用的BaseDao的实现类
- * 
+ * <BR>
+ * Date:	17:00 2010/11/19
  * @author dmj
- * @version 17:00 2010/11/19
  */
 class SessionDaoImpl extends BaseDaoImpl {
 	/**
@@ -45,7 +45,8 @@ class SessionDaoImpl extends BaseDaoImpl {
 	 * 取得数据库连接<br>
 	 * 重写BaseDaoImpl中的该方法,确保该类中的数据库连接只共用一个.<br>
 	 * 
-	 * @throws Exception
+	 * @throws ClassNotFoundException  occur when class not found
+	 * @throws SQLException  if a database access error occurs
 	 * @return Connection 连接对象
 	 */
 	@Override

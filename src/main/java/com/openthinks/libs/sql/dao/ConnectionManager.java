@@ -42,23 +42,24 @@ import com.openthinks.libs.utilities.Checker;
  */
 public final class ConnectionManager {
 	private static Logger logger = Logger.getLogger(ConnectionManager.class.getName());
+
 	/**
 	 * @param configurator Configurator
 	 * @return Connection
-	 * @throws ClassNotFoundException 
-	 * @throws SQLException 
+	 * @throws ClassNotFoundException occur when class not found
+	 * @throws SQLException occur when SQL exception
 	 */
 	public static Connection getConnection(Configurator configurator) throws ClassNotFoundException, SQLException {
 		Checker.require(configurator).notNull();
 		Connection conn = null;
-		if(configurator.isUsePool()){
-			ConnectionPool connPool=ConnectionPoolManager.getInstance(configurator);
-			conn =  connPool.request();
-		}else{
+		if (configurator.isUsePool()) {
+			ConnectionPool connPool = ConnectionPoolManager.getInstance(configurator);
+			conn = connPool.request();
+		} else {
 			Class.forName(configurator.getDriver());
-			conn = DriverManager.getConnection(configurator.getUrl(),
-					configurator.getUserName(), configurator.getUserPwd());
-			
+			conn = DriverManager.getConnection(configurator.getUrl(), configurator.getUserName(),
+					configurator.getUserPwd());
+
 		}
 		return conn;
 	}
@@ -68,13 +69,14 @@ public final class ConnectionManager {
 	 * @param conns Connection[]
 	 */
 	public static void closeConnection(Configurator configurator, Connection... conns) {
-		if(conns==null || conns.length==0) return;
+		if (conns == null || conns.length == 0)
+			return;
 		Checker.require(configurator).notNull();
-		if(configurator.isUsePool()){
-			ConnectionPool connPool=ConnectionPoolManager.getInstance(configurator);
+		if (configurator.isUsePool()) {
+			ConnectionPool connPool = ConnectionPoolManager.getInstance(configurator);
 			connPool.recycle(conns);
-		}else{
-			for(Connection conn:conns){
+		} else {
+			for (Connection conn : conns) {
 				if (conn != null) {
 					try {
 						if (!conn.isClosed()) {
@@ -86,9 +88,8 @@ public final class ConnectionManager {
 					}
 				}
 			}
-			
+
 		}
 	}
 
-	
 }

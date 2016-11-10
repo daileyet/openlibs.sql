@@ -36,6 +36,7 @@ import com.openthinks.libs.utilities.Converter;
 
 /**
  * The implementation of {@link Query}
+ * @param <T> entity class type
  * @author minjdai
  * 
  */

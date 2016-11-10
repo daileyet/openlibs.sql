@@ -4,10 +4,9 @@ import com.openthinks.libs.sql.dao.BaseDao;
 import com.openthinks.libs.sql.lang.Configurator;
 
 /**
- * 默认实现的Session类
- * 
+ * 默认实现的Session类<BR>
+ * Date:	 17:20 2010/11/19
  * @author dmj
- * @version 17:20 2010/11/19
  */
 class DefaultSessionImpl extends AbstractSession {
 	private final BaseDao baseDao;

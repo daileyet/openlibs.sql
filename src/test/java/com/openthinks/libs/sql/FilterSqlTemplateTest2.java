@@ -75,5 +75,6 @@ public class FilterSqlTemplateTest2 {
 		String actual = template.generateSQL();
 		String expected = "select * from `message` where limit ? , ?";
 		Assert.assertEquals(expected.toLowerCase(), actual.toLowerCase());
+
 	}
 }
