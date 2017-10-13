@@ -47,6 +47,7 @@ public final class SQLDialectUtils {
 				retVal = "`" + columnName + "`";
 				break;
 			case ORACLE:
+			case DERBY:
 				retVal = "\"" + columnName + "\"";
 				break;
 			case SQLSERVER:

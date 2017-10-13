@@ -25,6 +25,7 @@
 */
 package com.openthinks.libs.sql;
 
+import com.openthinks.libs.sql.lang.Configurator.Dialect;
 import com.openthinks.libs.utilities.version.AppVersion;
 import com.openthinks.libs.utilities.version.VersionCenter;
 
@@ -35,5 +36,8 @@ import com.openthinks.libs.utilities.version.VersionCenter;
  */
 @AppVersion("2.0")
 public class Versions extends VersionCenter {
-
+	/**
+	 * add Derby database {@link Dialect#DERBY}
+	 */
+	String v_2_0;
 }
