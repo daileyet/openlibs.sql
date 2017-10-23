@@ -27,7 +27,6 @@ package com.openthinks.libs.sql.dao.pool.impl;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -48,7 +47,6 @@ public class SimpleConnectionPool implements ConnectionPool {
 	private final ConcurrentLinkedQueue<Connection> connectionQueue;
 	private final Configurator configurator;
 	private final Lock lock;
-	private final AtomicInteger freeCount = new AtomicInteger(0);
 	private final AtomicInteger activeCount = new AtomicInteger(0);
 	private final AtomicBoolean rejectAction = new AtomicBoolean(false);
 	private final Logger logger = Logger.getLogger(SimpleConnectionPool.class);
@@ -79,7 +77,6 @@ public class SimpleConnectionPool implements ConnectionPool {
 				destroy(conn);
 				conn = createConnection();
 			} else {//directly get connections from free side
-				freeCount.decrementAndGet();
 			}
 			return conn;
 		} finally {
@@ -116,9 +113,19 @@ public class SimpleConnectionPool implements ConnectionPool {
 			throw new IllegalStateException("This pool has been shutdown.");
 		lock.lock();
 		try {
-			boolean result = connectionQueue.addAll(Arrays.asList(conns));
-			if (result) {
-				freeCount.addAndGet(conns.length);
+			for(Connection conn:conns) {
+				if(idelSize()+1 > maxIdle()) {
+					try {
+						if (conn != null && !conn.isClosed()) {
+							conn.close();
+						}
+					} catch (SQLException e) {
+						logger.error("Database close error occurs", e);
+						continue;
+					}
+				}else {
+					connectionQueue.add(conn);
+				}
 			}
 		} finally {
 			lock.unlock();
@@ -135,14 +142,12 @@ public class SimpleConnectionPool implements ConnectionPool {
 					conn.close();
 				}
 			} catch (SQLException e) {
-				logger.error("Database access error occurs", e);
+				logger.error("Database close error occurs", e);
 				continue;
 			}
 			lock.lock();
 			try {
-				boolean changed = this.connectionQueue.remove(conn);
-				if (changed)
-					freeCount.decrementAndGet();
+				this.connectionQueue.remove(conn);
 				activeCount.decrementAndGet();
 			} finally {
 				lock.unlock();
@@ -157,6 +162,10 @@ public class SimpleConnectionPool implements ConnectionPool {
 	@Override
 	public int size() {
 		return activeCount.get();
+	}
+	
+	protected int idelSize() {
+		return connectionQueue.size();
 	}
 
 	public int maxActive() {
@@ -187,9 +196,7 @@ public class SimpleConnectionPool implements ConnectionPool {
 			}
 			lock.lock();
 			try {
-				boolean changed = this.connectionQueue.remove(conn);
-				if (changed)
-					freeCount.decrementAndGet();
+				this.connectionQueue.remove(conn);
 				activeCount.decrementAndGet();
 			} finally {
 				lock.unlock();
