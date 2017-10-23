@@ -112,5 +112,15 @@ public final class ConnectionPoolManager {
 	public static void setSingletonPoolInstance(ConnectionPool singletonPoolInstance) {
 		ConnectionPoolManager.singletonPoolInstance = singletonPoolInstance;
 	}
+	
+	/**
+	 * destroy all connections in {@link ConnectionPool}
+	 */
+	public static void destroy() {
+		final ConnectionPool connPool = ConnectionPoolManager.singletonPoolInstance;
+		if(connPool!=null) {
+			connPool.shutdown();
+		}
+	}
 
 }
