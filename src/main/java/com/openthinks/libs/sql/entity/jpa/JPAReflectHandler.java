@@ -26,9 +26,13 @@
 package com.openthinks.libs.sql.entity.jpa;
 
 import java.beans.PropertyDescriptor;
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.sql.Clob;
+import java.sql.SQLException;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -42,6 +46,7 @@ import com.openthinks.libs.sql.entity.ColumnAttributeMapping;
 import com.openthinks.libs.sql.entity.key.IDType;
 import com.openthinks.libs.sql.lang.reflect.ReflectEntity;
 import com.openthinks.libs.utilities.Converter;
+import com.openthinks.libs.utilities.Converter.ConvertHandler;
 
 /**
  * The simple {@link IReflectHandler} implementation for JPA Annotation
@@ -53,9 +58,10 @@ public class JPAReflectHandler implements IReflectHandler {
 
 	/**
 	 * The strategy of get column name
-	 * <ol>		
+	 * <ol>
 	 * <li>from the name of annotation {@link javax.persistence.Column}
-	 * <li>if the name of annotation {@link javax.persistence.Column} is empty, use the attribute name
+	 * <li>if the name of annotation {@link javax.persistence.Column} is empty, use
+	 * the attribute name
 	 * </ol>
 	 */
 	@Override
@@ -119,11 +125,11 @@ public class JPAReflectHandler implements IReflectHandler {
 		String attributeName = columnAttributeMapping.findByColumn(columnName).getAttributeName();
 		if (attributeName == null)
 			return false;
-		boolean isSuccess = trySetByField(entity, attributeName, columnValue);
+		boolean isSuccess = trySetByMethod(entity, attributeName, columnValue);
 		if (isSuccess == true) {
 			return true;
 		}
-		isSuccess = trySetByMethod(entity, attributeName, columnValue);
+		isSuccess = trySetByField(entity, attributeName, columnValue);
 		return isSuccess;
 	}
 
@@ -169,9 +175,10 @@ public class JPAReflectHandler implements IReflectHandler {
 
 	/**
 	 * The strategy of get table name
-	 * <ol>		
+	 * <ol>
 	 * <li>from the name of annotation {@link javax.persistence.Table}
-	 * <li>if the name of annotation {@link javax.persistence.Table} is empty, use the entity class name
+	 * <li>if the name of annotation {@link javax.persistence.Table} is empty, use
+	 * the entity class name
 	 * </ol>
 	 */
 	@Override
@@ -203,6 +210,48 @@ public class JPAReflectHandler implements IReflectHandler {
 			}
 		}
 		return idName;
+	}
+
+	static {
+		Converter.register(Clob.class, new ClobConvertHandler());
+	}
+
+	static class ClobConvertHandler implements ConvertHandler {
+		private Clob source;
+
+		@Override
+		public void handSource(Object obj) {
+			this.source = (Clob) obj;
+		}
+
+		@SuppressWarnings("unchecked")
+		@Override
+		public <T> T handTarget(Class<T> clazz) {
+			if (clazz == String.class) {
+				try {
+					return (T) convertToString();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			return null;
+		}
+
+		private String convertToString() throws SQLException, IOException {
+			BufferedReader br = new BufferedReader(source.getCharacterStream());
+			String line = null;
+			StringBuffer sb = new StringBuffer();
+			int lineCount = 0;
+			while ((line = br.readLine()) != null) {
+				if (++lineCount > 1)
+					sb.append("\r\n");
+				sb.append(line);
+			}
+			br.close();
+			return sb.toString();
+		}
 	}
 
 }

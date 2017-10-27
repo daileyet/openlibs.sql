@@ -13,23 +13,23 @@ public final class Configurator extends Properties {
 	/**
 	 * 配置文件数据库驱动键名常量
 	 */
-	public final static String DRIVER = "DRIVER";
+	public final static String DRIVER = "sql.driver";
 	/**
 	 * 配置文件数据库连接地址键名常量
 	 */
-	public final static String URL = "URL";
+	public final static String URL = "sql.url";
 	/**
 	 * 配置文件数据库登录名键名常量
 	 */
-	public final static String USERNAME = "USERNAME";
+	public final static String USERNAME = "user";
 	/**
 	 * 配置文件数据库登录密码键名常量
 	 */
-	public final static String USERPWD = "USERPWD";
+	public final static String USERPWD = "password";
 
-	public final static String USEDPOOL = "USEPOOL";
+	public final static String USEDPOOL = "sql.usepool";
 
-	public final static String DIALECT = "DIALECT";
+	public final static String DIALECT = "sql.dialect";
 
 	public Configurator() {
 	}

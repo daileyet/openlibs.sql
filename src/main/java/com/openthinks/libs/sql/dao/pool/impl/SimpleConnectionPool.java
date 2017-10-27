@@ -45,7 +45,7 @@ import com.openthinks.libs.sql.lang.Configurator;
  */
 public class SimpleConnectionPool implements ConnectionPool {
 	private final ConcurrentLinkedQueue<Connection> connectionQueue;
-	private final Configurator configurator;
+	protected final Configurator configurator;
 	private final Lock lock;
 	private final AtomicInteger activeCount = new AtomicInteger(0);
 	private final AtomicBoolean rejectAction = new AtomicBoolean(false);
@@ -96,10 +96,13 @@ public class SimpleConnectionPool implements ConnectionPool {
 		if (activeCount.get() >= this.maxActive())
 			throw new IllegalStateException("Reached the maximum number of database connections in pool.");
 		Class.forName(configurator.getDriver());
-		conn = DriverManager.getConnection(configurator.getUrl(), configurator.getUserName(),
-				configurator.getUserPwd());
+		conn = createNewConnection(configurator);
 		activeCount.incrementAndGet();
 		return conn;
+	}
+
+	protected Connection createNewConnection(final Configurator configurator) throws SQLException {
+		return DriverManager.getConnection(configurator.getUrl(), configurator);
 	}
 
 	/* (non-Javadoc)

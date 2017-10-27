@@ -57,13 +57,12 @@ public final class ConnectionManager {
 			conn = connPool.request();
 		} else {
 			Class.forName(configurator.getDriver());
-			conn = DriverManager.getConnection(configurator.getUrl(), configurator.getUserName(),
-					configurator.getUserPwd());
+			conn = DriverManager.getConnection(configurator.getUrl(), configurator);
 
 		}
 		return conn;
 	}
-
+	
 	/**
 	 * @param configurator Configurator
 	 * @param conns Connection[]

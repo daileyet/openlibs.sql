@@ -37,6 +37,7 @@ import com.openthinks.libs.utilities.InstanceUtilities;
 
 /**
  * The management of {@link ConnectionPool}
+ * 
  * @author dailey.yet@outlook.com
  *
  */
@@ -46,7 +47,8 @@ public final class ConnectionPoolManager {
 	private static Logger logger = Logger.getLogger(ConnectionPoolManager.class);
 
 	/**
-	 * @param configurator Configurator
+	 * @param configurator
+	 *            Configurator
 	 * @return ConnectionPool
 	 */
 	public static ConnectionPool getInstance(Configurator configurator) {
@@ -70,11 +72,13 @@ public final class ConnectionPoolManager {
 	}
 
 	/**
-	 * @param configurator Configurator
+	 * @param configurator
+	 *            Configurator
 	 */
 	@SuppressWarnings("unchecked")
 	private static ConnectionPool initialConnectionPool(Configurator configurator) {
-		String clazzName = (String) configurator.get(ConnectionPool.POOL_CLASS);
+		String clazzName = (String) configurator.getOrDefault(ConnectionPool.POOL_CLASS,
+				SimpleConnectionPool.class.getName());
 		ConnectionPool connPool = null;
 		try {
 			Class<? extends ConnectionPool> clazz = (Class<? extends ConnectionPool>) Class.forName(clazzName);
@@ -91,14 +95,14 @@ public final class ConnectionPoolManager {
 				if (isThrowed) {
 					connPool = InstanceUtilities.create(clazz, null, new Object[] {});
 					if (connPool == null)
-						throw new IllegalAccessException("Failed to instance the constructor of " + clazz.getName()
-								+ " with no parameter.");
+						throw new IllegalAccessException(
+								"Failed to instance the constructor of " + clazz.getName() + " with no parameter.");
 				}
 			} else {
 				throw new IllegalArgumentException("Not the implementation type from ConnectionPool.");
 			}
 		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
+			logger.warn(e.getMessage(), e);
 			connPool = new SimpleConnectionPool(configurator);
 		}
 		return connPool;
@@ -107,18 +111,20 @@ public final class ConnectionPoolManager {
 	/**
 	 * set the instance of ConnectionPool by the given parameter;<BR>
 	 * it can be other complex implementation for {@link ConnectionPool}
-	 * @param singletonPoolInstance the singletonPoolInstance to set
+	 * 
+	 * @param singletonPoolInstance
+	 *            the singletonPoolInstance to set
 	 */
 	public static void setSingletonPoolInstance(ConnectionPool singletonPoolInstance) {
 		ConnectionPoolManager.singletonPoolInstance = singletonPoolInstance;
 	}
-	
+
 	/**
 	 * destroy all connections in {@link ConnectionPool}
 	 */
 	public static void destroy() {
 		final ConnectionPool connPool = ConnectionPoolManager.singletonPoolInstance;
-		if(connPool!=null) {
+		if (connPool != null) {
 			connPool.shutdown();
 		}
 	}
