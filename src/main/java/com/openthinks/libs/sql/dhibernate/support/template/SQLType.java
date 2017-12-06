@@ -27,8 +27,9 @@ package com.openthinks.libs.sql.dhibernate.support.template;
 
 /**
  * generate SQL type
+ * 
  * @author dailey
  */
 public enum SQLType {
-	INSERT, UPDATE, QUERY, DELETE
+	INSERT, UPDATE, QUERY, DELETE, DELETE_ALL
 }

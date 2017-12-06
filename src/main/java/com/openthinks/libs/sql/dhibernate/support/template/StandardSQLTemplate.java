@@ -88,8 +88,21 @@ public class StandardSQLTemplate implements Template {
 			String idName_ = ReflectEngine.getEntityID(entityType);
 			Checker.require(idName_).notNull();
 			return getDelete(entityTableName, idName_);
+		case DELETE_ALL:
+			return getDeleteAll(entityTableName);
 		}
 		return "";
+	}
+	
+	/**
+	 * generate delete all action SQL
+	 * @param entityTableName String table name
+	 * @return the delete all action SQL
+	 */
+	private String getDeleteAll(String entityTableName) {
+		StringBuffer sb = new StringBuffer();
+		sb.append("DELETE FROM " + entityTableName);
+		return sb.toString();
 	}
 
 	/**

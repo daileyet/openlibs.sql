@@ -131,6 +131,15 @@ public abstract class AbstractSession implements Session {
 		getBaseDao().executeSql(sql);
 
 	}
+	
+	@Override
+	public <T> void deleteAll(Class<T> clazz) {
+		Checker.require(clazz).notNull();
+		Template template = ReflectEngine.createSQLTemplate(clazz);
+		template.setType(SQLType.DELETE_ALL);
+		String sql = template.generateSQL();
+		getBaseDao().executeSql(sql);
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -369,7 +378,7 @@ public abstract class AbstractSession implements Session {
 	public int delete(Condition condition) {
 		return getBaseDao().executeSql(condition);
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
