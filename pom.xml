@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.openthinks.libs</groupId>
-	<artifactId>sql</artifactId>
+	<artifactId>openlibs.sql</artifactId>
 	<packaging>jar</packaging>
 	<version>2.0.1</version>
 	<name>openlibs.sql</name>
@@ -47,8 +47,8 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.openthinks.libs</groupId>
-			<artifactId>utilities</artifactId>
-			<version>1.2</version>
+			<artifactId>openlibs.utilities</artifactId>
+			<version>1.2.1</version>
 		</dependency>
 		<dependency>
 			<groupId>log4j</groupId>
@@ -61,7 +61,7 @@
 			<artifactId>hibernate-jpa-2.0-api</artifactId>
 			<version>1.0.1.Final</version>
 		</dependency>
-		<!-- <dependency> <groupId>mysql</groupId> <artifactId>mysql-connector-java</artifactId> 
+		<!-- <dependency> <groupId>mysql</groupId> <artifactId>mysql-connector-java</artifactId>
 			<version>5.1.14</version> </dependency> -->
 		<dependency>
 			<groupId>junit</groupId>

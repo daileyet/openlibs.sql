@@ -193,8 +193,8 @@ public interface Session {
 	/**
 	 * 删除所有对象
 	 * 
-	 * @param clz
-	 *            实体类型clz<BR>
+	 * @param clazz
+	 *            实体类型clazz<BR>
 	 *            1.{@link Entity}子类默认第一个属性为ID列,类名需与表名一致<BR>
 	 *            2.JPA标注的实体类标准 {@link javax.persistence.Entity}
 	 * @param <T>
