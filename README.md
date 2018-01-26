@@ -6,8 +6,8 @@ The lib of java database ORM simple implementation
 ```xml
 <dependency>
   <groupId>com.openthinks.libs</groupId>
-  <artifactId>sql</artifactId>
-  <version>2.0</version>
+  <artifactId>openlibs.sql</artifactId>
+  <version>2.0.1</version>
 </dependency>
 ```
 ---
