@@ -15,8 +15,7 @@ import com.openthinks.libs.sql.lang.Condition;
 import com.openthinks.libs.sql.lang.Configurator;
 
 /**
- * 与数据库会话接口
- * Include high level and low level ways to access database<BR>
+ * 与数据库会话接口 Include high level and low level ways to access database<BR>
  * <B>High level DAO API - auto generate SQL</B>
  * <ul>
  * <li>{@link #createQuery(Class)}</li>
@@ -28,14 +27,21 @@ import com.openthinks.libs.sql.lang.Configurator;
  * </ul>
  * <B>Low level DAO API - manual generate SQL</B>
  * <ul>
- * <li>{@link #add(Condition)} {@link #add(String)} {@link #add(String, String[])}</li>
+ * <li>{@link #add(Condition)} {@link #add(String)}
+ * {@link #add(String, String[])}</li>
  * <li>{@link #createCondition()}</li>
- * <li>{@link #delete(Condition)} {@link #delete(String)} {@link #delete(String, String[])}</li>
- * <li>{@link #get(Class, Condition)} {@link #get(Class, String)} {@link #get(Class, String, String[])}</li>
- * <li>{@link #list(Condition)} {@link #list(String)} {@link #list(String, String[])}</li>
- * <li>{@link #list(Class, Condition)} {@link #list(Class, String)} {@link #list(Class, String, String[])}</li>
- * <li>{@link #update(Condition)} {@link #update(String)} {@link #update(String, String[])}</li>
+ * <li>{@link #delete(Condition)} {@link #delete(String)}
+ * {@link #delete(String, String[])}</li>
+ * <li>{@link #get(Class, Condition)} {@link #get(Class, String)}
+ * {@link #get(Class, String, String[])}</li>
+ * <li>{@link #list(Condition)} {@link #list(String)}
+ * {@link #list(String, String[])}</li>
+ * <li>{@link #list(Class, Condition)} {@link #list(Class, String)}
+ * {@link #list(Class, String, String[])}</li>
+ * <li>{@link #update(Condition)} {@link #update(String)}
+ * {@link #update(String, String[])}</li>
  * </ul>
+ * 
  * @author dmj
  * @version 2010/11/19
  * 
@@ -52,8 +58,11 @@ public interface Session {
 
 	/**
 	 * 开启事务并设置事务级别
-	 * @param transactionLevel TransactionLevel
-	 * @throws TransactionException TransactionException
+	 * 
+	 * @param transactionLevel
+	 *            TransactionLevel
+	 * @throws TransactionException
+	 *             TransactionException
 	 */
 	public void beginTransaction(TransactionLevel transactionLevel) throws TransactionException;
 
@@ -102,6 +111,7 @@ public interface Session {
 
 	/**
 	 * judge database connection is auto-close after execute DML
+	 * 
 	 * @return Boolean
 	 */
 	public Boolean isAutoClose();
@@ -114,59 +124,83 @@ public interface Session {
 
 	public void disableAutoClose();
 
-	/*==========================================================================================
-	*	High level DAO API, recommend
-	*/
+	/*
+	 * =============================================================================
+	 * ============= High level DAO API, recommend
+	 */
 	/**
 	 * create a {@link Query} for this given entity class
-	 * @param clz Class entity class type
-	 * @param <T> the entity class type
+	 * 
+	 * @param clz
+	 *            Class entity class type
+	 * @param <T>
+	 *            the entity class type
 	 * @return Query
 	 */
 	public <T> Query<T> createQuery(Class<T> clz);
 
 	/**
 	 * 根据id值获取clz类型的实体对象
+	 * 
 	 * @param clz
 	 *            实体类型clz<BR>
 	 *            1.{@link Entity}子类默认第一个属性为ID列,类名需与表名一致<BR>
 	 *            2.JPA标注的实体类标准 {@link javax.persistence.Entity}
-	 * @param id Serializable
-	 *            主键值
-	 * @param <T> the entity class type
+	 * @param id
+	 *            Serializable 主键值
+	 * @param <T>
+	 *            the entity class type
 	 * @return Object 数据库表所对应的实体对象
 	 */
 	public <T> T load(Class<T> clz, Serializable id);
 
 	/**
 	 * 持久化对象,进行Insert
-	 * @param <T> the entity class type
-	 * @param object T
-	 * 			    实体类型T<BR>
+	 * 
+	 * @param <T>
+	 *            the entity class type
+	 * @param object
+	 *            T 实体类型T<BR>
 	 *            1.{@link Entity}子类默认第一个属性为ID列,类名需与表名一致<BR>
 	 *            2.JPA标注的实体类标准 {@link javax.persistence.Entity}
 	 */
 	public <T> void save(T object);
 
 	/**
-	 * 持久化对象,根据持久化的对象主键进行Update
-	 * 			    实体类型T<BR>
-	 *            1.{@link Entity}子类默认第一个属性为ID列,类名需与表名一致<BR>
-	 *            2.JPA标注的实体类标准 {@link javax.persistence.Entity}
-	 * @param object T
-	 * @param <T> the entity class type
+	 * 持久化对象,根据持久化的对象主键进行Update 实体类型T<BR>
+	 * 1.{@link Entity}子类默认第一个属性为ID列,类名需与表名一致<BR>
+	 * 2.JPA标注的实体类标准 {@link javax.persistence.Entity}
+	 * 
+	 * @param object
+	 *            T
+	 * @param <T>
+	 *            the entity class type
 	 */
 	public <T> void update(T object);
 
 	/**
-	 * 删除对象,根据持久化的对象主键进行Delete
-	 * 			    实体类型T<BR>
-	 *            1.{@link Entity}子类默认第一个属性为ID列,类名需与表名一致<BR>
-	 *            2.JPA标注的实体类标准 {@link javax.persistence.Entity}
-	 * @param object T
-	 * @param <T> the entity class type
+	 * 删除对象,根据持久化的对象主键进行Delete 实体类型T<BR>
+	 * 1.{@link Entity}子类默认第一个属性为ID列,类名需与表名一致<BR>
+	 * 2.JPA标注的实体类标准 {@link javax.persistence.Entity}
+	 * 
+	 * @param object
+	 *            T
+	 * @param <T>
+	 *            the entity class type
 	 */
 	public <T> void delete(T object);
+
+	/**
+	 * 删除所有对象
+	 * 
+	 * @param clazz
+	 *            实体类型clazz<BR>
+	 *            1.{@link Entity}子类默认第一个属性为ID列,类名需与表名一致<BR>
+	 *            2.JPA标注的实体类标准 {@link javax.persistence.Entity}
+	 * @param <T>
+	 *            the entity class type
+	 */
+	public <T> void deleteAll(Class<T> clazz);
 
 	/**
 	 * 返回所有相应实体类的集合列表<br>
@@ -175,15 +209,17 @@ public interface Session {
 	 *            查询的实体Class类型,<span style=color:red>可以不是Entity的子类</span><BR>
 	 *            1.{@link Entity}子类子类默认第一个属性为ID列,类名需与表名一致<BR>
 	 *            2.JPA注解方式
-	 * @param <T> the entity class type          
+	 * @param <T>
+	 *            the entity class type
 	 * @since 2010/11/17
 	 * @return List 任何实体类的集合列表
 	 */
 	public <T> List<T> list(Class<T> clz);
 
-	/*==========================================================================================
-	*	Low level DAO API, recommend 
-	*/
+	/*
+	 * =============================================================================
+	 * ============= Low level DAO API, recommend
+	 */
 
 	/**
 	 * 根据查询语句获取clz类型的实体对象
@@ -194,16 +230,18 @@ public interface Session {
 	 *            2.JPA标注的实体类标准 {@link javax.persistence.Entity}
 	 * @param sql
 	 *            完整标准查询语句,<span style=color:red;>不支持多表查询语句</span>
-	 * @param <T> the entity class type
+	 * @param <T>
+	 *            the entity class type
 	 * @return T 数据库表所对应的实体对象
 	 */
 	public <T> T get(Class<T> clz, String sql);
 
-	//	@Deprecated
-	//	public <T extends Entity> T get(Entity entity, String sql);
+	// @Deprecated
+	// public <T extends Entity> T get(Entity entity, String sql);
 
 	/**
 	 * 根据查询语句获取clz类型的实体对象
+	 * 
 	 * @param clz
 	 *            实体类型clz<BR>
 	 *            1.{@link Entity}子类<BR>
@@ -212,13 +250,14 @@ public interface Session {
 	 *            完整标准查询语句,<span style=color:red;>不支持多表查询语句</span>
 	 * @param params
 	 *            sql语句依赖的参数数组
-	 * @param <T> the entity class type
+	 * @param <T>
+	 *            the entity class type
 	 * @return T 数据库表所对应的实体对象
 	 */
 	public <T> T get(Class<T> clz, String sql, String[] params);
 
-	//	@Deprecated
-	//	public <T extends Entity> T get(Entity entity, String sql, String[] params);
+	// @Deprecated
+	// public <T extends Entity> T get(Entity entity, String sql, String[] params);
 	/**
 	 * 根据查询语句获取clz类型的实体对象
 	 * 
@@ -228,27 +267,31 @@ public interface Session {
 	 *            2.JPA标注的实体类标准 {@link javax.persistence.Entity}
 	 * @param condition
 	 *            专用于生成带条件的完整查询语句的对象,<span style=color:red;>不支持多表查询</span>
-	 * @param <T> the entity class type
+	 * @param <T>
+	 *            the entity class type
 	 * @return T 数据库表所对应的实体对象
 	 */
 	public <T> T get(Class<T> clz, Condition condition);
 
-	//	@Deprecated
-	//	public <T extends Entity> T get(Entity entity, Condition condition);
+	// @Deprecated
+	// public <T extends Entity> T get(Entity entity, Condition condition);
 	/**
 	 * 根据查询语句获取clz类型的实体对象对象列表
+	 * 
 	 * @see Session#list(Class, String, String[])
 	 * @param clz
 	 *            实体类型clz
 	 * @param sql
 	 *            标准查询语句,<span style=color:red;>不支持多表查询语句</span>
-	 * @param <T> the entity class type
+	 * @param <T>
+	 *            the entity class type
 	 * @return List 数据库表所对应的实体对象列表集合
 	 */
 	public <T> List<T> list(Class<T> clz, String sql);
 
 	/**
 	 * 根据查询语句获取clz类型的实体对象对象列表
+	 * 
 	 * @see BaseDao#list(Class, String, String[])
 	 * @param clz
 	 *            实体类型clz
@@ -256,7 +299,8 @@ public interface Session {
 	 *            标准查询语句,<span style=color:red;>不支持多表查询语句</span>
 	 * @param params
 	 *            sql语句依赖的参数数组
-	 * @param <T> the entity class type
+	 * @param <T>
+	 *            the entity class type
 	 * @return List 数据库表所对应的实体对象列表集合
 	 */
 	public <T> List<T> list(Class<T> clz, String sql, String[] params);
@@ -268,7 +312,8 @@ public interface Session {
 	 *            实体类型clz
 	 * @param condition
 	 *            专用于生成带条件的sql语句的对象,<span style=color:red;>不支持多表查询</span>
-	 * @param <T> the entity class type
+	 * @param <T>
+	 *            the entity class type
 	 * @return List 数据库表所对应的实体对象列表集合
 	 */
 	public <T> List<T> list(Class<T> clz, Condition condition);

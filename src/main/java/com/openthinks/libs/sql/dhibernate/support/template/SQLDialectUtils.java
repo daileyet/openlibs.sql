@@ -66,7 +66,11 @@ public final class SQLDialectUtils {
 	public static String wrapColumnValue(Object value) {
 		String retVale = null;
 		if (value != null) {
-			retVale = "'" + value + "'";
+			if(value instanceof Number) {
+				retVale =  String.valueOf(value) ;
+			}else {
+				retVale = "'" + value + "'";
+			}
 		}
 		return retVale;
 	}
