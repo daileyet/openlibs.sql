@@ -141,7 +141,7 @@ public final class Configurator extends Properties {
 	}
 
 	public enum Dialect {
-		MYSQL, ORACLE, SQLSERVER;
+		MYSQL, ORACLE, SQLSERVER, DERBY;
 
 		static Dialect toDialect(String dialect) {
 			for (Dialect d : Dialect.values()) {
